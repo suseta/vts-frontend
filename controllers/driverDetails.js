@@ -33,10 +33,19 @@ const addDriver = async (req, res) => {
     s_license_verification_covid
   } = req.body
 
-  if (!s_driver_id || !s_driver_name) {
+  if (
+    !s_entity_name ||
+    !s_driver_id ||
+    !s_driver_name ||
+    !i_mobile_no ||
+    !s_state_name ||
+    !s_country_name ||
+    !i_driver_pincode ||
+    !s_driver_city
+  ) {
     return res.status(400).json({
       error:
-        's_driver_id and s_driver_name are required in the body parameters.'
+        's_entity_name or s_driver_id or s_driver_name or i_mobile_no or s_state_name or s_country_name or i_driver_pincode or s_driver_city cannot be empty!'
     })
   }
 

@@ -13,7 +13,7 @@ const addVehicle = async (req, res) => {
     s_asset_id,
     s_asset_name,
     imei_number,
-    c_fuel_type,
+    s_asset_type,
     i_tare_weight,
     i_gross_weight,
     s_asset_model,
@@ -49,9 +49,9 @@ const addVehicle = async (req, res) => {
     i_seating_capacity
   } = req.body
 
-  if (!s_asset_id || !imei_number) {
+  if (!s_entity_identity || !s_asset_id || !s_asset_type) {
     return res.status(400).json({
-      error: 's_asset_id and imei_number are required in the body parameters.'
+      error: 's_entity_identity or s_asset_id or s_asset_type cannot be empty!'
     })
   }
 
@@ -62,7 +62,7 @@ const addVehicle = async (req, res) => {
       s_asset_id,
       s_asset_name,
       imei_number,
-      c_fuel_type,
+      s_asset_type,
       i_tare_weight,
       i_gross_weight,
       s_asset_model,
@@ -106,7 +106,7 @@ const addVehicle = async (req, res) => {
                     s_asset_id, 
                     s_asset_name, 
                     imei_number, 
-                    c_fuel_type, 
+                    s_asset_type, 
                     i_tare_weight, 
                     i_gross_weight, 
                     s_asset_model, 
@@ -150,7 +150,7 @@ const addVehicle = async (req, res) => {
         dataToInsert.s_asset_id,
         dataToInsert.s_asset_name,
         dataToInsert.imei_number,
-        dataToInsert.c_fuel_type,
+        dataToInsert.s_asset_type,
         dataToInsert.i_tare_weight,
         dataToInsert.i_gross_weight,
         dataToInsert.s_asset_model,
@@ -191,7 +191,7 @@ const addVehicle = async (req, res) => {
       const result = await client.query(query)
       console.log('Data inserted successfully:', result.rows[0])
       res.status(200).json({
-        message: 'Asset data stored successfully',
+        message: 'Asset data stored successfully!',
         data: result.rows[0]
       })
     } finally {
