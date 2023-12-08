@@ -2,9 +2,7 @@ const { getClient } = require('../db/connect')
 
 var client
 
-const index = async (req, res) => {
-  res.status(200).json({ message: 'I am in index' })
-}
+
 
 const addVehicle = async (req, res) => {
   const {
@@ -203,6 +201,5 @@ const addVehicle = async (req, res) => {
 }
 
 module.exports = {
-  index,
   addVehicle
 }
