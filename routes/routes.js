@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const {index,addDriver} =require("../controllers/controllerFunction")
-router.route("/").get(index);
+const { index, addDriver } = require('../controllers/driverDetails')
+const { index, addVehicle } = require('../controllers/vehicleDetails')
+router.route('/').get(index)
 
-// router.route("/addVehicle").post(addVehicle);
-// router.route("/vehicleDetail").post(vehicleDetail);
-router.route("/addDriver").post(addDriver);
-// router.route("/DriverDetail").post(driverDetail);
+router.route('/addVehicle').post(addVehicle)
+// router.route("/vehicleDetails").post(vehicleDetails);
+router.route('/addDriver').post(addDriver)
+// router.route("/driverDetails").post(driverDetails);
 
-
-module.exports = router;
+module.exports = router
