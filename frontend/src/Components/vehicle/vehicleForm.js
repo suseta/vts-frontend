@@ -95,7 +95,7 @@ const VehicleForm = () => {
       />
       </div>
       <div>
-      <label htmlFor="s_asset_id">Asset ID:</label>
+      <label htmlFor="s_asset_id" className="mandatory">Asset ID:</label>
       <input
         type="text"
         id="s_asset_id"
@@ -126,7 +126,7 @@ const VehicleForm = () => {
       />
       </div>
       <div>
-      <label htmlFor="s_asset_type">Asset Type:</label>
+      <label htmlFor="s_asset_type" className="mandatory">Asset Type:</label>
       <input
         type="text"
         id="s_asset_type"
