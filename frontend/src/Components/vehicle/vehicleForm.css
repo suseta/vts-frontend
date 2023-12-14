@@ -43,3 +43,27 @@ button:hover {
     content: " *";
     color: red;
 }
+
+.navbar {
+    background-color: #4c56b3;
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: rgb(84, 48, 243);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 28px;
+    color: #040768;
+    -webkit-text-stroke: 1px #fafafa;
+}
+
+.VehicleForm {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
