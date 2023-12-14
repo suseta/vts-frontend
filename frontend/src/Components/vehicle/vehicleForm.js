@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './vehicleForm.css';
-import nav-logo from 'D:\Navictronicx Documents\VTS_Frontend\vts-frontend\frontend\src\nav-logo.jpg';
+import navLogo from '../../navLogo.png';
 
 const VehicleForm = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +74,7 @@ const VehicleForm = () => {
   return (
     <div>
       <div className='navbar'>
-      <img src={nav-logo} alt="Logo" className="logo" />
+      <img src={navLogo} alt="Logo" className="logo" />
         <a href='#'>NavitronicX</a>
       </div>
       <div className='VehicleForm'>
