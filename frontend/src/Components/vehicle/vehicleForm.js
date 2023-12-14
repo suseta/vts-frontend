@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './vehicleForm.css';
-import navLogo from '../../navLogo.png';
+import React, { useState, useEffect } from 'react'
+import './vehicleForm.css'
+import navLogo from '../../navLogo.jpg'
 
 const VehicleForm = () => {
   const [formData, setFormData] = useState({
@@ -45,6 +45,31 @@ const VehicleForm = () => {
     i_seating_capacity: ''
   })
 
+  const [entityIdentityOptions, setEntityIdentityOptions] = useState([]);
+
+  useEffect(() => {
+    // Fetch options from your API
+    fetch('your_api_endpoint')
+      .then((response) => response.json())
+      .then((data) => {
+        // Assuming data is an array of options
+        setEntityIdentityOptions(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching options:', error);
+      });
+  }, []);
+
+  const [assetTypes, setAssetTypes] = useState([]);
+
+  useEffect(() => {
+    // Fetch asset types from API when the component mounts
+    fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
+      .then(response => response.json())
+      .then(data => setAssetTypes(data))
+      .catch(error => console.error('Error fetching asset types:', error));
+  }, []);
+
   const handleChange = e => {
     const { name, value } = e.target
     setFormData(prevData => ({ ...prevData, [name]: value }))
@@ -74,23 +99,30 @@ const VehicleForm = () => {
   return (
     <div>
       <div className='navbar'>
-      <img src={navLogo} alt="Logo" className="logo" />
+        <img src={navLogo} alt='Logo' className='logo' />
         <a href='#'>NavitronicX</a>
       </div>
+      <div className='container'>
       <div className='VehicleForm'>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor='s_entity_identity' className='mandatory'>
-              Entity Identity:
+              Entity:
             </label>
-            <input
-              type='text'
+            <select
               id='s_entity_identity'
               name='s_entity_identity'
               required
               value={formData.s_entity_identity}
               onChange={handleChange}
-            />
+            >
+              <option value=''>Select</option>
+              {entityIdentityOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor='s_transporter_id'>Transporter ID:</label>
@@ -139,14 +171,20 @@ const VehicleForm = () => {
             <label htmlFor='s_asset_type' className='mandatory'>
               Asset Type:
             </label>
-            <input
-              type='text'
+            <select
               id='s_asset_type'
               name='s_asset_type'
               required
               value={formData.s_asset_type}
               onChange={handleChange}
-            />
+            >
+              <option value=''>Select</option>
+              {assetTypes.map(assetType => (
+                <option key={assetType.id} value={assetType.id}>
+                  {assetType.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor='i_tare_weight'>Tare Weight:</label>
@@ -514,6 +552,7 @@ const VehicleForm = () => {
 
           <button type='submit'>Submit</button>
         </form>
+      </div>
       </div>
     </div>
   )

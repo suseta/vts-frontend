@@ -1,6 +1,16 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #d3d3ec; /* Set your desired background color */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background-color: #c2ddf7;
 }
 
 h2 {
@@ -45,8 +55,13 @@ button:hover {
 }
 
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: #4c56b3;
     overflow: hidden;
+    z-index: 1000;
 }
 
 .navbar a {
@@ -66,9 +81,37 @@ button:hover {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    margin-top: 20px;
 }
 
 .logo {
-    height: 100px; 
-    width: 100px; 
+    height: 50px; 
+    width: 50px; 
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .VehicleForm form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .VehicleForm form div {
+    width: calc(25% - 10px); /* 10px is the combined margin between the divs */
+    margin-bottom: 20px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  /* Adjust the input width as needed */
+  .VehicleForm form input,
+  .VehicleForm form select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .VehicleForm form div.full-width {
+    width: 100%;
   }
