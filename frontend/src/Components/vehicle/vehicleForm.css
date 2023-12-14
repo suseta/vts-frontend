@@ -67,3 +67,8 @@ button:hover {
     margin: 0 auto;
     padding: 20px;
 }
+
+.logo {
+    height: 100px; 
+    width: 100px; 
+  }
