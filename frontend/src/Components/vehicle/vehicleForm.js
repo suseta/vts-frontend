@@ -10,6 +10,7 @@ const VehicleForm = () => {
     s_asset_name: '',
     imei_number: '',
     s_asset_type: '',
+    s_fuel_type: '',
     i_tare_weight: '',
     i_gross_weight: '',
     s_asset_model: '',
@@ -69,6 +70,44 @@ const VehicleForm = () => {
       .then(data => setAssetTypes(data))
       .catch(error => console.error('Error fetching asset types:', error))
   }, [])
+
+  const [fuelTypes, setFuelTypes] = useState([])
+
+  useEffect(() => {
+    // Fetch asset types from API when the component mounts
+    fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
+      .then(response => response.json())
+      .then(data => setFuelTypes(data))
+      .catch(error => console.error('Error fetching asset types:', error))
+  }, [])
+
+  const [capacityNames, setCapacityNames] = useState([])
+
+  useEffect(() => {
+    // Fetch asset types from API when the component mounts
+    fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
+      .then(response => response.json())
+      .then(data => setCapacityNames(data))
+      .catch(error => console.error('Error fetching asset types:', error))
+  }, [])
+
+  const [associatedTransporterNames, setAssociatedTransporterNames] = useState([])
+
+  useEffect(() => {
+    // Fetch asset types from API when the component mounts
+    fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
+      .then(response => response.json())
+      .then(data => setAssociatedTransporterNames(data))
+      .catch(error => console.error('Error fetching asset types:', error))
+  }, [])
+
+  const [manufacturingYears, setManufacturingYears] = useState([]);
+
+  useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    const yearsArray = Array.from({ length: currentYear - 1989 }, (_, index) => currentYear - index);
+    setManufacturingYears(yearsArray);
+  }, []);
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -146,15 +185,80 @@ const VehicleForm = () => {
               </select>
             </div>
             <div>
-              <label htmlFor='s_transporter_id'>Transporter ID:</label>
-              <input
-                type='text'
+              <label htmlFor='s_fuel_type'>
+                Fuel Type:
+              </label>
+              <select
+                className='form-select'
+                id='s_fuel_type'
+                name='s_fuel_type'
+                required
+                value={formData.s_fuel_type}
+                onChange={handleChange}
+              >
+                <option value=''>Select</option>
+                {fuelTypes.map(fuelType => (
+                  <option key={fuelType.id} value={fuelType.id}>
+                    {fuelType.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor='capacity_name'>Asset Capacity:</label>
+              <select
+                className='form-select'
+                id='capacity_name'
+                name='capacity_name'
+                required
+                value={formData.capacity_name}
+                onChange={handleChange}
+              >
+                <option value=''>Select</option>
+                {capacityNames.map(capacityName => (
+                  <option key={capacityName.id} value={capacityName.id}>
+                    {capacityName.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor='s_transporter_id'>
+                Associated Transporter Name:
+              </label>
+              <select
+                className='form-select'
                 id='s_transporter_id'
                 name='s_transporter_id'
+                required
                 value={formData.s_transporter_id}
                 onChange={handleChange}
-              />
+              >
+                <option value=''>Select</option>
+                {associatedTransporterNames.map(associatedTransporterName => (
+                  <option key={associatedTransporterName.id} value={associatedTransporterName.id}>
+                    {associatedTransporterName.name}
+                  </option>
+                ))}
+              </select>
             </div>
+            <div>
+            <label htmlFor='mfg_dt'>Manufacturing Date:</label>
+            <select
+          className='form-select'
+          id='mfg_dt'
+          name='mfg_dt'
+          value={formData.mfg_dt}
+          onChange={handleChange}
+        >
+          <option value=''>Select</option>
+          {manufacturingYears.map(year => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+          </div>
             <div>
               <label htmlFor='s_asset_id' className='mandatory'>
                 Asset ID:
@@ -219,26 +323,6 @@ const VehicleForm = () => {
               />
             </div>
             <div>
-              <label htmlFor='vahan_update_date'>Vahan Update Date:</label>
-              <input
-                type='date'
-                id='vahan_update_date'
-                name='vahan_update_date'
-                value={formData.vahan_update_date}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor='capacity_name'>Capacity Name:</label>
-              <input
-                type='text'
-                id='capacity_name'
-                name='capacity_name'
-                value={formData.capacity_name}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
               <label htmlFor='s_vendor_name'>Vendor Name:</label>
               <input
                 type='text'
@@ -255,16 +339,6 @@ const VehicleForm = () => {
                 id='registration_date'
                 name='registration_date'
                 value={formData.registration_date}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor='mfg_dt'>Manufacturing Date:</label>
-              <input
-                type='date'
-                id='mfg_dt'
-                name='mfg_dt'
-                value={formData.mfg_dt}
                 onChange={handleChange}
               />
             </div>
@@ -554,11 +628,11 @@ const VehicleForm = () => {
               />
             </div>
             <div class='form-buttons'>
-              <button type='submit'>Submit</button>
+              <button type='submit'>Save</button>
               <button type='button' class='cancel-button'>
                 Cancel
               </button>
-            </div>  
+            </div>
           </form>
         </div>
       </div>
