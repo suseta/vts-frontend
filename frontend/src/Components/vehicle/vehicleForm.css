@@ -1,16 +1,16 @@
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #d3d3ec; /* Set your desired background color */
+    background-color: #fcfcfa;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(247, 245, 228, 0.1);
   }
 
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: #c2ddf7;
+    background-color: #d3d3ec;
 }
 
 h2 {
@@ -97,12 +97,12 @@ button:hover {
     justify-content: space-between;
   }
   
-  .VehicleForm form div {
-    width: calc(25% - 10px); /* 10px is the combined margin between the divs */
+  /* .VehicleForm form div {
+    width: calc(25% - 10px);
     margin-bottom: 20px;
     display: inline-block;
     margin-right: 10px;
-  }
+  } */
   
   /* Adjust the input width as needed */
   .VehicleForm form input,
@@ -112,6 +112,38 @@ button:hover {
     box-sizing: border-box;
   }
 
+  .VehicleForm form div {
+    width: 48%; /* Adjust the width as needed */
+    margin-bottom: 20px;
+    display: inline-block;
+    margin-right: 2%; /* Adjust the margin as needed */
+    box-sizing: border-box;
+  }
+  
   .VehicleForm form div.full-width {
-    width: 100%;
+    /* width: 100%; */
+    margin-right: 0;
+  }
+
+  .VehicleForm form .form-buttons {
+    margin-top: 20px;
+  }
+
+  .VehicleForm form button {
+    background-color: #0de732;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .VehicleForm form button.cancel-button {
+    background-color: #f5f0f000;
+  }
+
+  .VehicleForm form button:hover {
+    background-color: #e6d9d94f;
   }
