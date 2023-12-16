@@ -49,11 +49,9 @@ const VehicleForm = () => {
   const [entityIdentityOptions, setEntityIdentityOptions] = useState([])
 
   useEffect(() => {
-    // Fetch options from your API
     fetch('your_api_endpoint')
       .then(response => response.json())
       .then(data => {
-        // Assuming data is an array of options
         setEntityIdentityOptions(data)
       })
       .catch(error => {
@@ -64,7 +62,6 @@ const VehicleForm = () => {
   const [assetTypes, setAssetTypes] = useState([])
 
   useEffect(() => {
-    // Fetch asset types from API when the component mounts
     fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
       .then(response => response.json())
       .then(data => setAssetTypes(data))
@@ -74,7 +71,6 @@ const VehicleForm = () => {
   const [fuelTypes, setFuelTypes] = useState([])
 
   useEffect(() => {
-    // Fetch asset types from API when the component mounts
     fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
       .then(response => response.json())
       .then(data => setFuelTypes(data))
@@ -84,7 +80,6 @@ const VehicleForm = () => {
   const [capacityNames, setCapacityNames] = useState([])
 
   useEffect(() => {
-    // Fetch asset types from API when the component mounts
     fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
       .then(response => response.json())
       .then(data => setCapacityNames(data))
@@ -94,7 +89,6 @@ const VehicleForm = () => {
   const [associatedTransporterNames, setAssociatedTransporterNames] = useState([])
 
   useEffect(() => {
-    // Fetch asset types from API when the component mounts
     fetch('YOUR_API_ENDPOINT_FOR_ASSET_TYPES')
       .then(response => response.json())
       .then(data => setAssociatedTransporterNames(data))
@@ -105,7 +99,7 @@ const VehicleForm = () => {
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
-    const yearsArray = Array.from({ length: currentYear - 1989 }, (_, index) => currentYear - index);
+    const yearsArray = Array.from({ length: currentYear - 1980 }, (_, index) => currentYear - index);
     setManufacturingYears(yearsArray);
   }, []);
 
@@ -125,14 +119,14 @@ const VehicleForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success:', data)
-        alert('Form submitted successfully!')
+        console.log('Success in Asset Registration Form:', data)
+        alert('Asset registration done successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
-        alert('Error submitting form. Please try again.')
+        alert('Error! Please try again.')
       })
-    console.log('Form submitted:', formData)
+    console.log('Asset registration form submitted:', formData)
   }
 
   return (
@@ -141,6 +135,8 @@ const VehicleForm = () => {
         <img src={navLogo} alt='Logo' className='logo' />
         <a href='#'>NavitronicX</a>
       </div>
+      <div className='wrapper'>
+      <div className='scrollable-container'>
       <div className='container'>
         <div className='VehicleForm'>
           <form onSubmit={handleSubmit}>
@@ -635,6 +631,8 @@ const VehicleForm = () => {
             </div>
           </form>
         </div>
+      </div>
+      </div>
       </div>
     </div>
   )

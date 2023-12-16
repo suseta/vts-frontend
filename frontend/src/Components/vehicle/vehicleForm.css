@@ -1,10 +1,10 @@
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     background-color: #fcfcfa;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(247, 245, 228, 0.1);
+    box-shadow: 0 1 10px rgba(247, 245, 228, 0.1);
   }
 
 body {
@@ -97,14 +97,6 @@ button:hover {
     justify-content: space-between;
   }
   
-  /* .VehicleForm form div {
-    width: calc(25% - 10px);
-    margin-bottom: 20px;
-    display: inline-block;
-    margin-right: 10px;
-  } */
-  
-  /* Adjust the input width as needed */
   .VehicleForm form input,
   .VehicleForm form select {
     width: 100%;
@@ -113,15 +105,14 @@ button:hover {
   }
 
   .VehicleForm form div {
-    width: 48%; /* Adjust the width as needed */
+    width: 48%; 
     margin-bottom: 20px;
     display: inline-block;
-    margin-right: 2%; /* Adjust the margin as needed */
+    margin-right: 2%; 
     box-sizing: border-box;
   }
   
   .VehicleForm form div.full-width {
-    /* width: 100%; */
     margin-right: 0;
   }
 
@@ -146,4 +137,14 @@ button:hover {
 
   .VehicleForm form button:hover {
     background-color: #e6d9d94f;
+  }
+
+  .wrapper {
+    display: flex;
+  }
+  
+  .scrollable-container {
+    max-height: 600px;
+    overflow-y: auto;
+    flex: 1;
   }
