@@ -136,10 +136,22 @@ const VehicleForm = () => {
 
   return (
     <div>
-      <div className='navbar'>
-        <img src={navLogo} alt='Logo' className='logo' />
-        <a href='#'>NavitronicX</a>
+    <div class="navbar">
+    <div class="logo-container">
+    <img src={navLogo} alt="Logo" class="logo" />
+    <div class="brand-text">NavitronicX</div>
+    </div>
+    <div class="menu-container">
+      <div class="menu-bar">
+        <div class="dropdown">
+          <button class="dropbtn">Menu</button>
+          <div class="dropdown-content">
+            <a href="#">Page 1</a>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
       <div className='wrapper'>
         <div className='scrollable-container'>
           <div className='container'>
@@ -223,7 +235,7 @@ const VehicleForm = () => {
                 </div>
                 <div>
                   <label htmlFor='s_transporter_id'>
-                    Associated Transporter Name:
+                    Associated Transporter:
                   </label>
                   <select
                     className='form-select'
@@ -287,7 +299,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='imei_number'>IMEI Number:</label>
+                  <label htmlFor='imei_number'>Device ID:</label>
                   <input
                     type='text'
                     id='imei_number'
@@ -347,7 +359,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='rc_validity_date'>RC Validity Date:</label>
+                  <label htmlFor='rc_validity_date'>RC Validity:</label>
                   <input
                     type='date'
                     id='rc_validity_date'
@@ -369,7 +381,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='fitness_certificate_date'>
-                    Fitness Certificate Date:
+                    Fitness Certificate:
                   </label>
                   <input
                     type='date'
@@ -382,7 +394,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='polution_certificate_date'>
-                    Pollution Certificate Date:
+                    Pollution Certificate:
                   </label>
                   <input
                     type='date'
@@ -395,7 +407,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='isurance_validity_date'>
-                    Insurance Validity Date:
+                    Insurance Validity:
                   </label>
                   <input
                     type='date'
@@ -407,7 +419,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='state_permit_date'>State Permit Date:</label>
+                  <label htmlFor='state_permit_date'>State Permit:</label>
                   <input
                     type='date'
                     id='state_permit_date'
@@ -419,7 +431,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='international_permit_date'>
-                    International Permit Date:
+                    International Permit:
                   </label>
                   <input
                     type='date'
@@ -431,7 +443,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='goods_permit_date'>Goods Permit Date:</label>
+                  <label htmlFor='goods_permit_date'>Goods Permit:</label>
                   <input
                     type='date'
                     id='goods_permit_date'
@@ -442,7 +454,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='road_permit_date'>Road Permit Date:</label>
+                  <label htmlFor='road_permit_date'>Road Permit:</label>
                   <input
                     type='date'
                     id='road_permit_date'
@@ -453,7 +465,7 @@ const VehicleForm = () => {
                 </div>
                 <div>
                   <label htmlFor='battery_purchase_date'>
-                    Battery Purchase Date:
+                    Battery Purchase:
                   </label>
                   <input
                     type='date'
@@ -465,7 +477,7 @@ const VehicleForm = () => {
                 </div>
                 <div>
                   <label htmlFor='battery_expiry_date'>
-                    Battery Expiry Date:
+                    Battery Expiry:
                   </label>
                   <input
                     type='date'
@@ -476,7 +488,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='i_standard_km'>Standard Kilometers:</label>
+                  <label htmlFor='i_standard_km'>Standard KM:</label>
                   <input
                     type='number'
                     id='i_standard_km'
@@ -486,7 +498,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='peso_license_date'>PESO License Date:</label>
+                  <label htmlFor='peso_license_date'>PESO License:</label>
                   <input
                     type='date'
                     id='peso_license_date'
@@ -497,7 +509,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='rule_18'>Rule 18 Implementation Date:</label>
+                  <label htmlFor='rule_18'>Rule 18:</label>
                   <input
                     type='date'
                     id='rule_18'
@@ -508,7 +520,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='rule_19'>Rule 19 Implementation Date:</label>
+                  <label htmlFor='rule_19'>Rule 19:</label>
                   <input
                     type='date'
                     id='rule_19'
@@ -574,7 +586,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='s_national_certificate_no'>
-                    National Certificate Number:
+                    National Certificate:
                   </label>
                   <input
                     type='text'
@@ -586,7 +598,7 @@ const VehicleForm = () => {
                 </div>
                 <div>
                   <label htmlFor='national_test_date'>
-                    National Test Date:
+                    National Test:
                   </label>
                   <input
                     type='date'
@@ -599,7 +611,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='national_validity_date'>
-                    National Validity Date:
+                    National Validity:
                   </label>
                   <input
                     type='date'
@@ -612,7 +624,7 @@ const VehicleForm = () => {
 
                 <div>
                   <label htmlFor='vehicle_active_status'>
-                    Vehicle Active Status:
+                    Vehicle Status:
                   </label>
                   <select
                     id='vehicle_active_status'
@@ -637,7 +649,7 @@ const VehicleForm = () => {
                 </div>
                 <div class='form-buttons'>
                   <button type='submit'>Save</button>
-                  <button type='button' class='cancel-button'>
+                  <button type='button' className='cancel-button'>
                     Cancel
                   </button>
                 </div>
