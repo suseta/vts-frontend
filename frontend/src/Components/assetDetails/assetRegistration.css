@@ -2,13 +2,25 @@
   max-width: 1300px;
   margin: 0 auto;
   background-color: #f8f8ee;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 5px;
+  border-radius: 2px;
   box-shadow: 0 0 20px rgba(236, 198, 198, 0.1);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 200;
   font-style: oblique;
   color: #020547;
+}
+
+.container h2 {
+  margin-top: 50px;
+}
+
+.container h2:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.1), transparent);
 }
 
 body {
@@ -157,7 +169,7 @@ button:hover {
   width: 100%;
   margin-top: 20px;
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-end;
   align-items: center;
 }
 

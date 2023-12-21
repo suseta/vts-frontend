@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import './vehicleForm.css'
+import './assetRegistration.css'
 import navLogo from '../../navLogo.jpg'
 
-const VehicleForm = () => {
+const AssetRegistrationForm = () => {
   const [formData, setFormData] = useState({
     s_entity_identity: '',
     s_transporter_id: '',
@@ -136,25 +136,26 @@ const VehicleForm = () => {
 
   return (
     <div>
-    <div class="navbar">
-    <div class="logo-container">
-    <img src={navLogo} alt="Logo" class="logo" />
-    <div class="brand-text">NavitronicX</div>
-    </div>
-    <div class="menu-container">
-      <div class="menu-bar">
-        <div class="dropdown">
-          <button class="dropbtn">Menu</button>
-          <div class="dropdown-content">
-            <a href="#">Page 1</a>
+      <div class='navbar'>
+        <div class='logo-container'>
+          <img src={navLogo} alt='Logo' class='logo' />
+          <div class='brand-text'>NavitronicX</div>
+        </div>
+        <div class='menu-container'>
+          <div class='menu-bar'>
+            <div class='dropdown'>
+              <button class='dropbtn'>Menu</button>
+              <div class='dropdown-content'>
+                <a href='#'>Page 1</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
       <div className='wrapper'>
         <div className='scrollable-container'>
           <div className='container'>
+            <h2>Asset Registration</h2>
             <div className='VehicleForm'>
               <form onSubmit={handleSubmit}>
                 <div>
@@ -476,9 +477,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='battery_expiry_date'>
-                    Battery Expiry:
-                  </label>
+                  <label htmlFor='battery_expiry_date'>Battery Expiry:</label>
                   <input
                     type='date'
                     id='battery_expiry_date'
@@ -597,9 +596,7 @@ const VehicleForm = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor='national_test_date'>
-                    National Test:
-                  </label>
+                  <label htmlFor='national_test_date'>National Test:</label>
                   <input
                     type='date'
                     id='national_test_date'
@@ -623,9 +620,7 @@ const VehicleForm = () => {
                 </div>
 
                 <div>
-                  <label htmlFor='vehicle_active_status'>
-                    Vehicle Status:
-                  </label>
+                  <label htmlFor='vehicle_active_status'>Vehicle Status:</label>
                   <select
                     id='vehicle_active_status'
                     name='vehicle_active_status'
@@ -662,4 +657,4 @@ const VehicleForm = () => {
   )
 }
 
-export default VehicleForm
+export default AssetRegistrationForm
