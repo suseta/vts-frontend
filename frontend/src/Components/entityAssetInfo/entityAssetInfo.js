@@ -2,41 +2,36 @@ import React, { useState } from 'react'
 import './entityAssetInfo.css'
 import navLogo from '../../navLogo.jpg'
 
-const AssetInfoForm = () => {
-  const [formData, setFormData] = useState({
-    fuel_type: '',
-    asset_type: '',
-    asset_capacity: ''
+const AssetCusEntityInfoForm = () => {
+  const [assetInfoData, setAssetInfoData] = useState({
+    s_fuel_typ: '',
+    s_asset_typ: '',
+    s_asset_cap: ''
   })
 
-  const [formData1, setFormData1] = useState({
-    s_entity_id: '',
-    s_entity_name: '',
-    s_entity_type: '',
-    s_transporter_id: '',
-    s_transporter_name: '',
-    s_customer_id: '',
-    s_customer_name: '',
-    s_customer_type: '',
-    s_parent_entity_id: '',
-    s_immediate_parent_entity_name: '',
-    i_user_id: '',
-    s_user_type: ''
+  const [cusEntityInfoData, setCusEntityInfoData] = useState({
+    cus_entity_id: '',
+    cus_entity_name: '',
+    cus_entity_typ: '',
+    cus_entity_active_status: '',
+    cus_parent_entity_id: '',
+    cus_imdt_parent_entity_id: ''
   })
 
   const handleChange = (e, container = 1) => {
     const { name, value } = e.target
     if (container === 1) {
-      setFormData(prevData => ({ ...prevData, [name]: value }))
+      setAssetInfoData(prevData => ({ ...prevData, [name]: value }))
     } else if (container === 2) {
-      setFormData1(prevData => ({ ...prevData, [name]: value }))
+      setCusEntityInfoData(prevData => ({ ...prevData, [name]: value }))
     }
   }
 
   const handleSubmit = (e, container = 1) => {
     e.preventDefault()
-    const postData = container === 1 ? formData : formData1
-    const endpoint = container === 1 ? 'AddAssetInfo' : 'AnotherEndpoint'
+    const postData = container === 1 ? assetInfoData : cusEntityInfoData
+    const endpoint =
+      container === 1 ? 'AddAssetInfoData' : 'AddCusEntityInfoData'
     fetch('http://65.2.151.41:1410/api/v0/${endpoint}', {
       method: 'POST',
       headers: {
@@ -46,14 +41,14 @@ const AssetInfoForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Container ${container} Form:', data)
+        console.log('Success in ${container} container form:', data)
         alert('Asset information saved successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Container ${container} Form saved:', postData)
+    console.log('${container} container form saved:', postData)
   }
 
   return (
@@ -65,39 +60,39 @@ const AssetInfoForm = () => {
         </div>
       </div>
       <div className='wrapper'>
-        <div className='scrollable-container'>
+        <div className='container'>
           <div className='container'>
             <h2>Asset Info Entry</h2>
-            <div className='AssetInfoForm'>
+            <div className='AssetCusEntityInfoForm'>
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor='fuel_type'>Fuel Type:</label>
+                  <label htmlFor='s_fuel_typ'>Fuel Type:</label>
                   <input
                     type='text'
-                    id='fuel_type'
-                    name='fuel_type'
+                    id='s_fuel_typ'
+                    name='s_fuel_typ'
                     required
-                    value={formData.fuel_type}
+                    value={assetInfoData.s_fuel_typ}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='asset_type'>Asset Type:</label>
+                  <label htmlFor='s_asset_typ'>Asset Type:</label>
                   <input
                     type='text'
-                    id='asset_type'
-                    name='asset_type'
-                    value={formData.asset_type}
+                    id='s_asset_typ'
+                    name='s_asset_typ'
+                    value={assetInfoData.s_asset_typ}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='asset_capacity'>Asset Capacity:</label>
+                  <label htmlFor='s_asset_cap'>Asset Capacity:</label>
                   <input
                     type='text'
-                    id='asset_capacity'
-                    name='asset_capacity'
-                    value={formData.asset_capacity}
+                    id='s_asset_cap'
+                    name='s_asset_cap'
+                    value={assetInfoData.s_asset_cap}
                     onChange={handleChange}
                   />
                 </div>
@@ -111,139 +106,73 @@ const AssetInfoForm = () => {
             </div>
           </div>
           <div className='container'>
-            <h2>Entity Entry</h2>
-            <div className='AssetInfoForm'>
+            <h2>Customer/Entity Entry</h2>
+            <div className='AssetCusEntityInfoForm'>
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor='s_entity_id'>Entity ID:</label>
+                  <label htmlFor='cus_entity_id'>Customer/Entity Id:</label>
                   <input
                     type='text'
-                    id='s_entity_id'
-                    name='s_entity_id'
+                    id='cus_entity_id'
+                    name='cus_entity_id'
                     required
-                    value={formData.s_entity_id}
+                    value={cusEntityInfoData.cus_entity_id}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_entity_name'>Entity Name:</label>
+                  <label htmlFor='cus_entity_name'>Customer/Entity Name:</label>
                   <input
                     type='text'
-                    id='s_entity_name'
-                    name='s_entity_name'
-                    value={formData.s_entity_name}
+                    id='cus_entity_name'
+                    name='cus_entity_name'
+                    value={cusEntityInfoData.cus_entity_name}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_entity_type'>Entity Type:</label>
+                  <label htmlFor='cus_entity_typ'>Customer/Entity Type:</label>
                   <input
                     type='text'
-                    id='s_entity_type'
-                    name='s_entity_type'
-                    value={formData.s_entity_type}
+                    id='cus_entity_typ'
+                    name='cus_entity_typ'
+                    value={cusEntityInfoData.cus_entity_typ}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_transporter_id'>Transporter ID:</label>
-                  <input
-                    type='text'
-                    id='s_transporter_id'
-                    name='s_transporter_id'
-                    value={formData.s_transporter_id}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_transporter_name'>Transporter Name:</label>
-                  <input
-                    type='text'
-                    id='s_transporter_name'
-                    name='s_transporter_name'
-                    value={formData.s_transporter_name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_entity_type'>Entity Type:</label>
-                  <input
-                    type='text'
-                    id='s_entity_type'
-                    name='s_entity_type'
-                    value={formData.s_entity_type}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_customer_id'>Customer ID:</label>
-                  <input
-                    type='text'
-                    id='s_customer_id'
-                    name='s_customer_id'
-                    value={formData.s_customer_id}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_customer_name'>Customer Name:</label>
-                  <input
-                    type='text'
-                    id='s_customer_name'
-                    name='s_customer_name'
-                    value={formData.s_customer_name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_customer_type'>Customer Type:</label>
-                  <input
-                    type='text'
-                    id='s_customer_type'
-                    name='s_customer_type'
-                    value={formData.s_customer_type}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_parent_entity_id'>Parent Entity ID:</label>
-                  <input
-                    type='text'
-                    id='s_parent_entity_id'
-                    name='s_parent_entity_id'
-                    value={formData.s_parent_entity_id}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
-                  <label htmlFor='s_immediate_parent_entity_name'>
-                    Immediate Parent Entity Name:
+                  <label htmlFor='cus_entity_active_status'>
+                    Customer/Entity Active Status:
                   </label>
                   <input
                     type='text'
-                    id='s_immediate_parent_entity_name'
-                    name='s_immediate_parent_entity_name'
-                    value={formData.s_immediate_parent_entity_name}
+                    id='cus_entity_active_status'
+                    name='cus_entity_active_status'
+                    value={cusEntityInfoData.cus_entity_active_status}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='i_user_id'>User ID:</label>
+                  <label htmlFor='cus_parent_entity_id'>
+                    Parent Customer/Entity Id:
+                  </label>
                   <input
                     type='text'
-                    id='i_user_id'
-                    name='i_user_id'
-                    value={formData.i_user_id}
+                    id='cus_parent_entity_id'
+                    name='cus_parent_entity_id'
+                    value={cusEntityInfoData.cus_parent_entity_id}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_user_type'>User Type:</label>
+                  <label htmlFor='cus_imdt_parent_entity_id'>
+                    Immediate Customer/Parent Entity Name:
+                  </label>
                   <input
                     type='text'
-                    id='s_user_type'
-                    name='s_user_type'
-                    value={formData.s_user_type}
+                    id='cus_imdt_parent_entity_id'
+                    name='cus_imdt_parent_entity_id'
+                    value={cusEntityInfoData.cus_imdt_parent_entity_id}
                     onChange={handleChange}
                   />
                 </div>
@@ -262,4 +191,4 @@ const AssetInfoForm = () => {
   )
 }
 
-export default AssetInfoForm
+export default AssetCusEntityInfoForm

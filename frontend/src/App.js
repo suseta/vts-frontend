@@ -2,14 +2,14 @@
 import React from 'react'
 // import AssetRegistrationForm from './Components/assetDetails/assetRegistration'
 // import AssetInfoForm from './Components/entityAssetInfo/entityAssetInfo'
-import DriverEntryForm from './Components/driverDetails/driverEntry'
+import AssetCusEntityInfoForm from './Components/entityAssetInfo/entityAssetInfo'
 
 function App () {
   return (
     <div className='App'>
-  {/*<AssetRegistrationForm/>*/}
-  {/*<AssetInfoForm/>*/}
-  <DriverEntryForm/>
+      {/*<AssetRegistrationForm/>*/}
+      <AssetCusEntityInfoForm />
+      {/*<DriverEntryForm/>*/}
     </div>
   )
 }

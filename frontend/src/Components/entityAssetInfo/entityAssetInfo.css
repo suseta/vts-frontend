@@ -120,7 +120,7 @@
     text-shadow: 5px 10px 20px rgba(225, 236, 209, 0.753);
   }
   
-  .AssetInfoForm {
+  .AssetCusEntityInfoForm {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -147,31 +147,31 @@
     margin-bottom: 5px;
   }
   
-  .AssetInfoForm form {
+  .AssetCusEntityInfoForm form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     position: relative;
   }
   
-  .AssetInfoForm form input,
-  .AssetInfoForm form select {
+  .AssetCusEntityInfoForm form input,
+  .AssetCusEntityInfoForm form select {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
   }
   
-  .AssetInfoForm form > div {
+  .AssetCusEntityInfoForm form > div {
     flex: 0 0 calc(25% - 10px);
     margin-right: 10px;
     margin-bottom: 10px;
   }
   
-  .AssetInfoForm form div.full-width {
+  .AssetCusEntityInfoForm form div.full-width {
     margin-right: 0;
   }
   
-  .AssetInfoForm form .form-buttons {
+  .AssetCusEntityInfoForm form .form-buttons {
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -179,7 +179,7 @@
     align-items: center;
   }
   
-  .AssetInfoForm form button {
+  .AssetCusEntityInfoForm form button {
     background-color: #0de732;
     color: white;
     padding: 10px 15px;
@@ -190,7 +190,7 @@
     margin-left: 1000px;
   }
   
-  .AssetInfoForm form button.cancel-button {
+  .AssetCusEntityInfoForm form button.cancel-button {
     background-color: #808080;
     color: #f1eaea;
     border: 1px solid #f5f0f0;
@@ -209,12 +209,12 @@
   
   /* Making the form responsive */
   @media screen and (max-width: 768px) {
-    .AssetInfoForm form div {
+    .AssetCusEntityInfoForm form div {
       flex: 100%;
       margin-right: 0;
     }
-    .AssetInfoForm form button,
-    .AssetInfoForm form button.cancel-button {
+    .AssetCusEntityInfoForm form button,
+    .AssetCusEntityInfoForm form button.cancel-button {
       width: 100%;
       margin-left: 0;
       margin-top: 10px; /* Adding margin to separate buttons on small screens */
