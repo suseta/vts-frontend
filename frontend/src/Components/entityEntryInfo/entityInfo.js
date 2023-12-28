@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import './entityAssetInfo.css'
+import './entityInfo.css'
 import navLogo from '../../navLogo.jpg'
 
-const AssetCusEntityInfoForm = () => {
+const EntityEntryInfoForm = () => {
   const [assetInfoData, setAssetInfoData] = useState({
     s_fuel_typ: '',
     s_asset_typ: '',
@@ -56,14 +56,14 @@ const AssetCusEntityInfoForm = () => {
       <div class='navbar'>
         <div class='logo-container'>
           <img src={navLogo} alt='Logo' class='logo' />
-          <div class='brand-text'>NavitronicX</div>
+          <div className='brand-text'>NavitronicX</div>
         </div>
       </div>
       <div className='wrapper'>
         <div className='container'>
           <div className='container'>
             <h2>Asset Info Entry</h2>
-            <div className='AssetCusEntityInfoForm'>
+            <div className='EntityEntryInfoForm'>
               <form onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor='s_fuel_typ'>Fuel Type:</label>
@@ -107,7 +107,7 @@ const AssetCusEntityInfoForm = () => {
           </div>
           <div className='container'>
             <h2>Customer/Entity Entry</h2>
-            <div className='AssetCusEntityInfoForm'>
+            <div className='EntityEntryInfoForm'>
               <form onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor='cus_entity_id'>Customer/Entity Id:</label>
@@ -191,4 +191,4 @@ const AssetCusEntityInfoForm = () => {
   )
 }
 
-export default AssetCusEntityInfoForm
+export default EntityEntryInfoForm
