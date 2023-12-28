@@ -34,7 +34,7 @@ const EntityEntryInfoForm = () => {
     e.preventDefault()
     const postData = container === 1 ? cusEntityInfoData : subCusEntityInfoData
     const endpoint =
-      container === 1 ? 'AddCusEntityInfoData' : 'AddSubCusEntityInfoData'
+      container === 1 ? 'setCustomerEntityInfo' : 'setSubCustomerEntityInfo'
     fetch(`http://65.2.151.41:1410/api/v0/${endpoint}`, {
       method: 'POST',
       headers: {
