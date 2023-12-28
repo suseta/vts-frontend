@@ -16,7 +16,7 @@ const AssetEntryInfoForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    fetch('http://65.2.151.41:1410/api/v0/AddAssetData', {
+    fetch(`http://65.2.151.41:1410/api/v0/setAssetInfo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

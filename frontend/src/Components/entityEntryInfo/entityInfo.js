@@ -35,7 +35,7 @@ const EntityEntryInfoForm = () => {
     const postData = container === 1 ? cusEntityInfoData : subCusEntityInfoData
     const endpoint =
       container === 1 ? 'AddCusEntityInfoData' : 'AddSubCusEntityInfoData'
-    fetch('http://65.2.151.41:1410/api/v0/${endpoint}', {
+    fetch(`http://65.2.151.41:1410/api/v0/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
