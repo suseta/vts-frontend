@@ -36,7 +36,7 @@ const EntityCreationForm = () => {
 
   const [entityMap, setEntityMap] = useState([])
   useEffect(() => {
-    fetch('your_api_endpoint')
+    fetch('http://65.2.31.11:1410/api/v0/setEntityInfo')
       .then(response => response.json())
       .then(data => {
         setEntityMap(data)
