@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './entityCreation.css'
 import navLogo from '../../navLogo.jpg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 const EntityCreationForm = () => {
   const [entityRegDetails, setEntityRegDetails] = useState({
@@ -35,6 +37,11 @@ const EntityCreationForm = () => {
     s_fnd_rt: ''
   })
 
+  const [showPassword, setShowPassword] = useState(false)
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
+  }
+
   const [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
     fetch('http://65.2.31.11:1410/api/v0/getAllEntityNameList')
@@ -48,33 +55,70 @@ const EntityCreationForm = () => {
       })
   }, [])
 
-  const [stateList, setStateList] = useState([])
-  useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=IN')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setStateList(data)
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
-  }, [])
+  const [stateList, setStateList] = useState([{ state: [] }])
+  // useEffect(() => {
+  //   fetch('http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=IN')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       setStateList(data)
+  //     })
+  //     .catch(error => {
+  //       console.error('Error: ', error)
+  //     })
+  // }, [])
 
-  const [cityList, setCityList] = useState([])
+  const [stateLoading, setStateLoading] = useState(false)
   useEffect(() => {
-    fetch(
-      'http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=IN&s_entity_state=WB'
-    )
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setCityList(data)
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
-  }, [])
+    // Only fetch states if a country is selected
+    if (entityRegDetails.s_entity_country) {
+      setStateLoading(true)
+      fetch(
+        `http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          setStateList(data)
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
+        .finally(() => {
+          setStateLoading(false)
+        })
+    }
+  }, [entityRegDetails.s_entity_country])
+
+  // const [cityList, setCityList] = useState([])
+  // useEffect(() => {
+  //   fetch(
+  //     'http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=IN&s_entity_state=WB'
+  //   )
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       setCityList(data)
+  //     })
+  //     .catch(error => {
+  //       console.error('Error: ', error)
+  //     })
+  // }, [])
+  const [cityList, setCityList] = useState([{ city: [] }])
+  useEffect(() => {
+    if (entityRegDetails.s_entity_state) {
+      const url = `http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log('City: ', data)
+          setCityList(data.city || [])
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
+    }
+  }, [entityRegDetails.s_entity_state, entityRegDetails.s_entity_country])
 
   const [sapCodes, setSapCodes] = useState([])
   useEffect(() => {
@@ -152,7 +196,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_prnt_entity'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_prnt_entity ? 'required' : ''
                   }`}
                 >
                   Parent Entity Name:
@@ -188,7 +232,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_typ'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_typ ? 'required' : ''
                   }`}
                 >
                   Entity Type:
@@ -212,7 +256,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_grp'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_grp ? 'required' : ''
                   }`}
                 >
                   Entity Group:
@@ -224,18 +268,18 @@ const EntityCreationForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  <option value='Active'>Attendance</option>
-                  <option value='Inactive'>Card</option>
-                  <option value='Inactive'>GPS</option>
-                  <option value='Inactive'>Fuel Sensor</option>
-                  <option value='Inactive'>Both</option>
+                  <option value='ATD'>Attendance</option>
+                  <option value='C'>Card</option>
+                  <option value='GPS'>GPS</option>
+                  <option value='FS'>Fuel Sensor</option>
+                  <option value='B'>Both</option>
                 </select>
               </div>
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_mail'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_mail ? 'required' : ''
                   }`}
                 >
                   Approached By (Mail Id):
@@ -252,7 +296,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_id'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_id ? 'required' : ''
                   }`}
                 >
                   Entity/User Id:
@@ -269,24 +313,37 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_pass'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_pass ? 'required' : ''
                   }`}
                 >
                   Password:
                 </label>
                 <input
-                  type='text'
+                  type={showPassword ? 'text' : 'password'}
                   id='s_entity_pass'
                   name='s_entity_pass'
                   value={entityRegDetails.s_entity_pass}
                   onChange={handleChange}
                 />
+                <button
+                  type='button'
+                  onClick={togglePassword}
+                  style={{
+                    marginLeft: '1px',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: showPassword ? 'green' : 'grey'
+                  }}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                </button>
               </div>
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_mb_no'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_mb_no ? 'required' : ''
                   }`}
                 >
                   Contact No.:
@@ -303,7 +360,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_add'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_add ? 'required' : ''
                   }`}
                 >
                   Address:
@@ -320,7 +377,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_pin'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_pin ? 'required' : ''
                   }`}
                 >
                   Pincode:
@@ -365,30 +422,67 @@ const EntityCreationForm = () => {
                 >
                   State:
                 </label>
+                {stateLoading ? (
+                  <p>Loading states...</p>
+                ) : (
+                  <select
+                    className='form-select'
+                    id='s_entity_state'
+                    name='s_entity_state'
+                    required
+                    value={entityRegDetails.s_entity_state}
+                    onChange={handleChange}
+                  >
+                    <option value=''>Select</option>
+                    {stateList && Array.isArray(stateList.state) ? (
+                      stateList.state.map(state => (
+                        <option key={state} value={state}>
+                          {state}
+                        </option>
+                      ))
+                    ) : (
+                      <option value=''>
+                        {stateList && stateList.message
+                          ? stateList.message
+                          : 'No states available'}
+                      </option>
+                    )}
+                  </select>
+                )}
+              </div>
+              {/*  <div className='form-group'>
+                <label
+                  htmlFor='s_entity_city'
+                  className={`required-label ${
+                    entityRegDetails.s_entity_city ? 'required' : ''
+                  }`}
+                >
+                  City:
+                </label>
                 <select
                   className='form-select'
-                  id='s_entity_state'
-                  name='s_entity_state'
+                  id='s_entity_city'
+                  name='s_entity_city'
                   required
-                  value={entityRegDetails.s_entity_state}
+                  value={entityRegDetails.s_entity_city}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {stateList && Array.isArray(stateList.state) ? (
-                    stateList.state.map(state => (
-                      <option key={state} value={state}>
-                        {state}
+                  {cityList && Array.isArray(cityList.city) ? (
+                    cityList.city.map(city => (
+                      <option key={city} value={city}>
+                        {city}
                       </option>
                     ))
                   ) : (
                     <option value=''>
-                      {stateList && stateList.message
-                        ? stateList.message
-                        : 'No states available'}
+                      {cityList && cityList.message
+                        ? cityList.message
+                        : 'No cities available'}
                     </option>
                   )}
                 </select>
-              </div>
+                      </div>*/}
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_city'
@@ -422,6 +516,7 @@ const EntityCreationForm = () => {
                   )}
                 </select>
               </div>
+
               <div className='form-group'>
                 <label htmlFor='b_is_billing'>Billing:</label>
                 <input
@@ -448,7 +543,7 @@ const EntityCreationForm = () => {
                     <label
                       htmlFor='s_billing_name'
                       className={`required-label ${
-                        entityRegDetails.s_entity_name ? 'required' : ''
+                        entityRegDetails.s_billing_name ? 'required' : ''
                       }`}
                     >
                       Billing Name:
@@ -509,7 +604,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_msr_unit'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_msr_unit ? 'required' : ''
                   }`}
                 >
                   Measurement Unit:
@@ -592,7 +687,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='i_ovr_spd_lmt'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.i_ovr_spd_lmt ? 'required' : ''
                   }`}
                 >
                   Overspeed Limit:
