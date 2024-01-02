@@ -50,9 +50,10 @@ const EntityCreationForm = () => {
 
   const [stateList, setStateList] = useState([])
   useEffect(() => {
-    fetch('your_api_endpoint')
+    fetch('http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=IN')
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         setStateList(data)
       })
       .catch(error => {
@@ -60,13 +61,15 @@ const EntityCreationForm = () => {
       })
   }, [])
 
-  const [stateCityList, setStateCityList] = useState([])
+  const [cityList, setCityList] = useState([])
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAllStateAndCity')
+    fetch(
+      'http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=IN&s_entity_state=WB'
+    )
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        setStateCityList(data)
+        setCityList(data)
       })
       .catch(error => {
         console.error('Error: ', error)
@@ -349,7 +352,6 @@ const EntityCreationForm = () => {
                   <option value=''>Select</option>
                   <option value='BT'>Bhutan</option>
                   <option value='CN'>China</option>
-                  <option value='UAE'>Dubai</option>
                   <option value='IN'>India</option>
                   <option value='NP'>Nepal</option>
                 </select>
@@ -372,19 +374,16 @@ const EntityCreationForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {stateCityList && Array.isArray(stateCityList.state) ? (
-                    stateCityList.state.map(state => (
-                      <option
-                        key={state.s_entity_state}
-                        value={state.s_entity_state}
-                      >
-                        {state.s_entity_state}
+                  {stateList && Array.isArray(stateList.state) ? (
+                    stateList.state.map(state => (
+                      <option key={state} value={state}>
+                        {state}
                       </option>
                     ))
                   ) : (
                     <option value=''>
-                      {stateCityList && stateCityList.message
-                        ? stateCityList.message
+                      {stateList && stateList.message
+                        ? stateList.message
                         : 'No states available'}
                     </option>
                   )}
@@ -394,7 +393,7 @@ const EntityCreationForm = () => {
                 <label
                   htmlFor='s_entity_city'
                   className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
+                    entityRegDetails.s_entity_city ? 'required' : ''
                   }`}
                 >
                   City:
@@ -408,19 +407,16 @@ const EntityCreationForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {stateCityList && Array.isArray(stateCityList.city) ? (
-                    stateCityList.state.map(city => (
-                      <option
-                        key={city.s_entity_city}
-                        value={city.s_entity_city}
-                      >
-                        {city.s_entity_city}
+                  {cityList && Array.isArray(cityList.city) ? (
+                    cityList.city.map(city => (
+                      <option key={city} value={city}>
+                        {city}
                       </option>
                     ))
                   ) : (
                     <option value=''>
-                      {stateCityList && stateCityList.message
-                        ? stateCityList.message
+                      {cityList && cityList.message
+                        ? cityList.message
                         : 'No cities available'}
                     </option>
                   )}
