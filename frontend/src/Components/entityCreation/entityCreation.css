@@ -155,6 +155,7 @@
     border: none; 
     border-bottom: 0.5px solid #020547; 
     outline: none;
+    background-color: #f2f2f2;
   }
   
   .EntityCreationForm form div.full-width {

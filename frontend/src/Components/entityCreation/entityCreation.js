@@ -16,7 +16,7 @@ const EntityCreationForm = () => {
     s_entity_pin: '',
     s_entity_state: '',
     s_entity_city: '',
-    b_is_billing: '',
+    b_is_billing: false,
     s_billing_name: '',
     s_billing_typ: '',
     s_billing_md: '',
@@ -29,20 +29,21 @@ const EntityCreationForm = () => {
     s_mb_actv: '',
     i_ovr_spd_lmt: '',
     s_rep_wp: '',
-    s_frc_entity: '',
-    b_is_fnd: '',
+    s_frc_entity_map: '',
+    b_is_fnd: false,
     s_fnd_rt: ''
   })
 
-  const [entityMap, setEntityMap] = useState([])
+  const [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/setEntityInfo')
+    fetch('http://65.2.31.11:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        setEntityMap(data)
+        console.log(data)
+        setEntityMap({ data })
       })
       .catch(error => {
-        console.error('Error fetching options:', error)
+        console.error('Error: ', error)
       })
   }, [])
 
@@ -54,7 +55,7 @@ const EntityCreationForm = () => {
         setStateList(data)
       })
       .catch(error => {
-        console.error('Error fetching options:', error)
+        console.error('Error: ', error)
       })
   }, [])
 
@@ -66,7 +67,7 @@ const EntityCreationForm = () => {
         setCityList(data)
       })
       .catch(error => {
-        console.error('Error fetching options:', error)
+        console.error('Error: ', error)
       })
   }, [])
 
@@ -78,18 +79,21 @@ const EntityCreationForm = () => {
         setSapCodes(data)
       })
       .catch(error => {
-        console.error('Error fetching options:', error)
+        console.error('Error: ', error)
       })
   }, [])
 
   const handleChange = e => {
-    const { name, value } = e.target
-    setEntityRegDetails(prevData => ({ ...prevData, [name]: value }))
+    const { name, value, type, checked } = e.target
+    setEntityRegDetails(prevData => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value
+    }))
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    fetch('http://65.2.151.41:1410/api/v0/addEntity', {
+    fetch('http://65.2.31.11:1410/api/v0/setEntityInfo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -139,7 +143,6 @@ const EntityCreationForm = () => {
                   onChange={handleChange}
                 />
               </div>
-
               <div className='form-group'>
                 <label
                   htmlFor='s_prnt_entity'
@@ -158,11 +161,22 @@ const EntityCreationForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {entityMap.map(option => (
-                    <option key={option} value={option}>
-                      {option}
+                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
+                    entityMap.data.data.map(entity => (
+                      <option
+                        key={entity.s_entity_name}
+                        value={entity.s_entity_name}
+                      >
+                        {entity.s_entity_name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {entityMap.data && entityMap.data.message
+                        ? entityMap.data.message
+                        : 'No entities available'}
                     </option>
-                  ))}
+                  )}
                 </select>
               </div>
               <div className='form-group'>
@@ -317,9 +331,9 @@ const EntityCreationForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_state'
-                  className={`required-label ${
+                  /*className={`required-label ${
                     entityRegDetails.s_entity_name ? 'required' : ''
-                  }`}
+                  }`}*/
                 >
                   State:
                 </label>
@@ -327,7 +341,7 @@ const EntityCreationForm = () => {
                   className='form-select'
                   id='s_entity_state'
                   name='s_entity_state'
-                  required
+                  /*required*/
                   value={entityRegDetails.s_entity_state}
                   onChange={handleChange}
                 >
@@ -342,9 +356,9 @@ const EntityCreationForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_city'
-                  className={`required-label ${
+                  /*className={`required-label ${
                     entityRegDetails.s_entity_name ? 'required' : ''
-                  }`}
+                  }`}*/
                 >
                   City:
                 </label>
@@ -352,7 +366,7 @@ const EntityCreationForm = () => {
                   className='form-select'
                   id='s_entity_city'
                   name='s_entity_city'
-                  required
+                  /*required*/
                   value={entityRegDetails.s_entity_city}
                   onChange={handleChange}
                 >
@@ -483,7 +497,6 @@ const EntityCreationForm = () => {
                   className='form-select'
                   id='s_sap_code'
                   name='s_sap_code'
-                  required
                   value={entityRegDetails.s_sap_code}
                   onChange={handleChange}
                 >
@@ -549,39 +562,59 @@ const EntityCreationForm = () => {
                 />
               </div>
               <div className='form-group'>
-                <label htmlFor='s_prnt_entity'>Replicate Waypoint:</label>
+                <label htmlFor='s_rep_wp'>Replicate Waypoint:</label>
                 <select
                   className='form-select'
-                  id='s_prnt_entity'
-                  name='s_prnt_entity'
-                  required
-                  value={entityRegDetails.s_prnt_entity}
+                  id='s_rep_wp'
+                  name='s_rep_wp'
+                  value={entityRegDetails.s_rep_wp}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {entityMap.map(option => (
-                    <option key={option} value={option}>
-                      {option}
+                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
+                    entityMap.data.data.map(entity => (
+                      <option
+                        key={entity.s_entity_name}
+                        value={entity.s_entity_name}
+                      >
+                        {entity.s_entity_name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {entityMap.data && entityMap.data.message
+                        ? entityMap.data.message
+                        : 'No entities available'}
                     </option>
-                  ))}
+                  )}
                 </select>
               </div>
               <div className='form-group'>
-                <label htmlFor='s_prnt_entity'>Force Entity Map:</label>
+                <label htmlFor='s_frc_entity_map'>Force Entity Map:</label>
                 <select
                   className='form-select'
-                  id='s_prnt_entity'
-                  name='s_prnt_entity'
-                  required
-                  value={entityRegDetails.s_prnt_entity}
+                  id='s_frc_entity_map'
+                  name='s_frc_entity_map'
+                  value={entityRegDetails.s_frc_entity_map}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {entityMap.map(option => (
-                    <option key={option} value={option}>
-                      {option}
+                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
+                    entityMap.data.data.map(entity => (
+                      <option
+                        key={entity.s_entity_name}
+                        value={entity.s_entity_name}
+                      >
+                        {entity.s_entity_name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {entityMap.data && entityMap.data.message
+                        ? entityMap.data.message
+                        : 'No entities available'}
                     </option>
-                  ))}
+                  )}
                 </select>
               </div>
               <div className='form-group'>
