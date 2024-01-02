@@ -14,6 +14,7 @@ const EntityCreationForm = () => {
     s_entity_mb_no: '',
     s_entity_add: '',
     s_entity_pin: '',
+    s_entity_country: '',
     s_entity_state: '',
     s_entity_city: '',
     b_is_billing: false,
@@ -59,12 +60,13 @@ const EntityCreationForm = () => {
       })
   }, [])
 
-  const [cityList, setCityList] = useState([])
+  const [stateCityList, setStateCityList] = useState([])
   useEffect(() => {
-    fetch('your_api_endpoint')
+    fetch('http://65.2.31.11:1410/api/v0/getAllStateAndCity')
       .then(response => response.json())
       .then(data => {
-        setCityList(data)
+        console.log(data)
+        setStateCityList(data)
       })
       .catch(error => {
         console.error('Error: ', error)
@@ -73,7 +75,7 @@ const EntityCreationForm = () => {
 
   const [sapCodes, setSapCodes] = useState([])
   useEffect(() => {
-    fetch('your_api_endpoint')
+    fetch('api')
       .then(response => response.json())
       .then(data => {
         setSapCodes(data)
@@ -330,10 +332,34 @@ const EntityCreationForm = () => {
               </div>
               <div className='form-group'>
                 <label
+                  htmlFor='s_entity_country'
+                  className={`required-label ${
+                    entityRegDetails.s_entity_country ? 'required' : ''
+                  }`}
+                >
+                  Country:
+                </label>
+                <select
+                  id='s_entity_country'
+                  name='s_entity_country'
+                  required
+                  value={entityRegDetails.s_entity_country}
+                  onChange={handleChange}
+                >
+                  <option value=''>Select</option>
+                  <option value='BT'>Bhutan</option>
+                  <option value='CN'>China</option>
+                  <option value='UAE'>Dubai</option>
+                  <option value='IN'>India</option>
+                  <option value='NP'>Nepal</option>
+                </select>
+              </div>
+              <div className='form-group'>
+                <label
                   htmlFor='s_entity_state'
-                  /*className={`required-label ${
-                    entityRegDetails.s_entity_name ? 'required' : ''
-                  }`}*/
+                  className={`required-label ${
+                    entityRegDetails.s_entity_state ? 'required' : ''
+                  }`}
                 >
                   State:
                 </label>
@@ -341,24 +367,35 @@ const EntityCreationForm = () => {
                   className='form-select'
                   id='s_entity_state'
                   name='s_entity_state'
-                  /*required*/
+                  required
                   value={entityRegDetails.s_entity_state}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {stateList.map(option => (
-                    <option key={option} value={option}>
-                      {option}
+                  {stateCityList && Array.isArray(stateCityList.state) ? (
+                    stateCityList.state.map(state => (
+                      <option
+                        key={state.s_entity_state}
+                        value={state.s_entity_state}
+                      >
+                        {state.s_entity_state}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {stateCityList && stateCityList.message
+                        ? stateCityList.message
+                        : 'No states available'}
                     </option>
-                  ))}
+                  )}
                 </select>
               </div>
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_city'
-                  /*className={`required-label ${
+                  className={`required-label ${
                     entityRegDetails.s_entity_name ? 'required' : ''
-                  }`}*/
+                  }`}
                 >
                   City:
                 </label>
@@ -366,16 +403,27 @@ const EntityCreationForm = () => {
                   className='form-select'
                   id='s_entity_city'
                   name='s_entity_city'
-                  /*required*/
+                  required
                   value={entityRegDetails.s_entity_city}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  {cityList.map(option => (
-                    <option key={option} value={option}>
-                      {option}
+                  {stateCityList && Array.isArray(stateCityList.city) ? (
+                    stateCityList.state.map(city => (
+                      <option
+                        key={city.s_entity_city}
+                        value={city.s_entity_city}
+                      >
+                        {city.s_entity_city}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {stateCityList && stateCityList.message
+                        ? stateCityList.message
+                        : 'No cities available'}
                     </option>
-                  ))}
+                  )}
                 </select>
               </div>
               <div className='form-group'>
