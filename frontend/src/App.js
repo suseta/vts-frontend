@@ -1,11 +1,11 @@
 // src/App.js
 import React from 'react'
+import AssetRegistrationForm from './Components/assetRegistration/assetRegistration'
 // import VendorCreationForm from './Components/vendorCreation/vendorCreation'
 // import DeviceDetailsEntryForm from './Components/deviceDetails/deviceDetails'
 // import PlantLocEntryInfoForm from './Components/plantLocationEntryInfo/plantLocInfo'
-// import AssetRegistrationForm from './Components/assetDetails/assetRegistration'
 // import AssetInfoForm from './Components/entityAssetInfo/entityAssetInfo'
-import EntityCreationForm from './Components/entityCreation/entityCreation'
+// import EntityCreationForm from './Components/entityCreation/entityCreation'
 // import AssetEntryInfoForm from './Components/assetEntryInfo/assetInfo'
 // import ConsigneeEntryInfoForm from './Components/consigneeEntryInfo/consigneeInfo'
 // import ConsignorEntryInfoForm from './Components/consignorEntryInfo copy/consignorInfo'
@@ -13,8 +13,8 @@ import EntityCreationForm from './Components/entityCreation/entityCreation'
 function App () {
   return (
     <div className='App'>
-      {/*<AssetRegistrationForm/>*/}
-      <EntityCreationForm />
+      <AssetRegistrationForm />
+      {/*<EntityCreationForm />*/}
       {/*<DriverEntryForm/>*/}
       {/*<AssetEntryInfoForm/>*/}
       {/*<ConsigneeEntryInfoForm/>*/}
