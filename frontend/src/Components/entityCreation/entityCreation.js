@@ -23,14 +23,14 @@ const EntityCreationForm = () => {
     s_billing_name: '',
     s_billing_typ: '',
     s_billing_md: '',
-    s_billing_svr_chrg: '',
+    s_billing_svr_chrg: 0,
     s_msr_unit: '',
     s_gst_no: '',
     s_sap_code: '',
     s_pan_no: '',
     s_svr_typ: '',
     s_mb_actv: '',
-    i_ovr_spd_lmt: '',
+    i_ovr_spd_lmt: 0,
     s_rep_wp: '',
     s_frc_entity_map: '',
     b_is_fnd: false,
@@ -47,7 +47,6 @@ const EntityCreationForm = () => {
     fetch('http://65.2.31.11:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         setEntityMap({ data })
       })
       .catch(error => {
@@ -56,21 +55,8 @@ const EntityCreationForm = () => {
   }, [])
 
   const [stateList, setStateList] = useState([{ state: [] }])
-  // useEffect(() => {
-  //   fetch('http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=IN')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       setStateList(data)
-  //     })
-  //     .catch(error => {
-  //       console.error('Error: ', error)
-  //     })
-  // }, [])
-
   const [stateLoading, setStateLoading] = useState(false)
   useEffect(() => {
-    // Only fetch states if a country is selected
     if (entityRegDetails.s_entity_country) {
       setStateLoading(true)
       fetch(
@@ -78,7 +64,6 @@ const EntityCreationForm = () => {
       )
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           setStateList(data)
         })
         .catch(error => {
@@ -90,20 +75,6 @@ const EntityCreationForm = () => {
     }
   }, [entityRegDetails.s_entity_country])
 
-  // const [cityList, setCityList] = useState([])
-  // useEffect(() => {
-  //   fetch(
-  //     'http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=IN&s_entity_state=WB'
-  //   )
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       setCityList(data)
-  //     })
-  //     .catch(error => {
-  //       console.error('Error: ', error)
-  //     })
-  // }, [])
   const [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (entityRegDetails.s_entity_state) {
@@ -111,7 +82,6 @@ const EntityCreationForm = () => {
       fetch(url)
         .then(response => response.json())
         .then(data => {
-          console.log('City: ', data)
           setCityList(data.city || [])
         })
         .catch(error => {
@@ -151,14 +121,14 @@ const EntityCreationForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Entity Registration Form:', data)
-        alert('Entity registration done successfully!')
+        console.log('Success in Entity Creation Form:', data)
+        alert('Entity created successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Entity registration form submitted:', entityRegDetails)
+    console.log('Entity creation form submitted:', entityRegDetails)
   }
 
   return (
@@ -450,39 +420,6 @@ const EntityCreationForm = () => {
                   </select>
                 )}
               </div>
-              {/*  <div className='form-group'>
-                <label
-                  htmlFor='s_entity_city'
-                  className={`required-label ${
-                    entityRegDetails.s_entity_city ? 'required' : ''
-                  }`}
-                >
-                  City:
-                </label>
-                <select
-                  className='form-select'
-                  id='s_entity_city'
-                  name='s_entity_city'
-                  required
-                  value={entityRegDetails.s_entity_city}
-                  onChange={handleChange}
-                >
-                  <option value=''>Select</option>
-                  {cityList && Array.isArray(cityList.city) ? (
-                    cityList.city.map(city => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))
-                  ) : (
-                    <option value=''>
-                      {cityList && cityList.message
-                        ? cityList.message
-                        : 'No cities available'}
-                    </option>
-                  )}
-                </select>
-                      </div>*/}
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_city'
@@ -516,7 +453,6 @@ const EntityCreationForm = () => {
                   )}
                 </select>
               </div>
-
               <div className='form-group'>
                 <label htmlFor='b_is_billing'>Billing:</label>
                 <input
