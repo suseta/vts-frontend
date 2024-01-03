@@ -13,12 +13,14 @@ const EntityCreationForm = () => {
     s_entity_grp: '',
     s_entity_mail: '',
     s_entity_pass: '',
+    s_entity_cnf_pass: '',
     s_entity_mb_no: '',
     s_entity_add: '',
     s_entity_pin: '',
     s_entity_country: '',
     s_entity_state: '',
     s_entity_city: '',
+    entity_tmz: '',
     b_is_billing: false,
     s_billing_name: '',
     s_billing_typ: '',
@@ -30,7 +32,7 @@ const EntityCreationForm = () => {
     s_pan_no: '',
     s_svr_typ: '',
     s_mb_actv: '',
-    i_ovr_spd_lmt: 0,
+    i_ovr_spd_lmt: 50,
     s_rep_wp: '',
     s_frc_entity_map: '',
     b_is_fnd: false,
@@ -40,6 +42,11 @@ const EntityCreationForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const togglePassword = () => {
     setShowPassword(!showPassword)
+  }
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const toggleConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword)
   }
 
   const [entityMap, setEntityMap] = useState({ data: [] })
@@ -311,6 +318,39 @@ const EntityCreationForm = () => {
               </div>
               <div className='form-group'>
                 <label
+                  htmlFor='s_entity_cnf_pass'
+                  className={`required-label ${
+                    entityRegDetails.s_entity_cnf_pass ? 'required' : ''
+                  }`}
+                >
+                  Confirm Password:
+                </label>
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id='s_entity_cnf_pass'
+                  name='s_entity_cnf_pass'
+                  required
+                  value={entityRegDetails.s_entity_cnf_pass}
+                  onChange={handleChange}
+                />
+                <button
+                  type='button'
+                  onClick={toggleConfirmPassword}
+                  style={{
+                    marginLeft: '1px',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: showConfirmPassword ? 'green' : 'grey'
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={showConfirmPassword ? faEye : faEyeSlash}
+                  />
+                </button>
+              </div>
+              <div className='form-group'>
+                <label
                   htmlFor='s_entity_mb_no'
                   className={`required-label ${
                     entityRegDetails.s_entity_mb_no ? 'required' : ''
@@ -452,6 +492,24 @@ const EntityCreationForm = () => {
                     </option>
                   )}
                 </select>
+              </div>
+              <div className='form-group'>
+                <label
+                  htmlFor='entity_tmz'
+                  className={`required-label ${
+                    entityRegDetails.entity_tmz ? 'required' : ''
+                  }`}
+                >
+                  Timezone:
+                </label>
+                <input
+                  type='text'
+                  id='entity_tmz'
+                  name='entity_tmz'
+                  required
+                  value={entityRegDetails.entity_tmz}
+                  onChange={handleChange}
+                />
               </div>
               <div className='form-group'>
                 <label htmlFor='b_is_billing'>Billing:</label>
