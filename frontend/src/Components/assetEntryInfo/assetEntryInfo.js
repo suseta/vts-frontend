@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import './assetInfo.css'
+import './assetEntryInfo.css'
 import navLogo from '../../navLogo.jpg'
 
 const AssetEntryInfoForm = () => {
   const [assetData, setAssetData] = useState({
-    s_fuel_typ: '',
     s_asset_typ: '',
     s_asset_cap: ''
   })
@@ -44,21 +43,10 @@ const AssetEntryInfoForm = () => {
       </div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>Asset Info Entry</h2>
-          <div className='EntityEntryInfoForm'>
+          <h2>Asset Info Entry (Information Insert For Dropdown)</h2>
+          <div className='AssetEntryInfoForm'>
             <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor='s_fuel_typ'>Fuel Type:</label>
-                <input
-                  type='text'
-                  id='s_fuel_typ'
-                  name='s_fuel_typ'
-                  required
-                  value={assetData.s_fuel_typ}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
+              <div className='form-group'>
                 <label htmlFor='s_asset_typ'>Asset Type:</label>
                 <input
                   type='text'
@@ -68,7 +56,7 @@ const AssetEntryInfoForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div>
+              <div className='form-group'>
                 <label htmlFor='s_asset_cap'>Asset Capacity:</label>
                 <input
                   type='text'
