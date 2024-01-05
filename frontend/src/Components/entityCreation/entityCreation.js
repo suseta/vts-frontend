@@ -51,7 +51,7 @@ const EntityCreationForm = () => {
 
   const [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -67,7 +67,7 @@ const EntityCreationForm = () => {
     if (entityRegDetails.s_entity_country) {
       setStateLoading(true)
       fetch(
-        `http://65.2.31.11:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
+        `http://13.127.103.103:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
       )
         .then(response => response.json())
         .then(data => {
@@ -85,7 +85,7 @@ const EntityCreationForm = () => {
   const [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (entityRegDetails.s_entity_state) {
-      const url = `http://65.2.31.11:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
+      const url = `http://13.127.103.103:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -109,8 +109,14 @@ const EntityCreationForm = () => {
       })
   }, [])
 
+  const [passwordMatch, setPasswordMatch] = useState(true)
+
   const handleChange = e => {
     const { name, value, type, checked } = e.target
+    if (name === 's_entity_cnf_pass') {
+      const match = value === entityRegDetails.s_entity_pass
+      setPasswordMatch(match)
+    }
     setEntityRegDetails(prevData => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value
@@ -119,7 +125,7 @@ const EntityCreationForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    fetch('http://65.2.31.11:1410/api/v0/setEntityInfo', {
+    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -348,6 +354,12 @@ const EntityCreationForm = () => {
                     icon={showConfirmPassword ? faEye : faEyeSlash}
                   />
                 </button>
+                {passwordMatch && entityRegDetails.s_entity_cnf_pass && (
+                  <p className='success-message'>Password matched!</p>
+                )}
+                {!passwordMatch && (
+                  <p className='error-message'>Password didn't match!</p>
+                )}
               </div>
               <div className='form-group'>
                 <label
