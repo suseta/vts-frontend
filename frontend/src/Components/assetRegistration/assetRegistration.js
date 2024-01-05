@@ -7,8 +7,8 @@ const AssetRegistrationForm = () => {
     s_asset_id: '',
     s_asset_mk: '',
     s_asset_mdl: '',
-    s_entity_name: '',
-    s_vndr_name: '',
+    s_entity_id_and_name: '',
+    s_trans_name: '',
     s_fuel_typ: '',
     s_asset_cap: '',
     s_asset_typ: '',
@@ -46,7 +46,7 @@ const AssetRegistrationForm = () => {
 
   const [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -58,7 +58,7 @@ const AssetRegistrationForm = () => {
 
   const [transporter, setTransporter] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAllTransporterName')
+    fetch('http://13.127.103.103:1410/api/v0/getAllTransporterName')
       .then(response => response.json())
       .then(data => {
         setTransporter({ data })
@@ -70,7 +70,7 @@ const AssetRegistrationForm = () => {
 
   const [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAssetType')
+    fetch('http://13.127.103.103:1410/api/v0/getAssetType')
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -82,7 +82,7 @@ const AssetRegistrationForm = () => {
 
   const [assetCapacity, setAssetCapacity] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://65.2.31.11:1410/api/v0/getAssetCapacity')
+    fetch('http://13.127.103.103:1410/api/v0/getAssetCapacity')
       .then(response => response.json())
       .then(data => {
         setAssetCapacity({ data })
@@ -102,7 +102,7 @@ const AssetRegistrationForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    fetch('http://65.2.31.11:1410/api/v0/setEntityInfo', {
+    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -136,26 +136,26 @@ const AssetRegistrationForm = () => {
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
-                  htmlFor='s_entity_name'
+                  htmlFor='s_entity_id_and_name'
                   className={`required-label ${
-                    assetRegDetails.s_entity_name ? 'required' : ''
+                    assetRegDetails.s_entity_id_and_name ? 'required' : ''
                   }`}
                 >
                   Entity:
                 </label>
                 <select
                   className='form-select'
-                  id='s_entity_name'
-                  name='s_entity_name'
+                  id='s_entity_id_and_name'
+                  name='s_entity_id_and_name'
                   required
-                  value={assetRegDetails.s_entity_name}
+                  value={assetRegDetails.s_entity_id_and_name}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
                   {entityMap.data && Array.isArray(entityMap.data.data) ? (
                     entityMap.data.data.map(entity => (
                       <option
-                        key={entity.s_entity_name}
+                        key={entity.s_entity_id}
                         value={entity.s_entity_name}
                       >
                         {entity.s_entity_name}
@@ -171,23 +171,23 @@ const AssetRegistrationForm = () => {
                 </select>
               </div>
               <div className='form-group'>
-                <label htmlFor='s_vndr_name'>Associated Transporter:</label>
+                <label htmlFor='s_trans_name'>Associated Transporter:</label>
                 <select
                   className='form-select'
-                  id='s_vndr_name'
-                  name='s_vndr_name'
+                  id='s_trans_name'
+                  name='s_trans_name'
                   required
-                  value={assetRegDetails.s_vndr_name}
+                  value={assetRegDetails.s_trans_name}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
                   {transporter.data && Array.isArray(transporter.data.data) ? (
                     transporter.data.data.map(entity => (
                       <option
-                        key={entity.s_vndr_name}
-                        value={entity.s_vndr_name}
+                        key={entity.s_trans_name}
+                        value={entity.s_trans_name}
                       >
-                        {entity.s_vndr_name}
+                        {entity.s_trans_name}
                       </option>
                     ))
                   ) : (
