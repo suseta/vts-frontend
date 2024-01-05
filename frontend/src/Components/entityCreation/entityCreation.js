@@ -4,8 +4,8 @@ import navLogo from '../../navLogo.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-const EntityCreationForm = () => {
-  const [entityRegDetails, setEntityRegDetails] = useState({
+let EntityCreationForm = () => {
+  let [entityRegDetails, setEntityRegDetails] = useState({
     s_entity_id: '',
     s_entity_name: '',
     s_prnt_entity: '',
@@ -39,17 +39,29 @@ const EntityCreationForm = () => {
     s_fnd_rt: ''
   })
 
-  const [showPassword, setShowPassword] = useState(false)
-  const togglePassword = () => {
+  let [timezone, setTimezone] = useState({ data: [] })
+  useEffect(() => {
+    fetch('http://13.127.103.103:1410/api/v0/timezones')
+      .then(response => response.json())
+      .then(data => {
+        setTimezone({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
+  let [showPassword, setShowPassword] = useState(false)
+  let togglePassword = () => {
     setShowPassword(!showPassword)
   }
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const toggleConfirmPassword = () => {
+  let [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  let toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
 
-  const [entityMap, setEntityMap] = useState({ data: [] })
+  let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
@@ -61,11 +73,10 @@ const EntityCreationForm = () => {
       })
   }, [])
 
-  const [stateList, setStateList] = useState([{ state: [] }])
-  const [stateLoading, setStateLoading] = useState(false)
+  let [stateList, setStateList] = useState([{ state: [] }])
+
   useEffect(() => {
     if (entityRegDetails.s_entity_country) {
-      setStateLoading(true)
       fetch(
         `http://13.127.103.103:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
       )
@@ -76,20 +87,18 @@ const EntityCreationForm = () => {
         .catch(error => {
           console.error('Error: ', error)
         })
-        .finally(() => {
-          setStateLoading(false)
-        })
     }
   }, [entityRegDetails.s_entity_country])
 
-  const [cityList, setCityList] = useState([{ city: [] }])
+  let [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (entityRegDetails.s_entity_state) {
-      const url = `http://13.127.103.103:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
+      let url = `http://13.127.103.103:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
-          setCityList(data.city || [])
+          console.log(data)
+          setCityList(data)
         })
         .catch(error => {
           console.error('Error: ', error)
@@ -97,7 +106,7 @@ const EntityCreationForm = () => {
     }
   }, [entityRegDetails.s_entity_state, entityRegDetails.s_entity_country])
 
-  const [sapCodes, setSapCodes] = useState([])
+  let [sapCodes, setSapCodes] = useState([])
   useEffect(() => {
     fetch('api')
       .then(response => response.json())
@@ -109,12 +118,12 @@ const EntityCreationForm = () => {
       })
   }, [])
 
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  let [passwordMatch, setPasswordMatch] = useState(true)
 
-  const handleChange = e => {
-    const { name, value, type, checked } = e.target
+  let handleChange = e => {
+    let { name, value, type, checked } = e.target
     if (name === 's_entity_cnf_pass') {
-      const match = value === entityRegDetails.s_entity_pass
+      let match = value === entityRegDetails.s_entity_pass
       setPasswordMatch(match)
     }
     setEntityRegDetails(prevData => ({
@@ -123,7 +132,7 @@ const EntityCreationForm = () => {
     }))
   }
 
-  const handleSubmit = e => {
+  let handleSubmit = e => {
     e.preventDefault()
     fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
       method: 'POST',
@@ -444,34 +453,31 @@ const EntityCreationForm = () => {
                 >
                   State:
                 </label>
-                {stateLoading ? (
-                  <p>Loading states...</p>
-                ) : (
-                  <select
-                    className='form-select'
-                    id='s_entity_state'
-                    name='s_entity_state'
-                    required
-                    value={entityRegDetails.s_entity_state}
-                    onChange={handleChange}
-                  >
-                    <option value=''>Select</option>
-                    {stateList && Array.isArray(stateList.state) ? (
-                      stateList.state.map(state => (
-                        <option key={state} value={state}>
-                          {state}
-                        </option>
-                      ))
-                    ) : (
-                      <option value=''>
-                        {stateList && stateList.message
-                          ? stateList.message
-                          : 'No states available'}
+                <select
+                  className='form-select'
+                  id='s_entity_state'
+                  name='s_entity_state'
+                  required
+                  value={entityRegDetails.s_entity_state}
+                  onChange={handleChange}
+                >
+                  <option value=''>Select</option>
+                  {stateList && Array.isArray(stateList.state) ? (
+                    stateList.state.map(state => (
+                      <option key={state} value={state}>
+                        {state}
                       </option>
-                    )}
-                  </select>
-                )}
+                    ))
+                  ) : (
+                    <option value=''>
+                      {stateList && stateList.message
+                        ? stateList.message
+                        : 'No states available'}
+                    </option>
+                  )}
+                </select>
               </div>
+
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_city'
@@ -514,14 +520,29 @@ const EntityCreationForm = () => {
                 >
                   Timezone:
                 </label>
-                <input
-                  type='text'
+                <select
+                  className='form-select'
                   id='entity_tmz'
                   name='entity_tmz'
                   required
                   value={entityRegDetails.entity_tmz}
                   onChange={handleChange}
-                />
+                >
+                  <option value=''>Select</option>
+                  {timezone.data && Array.isArray(timezone.data.data) ? (
+                    timezone.data.data.map(tmz => (
+                      <option key={tmz} value={tmz}>
+                        {tmz}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {timezone.data && timezone.data.message
+                        ? timezone.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
               </div>
               <div className='form-group'>
                 <label htmlFor='b_is_billing'>Billing:</label>

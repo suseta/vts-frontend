@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './deviceEntry.css'
 import navLogo from '../../navLogo.jpg'
 
-const DeviceEntryForm = () => {
-  const [deviceInfo, setDeviceInfo] = useState({
+let DeviceEntryForm = () => {
+  let [deviceInfo, setDeviceInfo] = useState({
     i_imei_no: '',
     s_sim_no: '',
     s_sim_op: '',
@@ -19,7 +19,7 @@ const DeviceEntryForm = () => {
     is_air_wr: ''
   })
 
-  const [deviceType, setDeviceType] = useState({ data: [] })
+  let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/deviceTypes')
       .then(response => response.json())
@@ -31,7 +31,7 @@ const DeviceEntryForm = () => {
       })
   }, [])
 
-  const [timezone, setTimezone] = useState({ data: [] })
+  let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/timezones')
       .then(response => response.json())
@@ -43,12 +43,12 @@ const DeviceEntryForm = () => {
       })
   }, [])
 
-  const handleChange = e => {
-    const { name, value } = e.target
+  let handleChange = e => {
+    let { name, value } = e.target
     setDeviceInfo(prevData => ({ ...prevData, [name]: value }))
   }
 
-  const handleSubmit = e => {
+  let handleSubmit = e => {
     e.preventDefault()
     fetch(`http://65.2.151.41:1410/api/v0/addDeviceInfo`, {
       method: 'POST',

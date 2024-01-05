@@ -2,10 +2,10 @@
 import React from 'react'
 // import AssetRegistrationForm from './Components/assetRegistration/assetRegistration'
 // import TransporterCreationForm from './Components/transporterCreation/transporterCreation'
-import DeviceEntryForm from './Components/deviceEntry/deviceEntry'
+// import DeviceEntryForm from './Components/deviceEntry/deviceEntry'
 // import PlantLocEntryInfoForm from './Components/plantLocationEntryInfo/plantLocInfo'
 // import AssetInfoForm from './Components/entityAssetInfo/entityAssetInfo'
-// import EntityCreationForm from './Components/entityCreation/entityCreation'
+import EntityCreationForm from './Components/entityCreation/entityCreation'
 // import AssetEntryInfoForm from './Components/assetEntryInfo/assetInfo'
 // import ConsigneeEntryInfoForm from './Components/consigneeEntryInfo/consigneeInfo'
 // import ConsignorEntryInfoForm from './Components/consignorEntryInfo copy/consignorInfo'
@@ -14,14 +14,14 @@ function App () {
   return (
     <div className='App'>
       {/*<AssetRegistrationForm />*/}
-      {/*<EntityCreationForm />*/}
+      <EntityCreationForm />
       {/*<DriverEntryForm/>*/}
       {/*<AssetEntryInfoForm/>*/}
       {/*<ConsigneeEntryInfoForm/>*/}
       {/*<ConsignorEntryInfoForm/>*/}
       {/*<TransporterCreationForm />*/}
       {/*<PlantLocEntryInfoForm/>*/}
-      <DeviceEntryForm/>
+      {/*<DeviceEntryForm/>*/}
     </div>
   )
 }

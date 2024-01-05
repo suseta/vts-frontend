@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './assetRegistration.css'
 import navLogo from '../../navLogo.jpg'
 
-const AssetRegistrationForm = () => {
-  const [assetRegDetails, setAssetRegDetails] = useState({
+let AssetRegistrationForm = () => {
+  let [assetRegDetails, setAssetRegDetails] = useState({
     s_asset_id: '',
     s_asset_mk: '',
     s_asset_mdl: '',
@@ -37,14 +37,14 @@ const AssetRegistrationForm = () => {
     s_fnd_dvc_id: ''
   })
 
-  const currentDate = new Date().toISOString().split('T')[0]
+  let currentDate = new Date().toISOString().split('T')[0]
 
-  const currentYear = new Date().getFullYear()
-  const yearList = Array.from({ length: 30 }, (_, index) => currentYear - index)
+  let currentYear = new Date().getFullYear()
+  let yearList = Array.from({ length: 30 }, (_, index) => currentYear - index)
 
-  const hourList = Array.from({ length: 24 }, (_, index) => index + 1)
+  let hourList = Array.from({ length: 24 }, (_, index) => index + 1)
 
-  const [entityMap, setEntityMap] = useState({ data: [] })
+  let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
@@ -56,7 +56,7 @@ const AssetRegistrationForm = () => {
       })
   }, [])
 
-  const [transporter, setTransporter] = useState({ data: [] })
+  let [transporter, setTransporter] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAllTransporterName')
       .then(response => response.json())
@@ -68,7 +68,7 @@ const AssetRegistrationForm = () => {
       })
   }, [])
 
-  const [assetType, setAssetType] = useState({ data: [] })
+  let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAssetType')
       .then(response => response.json())
@@ -80,7 +80,7 @@ const AssetRegistrationForm = () => {
       })
   }, [])
 
-  const [assetCapacity, setAssetCapacity] = useState({ data: [] })
+  let [assetCapacity, setAssetCapacity] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAssetCapacity')
       .then(response => response.json())
@@ -92,15 +92,15 @@ const AssetRegistrationForm = () => {
       })
   }, [])
 
-  const handleChange = e => {
-    const { name, value, type, checked } = e.target
+  let handleChange = e => {
+    let { name, value, type, checked } = e.target
     setAssetRegDetails(prevData => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value
     }))
   }
 
-  const handleSubmit = e => {
+  let handleSubmit = e => {
     e.preventDefault()
     fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
       method: 'POST',

@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import './assetEntryInfo.css'
 import navLogo from '../../navLogo.jpg'
 
-const AssetEntryInfoForm = () => {
-  const [assetData, setAssetData] = useState({
+let AssetEntryInfoForm = () => {
+  let [assetData, setAssetData] = useState({
     s_asset_typ: '',
     s_asset_cap: ''
   })
 
-  const handleChange = e => {
-    const { name, value } = e.target
+  let handleChange = e => {
+    let { name, value } = e.target
     setAssetData(prevData => ({ ...prevData, [name]: value }))
   }
 
-  const handleSubmit = e => {
+  let handleSubmit = e => {
     e.preventDefault()
     fetch(`http://65.2.151.41:1410/api/v0/setAssetInfo`, {
       method: 'POST',

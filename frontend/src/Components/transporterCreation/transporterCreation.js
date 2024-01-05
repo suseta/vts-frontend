@@ -4,15 +4,15 @@ import navLogo from '../../navLogo.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-const TransporterCreationForm = () => {
-  const currentDate = new Date().toISOString().split('T')[0]
-  const defaultEndDate = () => {
-    const oneYearLater = new Date()
+let TransporterCreationForm = () => {
+  let currentDate = new Date().toISOString().split('T')[0]
+  let defaultEndDate = () => {
+    let oneYearLater = new Date()
     oneYearLater.setFullYear(oneYearLater.getFullYear() + 1)
     return oneYearLater.toISOString().split('T')[0]
   }
 
-  const [transporterRegDetails, setTransporterRegDetails] = useState({
+  let [transporterRegDetails, setTransporterRegDetails] = useState({
     s_trans_id: '',
     s_trans_name: '',
     s_entity_id_and_name: '',
@@ -38,22 +38,22 @@ const TransporterCreationForm = () => {
     s_trans_ifsc_cd: ''
   })
 
-  const [showBankingInfo, setShowBankingInfo] = useState(false)
-  const toggleBankingInfo = () => {
+  let [showBankingInfo, setShowBankingInfo] = useState(false)
+  let toggleBankingInfo = () => {
     setShowBankingInfo(!showBankingInfo)
   }
 
-  const [showPassword, setShowPassword] = useState(false)
-  const togglePassword = () => {
+  let [showPassword, setShowPassword] = useState(false)
+  let togglePassword = () => {
     setShowPassword(!showPassword)
   }
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const toggleConfirmPassword = () => {
+  let [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  let toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
 
-  const [entityNames, setEntityNames] = useState({ data: [] })
+  let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
@@ -65,7 +65,7 @@ const TransporterCreationForm = () => {
       })
   }, [])
 
-  const [timezone, setTimezone] = useState({ data: [] })
+  let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.127.103.103:1410/api/v0/timezones')
       .then(response => response.json())
@@ -77,13 +77,13 @@ const TransporterCreationForm = () => {
       })
   }, [])
 
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  let [passwordMatch, setPasswordMatch] = useState(true)
 
-  const handleChange = e => {
-    const { name, value, type, checked } = e.target
- 
+  let handleChange = e => {
+    let { name, value, type, checked } = e.target
+
     if (name === 's_trans_cnf_pass') {
-      const match = value === transporterRegDetails.s_trans_pass
+      let match = value === transporterRegDetails.s_trans_pass
       setPasswordMatch(match)
     }
     setTransporterRegDetails(prevData => ({
@@ -92,7 +92,7 @@ const TransporterCreationForm = () => {
     }))
   }
 
-  const handleSubmit = e => {
+  let handleSubmit = e => {
     e.preventDefault()
     fetch('http://13.127.103.103:1410/api/v0/setTransporterInfo', {
       method: 'POST',
