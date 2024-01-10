@@ -81,14 +81,14 @@ let AssetDeviceMapping = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Entity Creation Form:', data)
-        alert('Entity created successfully!')
+        console.log('Success in Asset-Device Mapping Form:', data)
+        alert('Asset-device mapped successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Entity creation form submitted:', assetDeviceMapping)
+    console.log('Asset-device mapping form submitted:', assetDeviceMapping)
   }
 
   return (
@@ -495,6 +495,7 @@ let AssetDeviceMapping = () => {
           </div>
         </div>
       </div>
+      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

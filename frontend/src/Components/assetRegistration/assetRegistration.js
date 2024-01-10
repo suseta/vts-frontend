@@ -111,14 +111,14 @@ let AssetRegistrationForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Entity Creation Form:', data)
-        alert('Entity created successfully!')
+        console.log('Success in Asset Registration Form:', data)
+        alert('Asset registered successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Entity creation form submitted:', assetRegDetails)
+    console.log('Asset registration form submitted:', assetRegDetails)
   }
 
   return (
