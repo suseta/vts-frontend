@@ -606,6 +606,7 @@ let TransporterCreationForm = () => {
           </div>
         </div>
       </div>
+      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }
