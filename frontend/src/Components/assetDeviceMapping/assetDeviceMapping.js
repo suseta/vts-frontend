@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './assetDeviceMapping.css'
 import navLogo from '../../navLogo.jpg'
 
-let AssetDeviceMapping = () => {
+let AssetDeviceMappingForm = () => {
   let [assetDeviceMapping, setAssetDeviceMapping] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
@@ -102,7 +102,7 @@ let AssetDeviceMapping = () => {
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Device Mapping</h2>
-          <div className='AssetDeviceMapping'>
+          <div className='AssetDeviceMappingForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
@@ -500,4 +500,4 @@ let AssetDeviceMapping = () => {
   )
 }
 
-export default AssetDeviceMapping
+export default AssetDeviceMappingForm

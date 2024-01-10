@@ -24,9 +24,9 @@ let TransporterCreationForm = () => {
     s_trans_pass: '',
     s_trans_cnf_pass: '',
     s_trans_inact_tm: '',
-    s_trans_start_dt: null,
-    s_trans_due_dt: null,
-    s_trans_ext_dt: null,
+    s_trans_start_dt: '',
+    s_trans_due_dt: '',
+    s_trans_ext_dt: '',
     s_trans_act_status: '',
     s_trans_pan: '',
     s_vh_sub_sync: '',
@@ -415,7 +415,7 @@ let TransporterCreationForm = () => {
                   type='date'
                   id='s_trans_start_dt'
                   name='s_trans_start_dt'
-                  value={transporterRegDetails.s_trans_start_dt || ''}
+                  value={transporterRegDetails.s_trans_start_dt || currentDate}
                   onChange={handleChange}
                 />
               </div>
@@ -432,7 +432,7 @@ let TransporterCreationForm = () => {
                   type='date'
                   id='s_trans_due_dt'
                   name='s_trans_due_dt'
-                  value={transporterRegDetails.s_trans_due_dt || ''}
+                  value={transporterRegDetails.s_trans_due_dt || defaultEndDate}
                   onChange={handleChange}
                 />
               </div>
@@ -444,7 +444,7 @@ let TransporterCreationForm = () => {
                   type='date'
                   id='s_trans_ext_dt'
                   name='s_trans_ext_dt'
-                  value={transporterRegDetails.s_trans_ext_dt || ''}
+                  value={transporterRegDetails.s_trans_ext_dt || defaultEndDate}
                   onChange={handleChange}
                 />
               </div>

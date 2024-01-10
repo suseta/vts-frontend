@@ -134,7 +134,7 @@
     margin-bottom: 5px;
   }
   
-  .AssetDeviceMapping form {
+  .AssetDeviceMappingForm form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -147,8 +147,8 @@
     margin-left: 1px
   }
 
-  .AssetDeviceMapping form input,
-  .AssetDeviceMapping form select {
+  .AssetDeviceMappingForm form input,
+  .AssetDeviceMappingForm form select {
     width: 40%;
     padding: 8px;
     box-sizing: border-box;
@@ -158,17 +158,17 @@
     background-color: #f2f2f2;
   }
   
-  .AssetDeviceMapping form div.full-width {
+  .AssetDeviceMappingForm form div.full-width {
     margin-right: 0;
   }
 
-  .AssetDeviceMapping form .form-group {
+  .AssetDeviceMappingForm form .form-group {
     flex: 0 0 calc(48% - 10px);
     margin-right: 10px;
     margin-bottom: 10px;
   }
 
-  .AssetDeviceMapping form label {
+  .AssetDeviceMappingForm form label {
     display:inline-block;
     margin-bottom: 10px;
     margin-right: 30px;
@@ -176,7 +176,7 @@
     color: #333;
   }
   
-  .AssetDeviceMapping form .form-buttons {
+  .AssetDeviceMappingForm form .form-buttons {
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -184,7 +184,7 @@
     align-items: center;
   }
   
-  .AssetDeviceMapping form button {
+  .AssetDeviceMappingForm form button {
     background-color: #0de732;
     color: white;
     padding: 10px 15px;
@@ -195,7 +195,7 @@
     margin-left: 1000px;
   }
   
-  .AssetDeviceMapping form button.cancel-button {
+  .AssetDeviceMappingForm form button.cancel-button {
     background-color: #808080;
     color: #f1eaea;
     border: 1px solid #f5f0f0;
@@ -236,12 +236,12 @@
 
   /* Making the form responsive */
   @media screen and (max-width: 768px) {
-    .AssetDeviceMapping form div {
+    .AssetDeviceMappingForm form div {
       flex: 100%;
       margin-right: 0;
     }
-    .AssetDeviceMapping form button,
-    .AssetDeviceMapping form button.cancel-button {
+    .AssetDeviceMappingForm form button,
+    .AssetDeviceMappingForm form button.cancel-button {
       width: 100%;
       margin-left: 0;
       margin-top: 10px;

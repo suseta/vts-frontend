@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './assetDriverMapping.css'
 import navLogo from '../../navLogo.jpg'
 
-let AssetDriverMapping = () => {
+let AssetDriverMappingForm = () => {
   let [assetDriverMapping, setAssetDriverMapping] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
@@ -87,7 +87,7 @@ let AssetDriverMapping = () => {
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Driver Mapping</h2>
-          <div className='AssetDriverMapping'>
+          <div className='AssetDriverMappingForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
@@ -232,4 +232,4 @@ let AssetDriverMapping = () => {
   )
 }
 
-export default AssetDriverMapping
+export default AssetDriverMappingForm
