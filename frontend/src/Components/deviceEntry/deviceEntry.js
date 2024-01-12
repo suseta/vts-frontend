@@ -133,7 +133,7 @@ let DeviceEntryForm = () => {
                   SIM No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_sim_no'
                   name='s_sim_no'
                   value={deviceInfo.s_sim_no}
