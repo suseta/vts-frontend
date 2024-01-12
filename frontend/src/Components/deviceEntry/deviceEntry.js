@@ -13,7 +13,7 @@ let DeviceEntryForm = () => {
     dvc_timezone: '',
     dvc_mfg_dt: '',
     dvc_add_dt: '',
-    dvc_dlt_dt: '',
+    dvc_dlt_dt: null,
     s_atd: '',
     s_dvc_status: '',
     is_ign_wr: false,
