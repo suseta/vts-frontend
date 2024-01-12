@@ -14,18 +14,18 @@ const DriverEntryForm = () => {
       s_lic_no:'',
       s_drv_city:'',
       s_drv_pin:'',
-      lic_vld_dt:null,
+      lic_vld_dt: null,
       s_smart_crd_no:'',
       s_drv_cntry:'',
       s_drv_state:'',      
       s_hzrd_crt_no:'',
-      hzrd_vld_dt:null,
-      med_tst_dt:null,
-      prd_trn_dt:null,
+      hzrd_vld_dt: null,
+      med_tst_dt: null,
+      prd_trn_dt: null,
       driver_active_status:'',
       s_drv_rmk:'',
-      ddt_exp_dt:null,
-      cab_vld_dt:null,
+      ddt_exp_dt: null,
+      cab_vld_dt: null,
       s_covid_status:''
   })
 
@@ -100,7 +100,7 @@ const DriverEntryForm = () => {
     formDataObj.append('s_drv_img_path', profilePic);
     formDataObj.append('s_drv_lic_img_path', licensePic);
   try {
-      const response = await fetch('http://13.201.79.110:1410/api/v0/addDriver', {
+      const response = await fetch('http://localhost:1410/api/v0/addDriver', {
         method: 'POST',
         body: formDataObj,
       });
