@@ -100,7 +100,7 @@ const DriverEntryForm = () => {
     formDataObj.append('s_drv_img_path', profilePic);
     formDataObj.append('s_drv_lic_img_path', licensePic);
   try {
-      const response = await fetch('http://localhost:1410/api/v0/addDriver', {
+      const response = await fetch('http://13.201.79.110:1410/api/v0/addDriver', {
         method: 'POST',
         body: formDataObj,
       });
