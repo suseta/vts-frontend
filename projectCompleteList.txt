@@ -1,0 +1,12 @@
+done list -
+
+1. entity - Done
+2. transporter -Done
+3. driver - D
+4. assetEntryInfo - type and capacity -Done
+5. assetRegistration -
+6. Consignee
+7. Consignor
+8. deviceEntry - Done
+9. PlantLocation - Table not found
+10. 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './deviceEntry.css'
 import navLogo from '../../navLogo.jpg'
+import { faL } from '@fortawesome/free-solid-svg-icons'
 
 let DeviceEntryForm = () => {
   let [deviceInfo, setDeviceInfo] = useState({
@@ -12,16 +13,39 @@ let DeviceEntryForm = () => {
     dvc_timezone: '',
     dvc_mfg_dt: '',
     dvc_add_dt: '',
-    dvc_dlt_dt: '',
+    dvc_dlt_dt: null,
     s_atd: '',
     s_dvc_status: '',
-    is_ign_wr: '',
-    is_air_wr: ''
+    is_ign_wr: false,
+    is_air_wr: false
   })
+  
+  let [showToggleValue, setShowToggleValue] = useState(false)
+  const toggleInfo = () => {
+    setShowToggleValue((prevShowToggleValue) => {
+      setDeviceInfo((prevData) => ({
+        ...prevData,
+        is_ign_wr: !prevShowToggleValue,
+      }));
+      return !prevShowToggleValue;
+    });
+  };
+
+  let [showIsAirCon,setShowIsAirCon] = useState(false)
+  const toggleAirInfo = () => {
+    setShowIsAirCon((prevShowToggleValue) => {
+      setDeviceInfo((prevData) => ({
+        ...prevData,
+        is_air_wr: !prevShowToggleValue,
+      }));
+      return !prevShowToggleValue;
+    });
+  };
+
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/deviceTypes')
+    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -33,7 +57,7 @@ let DeviceEntryForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/timezones')
+    fetch('http://13.201.79.110:1410/api/v0/timezones')
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -50,7 +74,7 @@ let DeviceEntryForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://65.2.151.41:1410/api/v0/addDeviceInfo`, {
+    fetch(`http://13.201.79.110:1410/api/v0/setDeviceDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -109,7 +133,7 @@ let DeviceEntryForm = () => {
                   SIM No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_sim_no'
                   name='s_sim_no'
                   value={deviceInfo.s_sim_no}
@@ -133,25 +157,23 @@ let DeviceEntryForm = () => {
                   value={deviceInfo.s_sim_op}
                   onChange={handleChange}
                 >
-                  <option value=''>Select</option>
-                  <option value=''>Airtel GPRS (airtelgprs.com)</option>
-                  <option value=''>Airtel IOT (airteliot.com)</option>
-                  <option value=''>Vodafone WWW (www)</option>
-                  <option value=''>Vodafone IOT (iot.com)</option>
-                  <option value=''>Idea Internet (internet)</option>
-                  <option value=''>Idea isafe (isafe)</option>
-                  <option value=''>BSNL (bsnl))</option>
-                  <option value=''>Jio (jio)</option>
-                  <option value=''>onSAT (onSAT)</option>
-                  <option value=''>Caburn Telecom (intelligence.m2m)</option>
-                  <option value=''>DIGI (diginet)</option>
-                  <option value=''>PWCC (public.pccwglobal.hktdcp)</option>
-                  <option value=''>GTT (internet.cellinkgy.com)</option>
-                  <option value=''>Digicel (web.digicelgy.com)</option>
-                  <option value=''>
-                    Claro Ecuador (internet.claro.com.ec)
-                  </option>
-                  <option value=''>TRUPHONE (iot.truphone.com)</option>
+                  <option value="">Select</option>
+                  <option value="Airtel Gprs">Airtel Gprs (airtelgprs.com)</option>
+					        <option value="Airtel Iot">Airtel Iot (airteliot.com)</option>
+                  <option value="Vodafone www">Vodafone www (www)</option>
+                  <option value="Vodafone Iot">Vodafone Iot (iot.com)</option>
+                  <option value="Idea Internet">Idea Internet (internet)</option>
+                  <option value="Idea isafe">Idea isafe (isafe)</option>
+                  <option value="Bsnl">Bsnl (bsnl)</option>
+                  <option value="Jio">Jio (jio)</option>
+                  <option value="onSAT">onSAT (onSAT)</option>
+                  <option value="Caburn Telecom">Caburn Telecom (intelligence.m2m)</option>
+                  <option value="DIGI">DIGI (diginet)</option>
+                  <option value="PWCC">PWCC (public.pccwglobal.hktdcp)</option>
+                  <option value="GTT">GTT (internet.cellinkgy.com)</option>
+                  <option value="Digicel">Digicel (web.digicelgy.com)</option>
+                  <option value="Claro Ecuador">Claro Ecuador (internet.claro.com.ec)</option>
+                  <option value="TRUPHONE">TRUPHONE (iot.truphone.com)</option>
                 </select>
               </div>
               <div className='form-group'>
@@ -174,8 +196,8 @@ let DeviceEntryForm = () => {
                   <option value=''>Select</option>
                   {deviceType.data && Array.isArray(deviceType.data.data) ? (
                     deviceType.data.data.map(device => (
-                      <option key={device} value={device}>
-                        {device}
+                      <option key={device.s_device_name} value={device.s_device_id}>
+                        {device.s_device_name}
                       </option>
                     ))
                   ) : (
@@ -267,7 +289,7 @@ let DeviceEntryForm = () => {
               <div className='form-group'>
                 <label htmlFor='dvc_dlt_dt'>Device Remove Date:</label>
                 <input
-                  type='datetime'
+                  type='date'
                   id='dvc_dlt_dt'
                   name='dvc_dlt_dt'
                   value={deviceInfo.dvc_dlt_dt}
@@ -320,8 +342,8 @@ let DeviceEntryForm = () => {
                   type='checkbox'
                   id='is_ign_wr'
                   name='is_ign_wr'
-                  value={deviceInfo.is_ign_wr}
-                  onChange={handleChange}
+                  checked={showToggleValue}
+                  onChange={toggleInfo}
                 />
               </div>
               <div className='form-group'>
@@ -330,8 +352,8 @@ let DeviceEntryForm = () => {
                   type='checkbox'
                   id='is_air_wr'
                   name='is_air_wr'
-                  value={deviceInfo.is_air_wr}
-                  onChange={handleChange}
+                  checked={showIsAirCon}
+                  onChange={toggleAirInfo}
                 />
               </div>
               <div class='form-buttons'>

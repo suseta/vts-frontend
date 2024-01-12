@@ -8,6 +8,7 @@ import DriverRegistrationForm from './Components/driverRegistration/driverRegist
 // import TransporterCreationForm from './Components/transporterCreation/transporterCreation'
 // import DeviceEntryForm from './Components/deviceEntry/deviceEntry'
 // import PlantLocEntryInfoForm from './Components/plantLocationEntryInfo/plantLocInfo'
+// import AssetInfoForm from './Components/entityAssetInfo/entityAssetInfo'
 // import EntityCreationForm from './Components/entityCreation/entityCreation'
 // import AssetEntryInfoForm from './Components/assetEntryInfo/assetEntryInfo'
 // import ConsigneeEntryInfoForm from './Components/consigneeEntryInfo/consigneeInfo'
@@ -28,6 +29,13 @@ function App () {
       <DriverRegistrationForm />
       {/*<AssetDriverMappingForm />*/}
       {/*<ServiceDataLogForm />*/}
+      {/* <EntityCreationForm /> */}
+      {/* <AssetEntryInfoForm/> */}
+      {/*<ConsigneeEntryInfoForm/>*/}
+      {/*<ConsignorEntryInfoForm/>*/}
+      {/* <TransporterCreationForm /> */}
+      {/* <PlantLocEntryInfoForm/> */}
+      {/* <DeviceEntryForm/> */}
     </div>
   )
 }
