@@ -13,9 +13,10 @@ let TransporterCreationForm = () => {
   }
 
   let [transporterRegDetails, setTransporterRegDetails] = useState({
+    s_entity_id:'',
+    s_entity_id_and_name:'',
     s_trans_id: '',
     s_trans_name: '',
-    s_entity_id_and_name: '',
     trans_tmz: '',
     s_trans_add: '',
     s_trans_mail: '',
@@ -52,10 +53,19 @@ let TransporterCreationForm = () => {
   let toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
-
+  const handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target;
+    if (name === 's_entity_id_and_name') {
+        setTransporterRegDetails(prevData => ({
+            ...prevData,
+            s_entity_id_and_name: value,
+            s_entity_id: s_entity_id1
+        }));
+    }
+  }; 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -67,7 +77,7 @@ let TransporterCreationForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/timezones')
+    fetch('http://13.201.79.110:1410/api/v0/timezones')
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -81,7 +91,6 @@ let TransporterCreationForm = () => {
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
-
     if (name === 's_trans_cnf_pass') {
       let match = value === transporterRegDetails.s_trans_pass
       setPasswordMatch(match)
@@ -91,10 +100,9 @@ let TransporterCreationForm = () => {
       [name]: type === 'checkbox' ? checked : value
     }))
   }
-
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setTransporterInfo', {
+    fetch('http://13.201.79.110:1410/api/v0/setTransporterInfo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -141,7 +149,10 @@ let TransporterCreationForm = () => {
                   name='s_entity_id_and_name'
                   required
                   value={transporterRegDetails.s_entity_id_and_name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
+                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  }}
                 >
                   <option value=''>Select</option>
                   {entityNames.data && Array.isArray(entityNames.data.data) ? (
@@ -606,8 +617,9 @@ let TransporterCreationForm = () => {
           </div>
         </div>
       </div>
+      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }
-
 export default TransporterCreationForm
+
