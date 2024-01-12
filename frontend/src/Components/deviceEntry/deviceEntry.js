@@ -45,7 +45,7 @@ let DeviceEntryForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://localhost:1410/api/v0/getDeviceTypeDetails')
+    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -74,7 +74,7 @@ let DeviceEntryForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://localhost:1410/api/v0/setDeviceDetails`, {
+    fetch(`http://13.201.79.110:1410/api/v0/setDeviceDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
