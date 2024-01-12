@@ -4,83 +4,65 @@ import navLogo from '../../navLogo.jpg'
 
 const DriverEntryForm = () => {
   const [formData, setFormData] = useState({
-    s_driver_id: '',
-    s_driver_img_path: '',
-    s_license_img_path: '',
-    s_entity_name: '',
-    s_driver_name: '',
-    i_mobile_no: '',
-    s_driver_email: '',
-    s_driver_address: '',
-    s_license_no: '',
-    s_driver_city: '',
-    i_driver_pincode: '',
-    license_validity_date: '',
-    s_smart_card_no: '',
-    s_state_name: '',
-    s_country_name: '',
-    s_hazard_certificate: '',
-    hazard_validity_date: '',
-    medical_test_date: '',
-    product_training_date: '',
-    driver_active_status: '',
-    s_remarks: '',
-    ddt_expiry_date: '',
-    cab_validity_date: '',
-    s_license_verification_covid: ''
+      s_entity_id:'',
+      s_entity_id_and_name:'',
+      s_drv_id:'',
+      s_drv_name:'',
+      s_drv_mb_no:'',
+      s_drv_mail:'',
+      s_drv_add:'',
+      s_lic_no:'',
+      s_drv_city:'',
+      s_drv_pin:'',
+      lic_vld_dt:'',
+      s_smart_crd_no:'',
+      s_drv_cntry:'',
+      s_drv_state:'',      
+      s_hzrd_crt_no:'',
+      hzrd_vld_dt:'',
+      med_tst_dt:'',
+      prd_trn_dt:'',
+      driver_active_status:'',
+      s_drv_rmk:'',
+      ddt_exp_dt:'',
+      cab_vld_dt:'',
+      s_covid_status:''
   })
 
-  const [entityLists, setEntityLists] = useState([])
+  const handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target;
+    if (name === 's_entity_id_and_name') {
+      setFormData(prevData => ({
+            ...prevData,
+            s_entity_id_and_name: value,
+            s_entity_id: s_entity_id1
+        }));
+    }
+  };
+
+  let [entityNames, setEntityNames] = useState({ data: [] })
 
   useEffect(() => {
-    fetch('your_api_endpoint')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        setEntityLists(data)
+        setEntityNames({ data })
       })
       .catch(error => {
-        console.error('Error fetching options:', error)
+        console.error('Error: ', error)
       })
   }, [])
 
-  const [countries, setCountries] = useState([])
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [cities, setCities] = useState([])
-  const [selectedCity, setSelectedCity] = useState('')
-
+  let [stateList, setStateList] = useState([{ state: [] }])
   useEffect(() => {
-    // Replace 'https://api.example.com/countries' with the actual API endpoint for countries
-    const countriesUrl = 'https://api.example.com/countries'
-
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(countriesUrl)
-        if (response.ok) {
-          const data = await response.json()
-          setCountries(data)
-        } else {
-          console.error('Failed to fetch countries:', response.statusText)
-        }
-      } catch (error) {
-        console.error('Error fetching countries:', error.message)
-      }
-    }
-
-    fetchCountries()
-  }, [])
-
-  // Fetch the list of cities when the selected country changes
-  useEffect(() => {
-    if (selectedCountry) {
-      // Replace 'https://api.example.com/cities' with the actual API endpoint for cities
-      const citiesUrl = `https://api.example.com/cities?country=${selectedCountry}`
-
+    if (formData.s_drv_cntry) {
+      const citiesUrl = `http://13.201.79.110:1410/api/v0/getAllState?s_entity_countryName=${formData.s_drv_cntry}`
       const fetchCities = async () => {
         try {
           const response = await fetch(citiesUrl)
           if (response.ok) {
             const data = await response.json()
-            setCities(data)
+            setStateList(data)
           } else {
             console.error('Failed to fetch cities:', response.statusText)
           }
@@ -91,49 +73,51 @@ const DriverEntryForm = () => {
 
       fetchCities()
     }
-  }, [selectedCountry])
+  }, [formData.s_drv_cntry])
+
+  
 
   const handleChange = e => {
     const { name, value } = e.target
     setFormData(prevData => ({ ...prevData, [name]: value }))
-  }
-
-  const handleImageChange = (e, fieldName) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setFormData((prevData) => ({
-        ...prevData,
-        [fieldName]: reader.result,
-      }));
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+  } 
+  const [profilePic, setProfilePic] = useState(null);
+  const handleDriverChange = (e) => {
+      setProfilePic(e.target.files[0]);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    fetch('http://65.2.151.41:1410/api/v0/addVehicle', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success in Asset Registration Form:', data)
-        alert('Asset registration done successfully!')
-      })
-      .catch(error => {
-        console.error('Error:', error)
-        alert('Error! Please try again.')
-      })
-    console.log('Asset registration form submitted:', formData)
-  }
+  const [licensePic, setLicensePic] = useState(null);
+  const handleLicenseChange = (e) => {
+    setLicensePic(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formDataObj = new FormData();
+    for (const key in formData) {
+      formDataObj.append(key, formData[key]);
+    }
+    formDataObj.append('s_drv_img_path', profilePic);
+    formDataObj.append('s_drv_lic_img_path', licensePic);
+  try {
+      const response = await fetch('http://13.201.79.110:1410/api/v0/addDriver', {
+        method: 'POST',
+        body: formDataObj,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Success in Asset Registration Form:', data);
+        alert('Asset registration done successfully!');
+      } else {
+        console.error('Error:', response.statusText);
+        alert('Error! Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error! Please try again.');
+    }
+    console.log('Asset registration form submitted:', formData);
+  };
 
   return (
     <div>
@@ -159,246 +143,278 @@ const DriverEntryForm = () => {
             <h2>Driver Entry</h2>
             <div className='DriverForm'>
               <form onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor='s_entity_name' className='mandatory'>
-                    Entity:
-                  </label>
-                  <select
-                    className='form-select'
-                    id='s_entity_name'
-                    name='s_entity_name'
-                    required
-                    value={formData.s_entity_name}
-                    onChange={handleChange}
-                  >
-                    <option value=''>Select</option>
-                    {entityLists.map(option => (
-                      <option key={option} value={option}>
-                        {option}
+              <div>
+                <label
+                  htmlFor='s_entity_id_and_name'
+                  className={`required-label ${
+                    setFormData.s_entity_id_and_name ? 'required' : ''
+                  }`}
+                >
+                  Entity:
+                </label>
+                <select
+                  className='form-select'
+                  id='s_entity_id_and_name'
+                  name='s_entity_id_and_name'
+                  required
+                  value={setFormData.s_entity_id_and_name}
+                  onChange={(e) => {
+                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
+                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  }}
+                >
+                  <option value=''>Select</option>
+                  {entityNames.data && Array.isArray(entityNames.data.data) ? (
+                    entityNames.data.data.map(entity => (
+                      <option
+                        key={entity.s_entity_id}
+                        value={entity.s_entity_name}
+                      >
+                        {entity.s_entity_name}
                       </option>
-                    ))}
-                  </select>
-                </div>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {entityNames.data && entityNames.data.message
+                        ? entityNames.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
+              </div>
                 <div>
-                  <label htmlFor='s_driver_name' className='mandatory'>
+                  <label htmlFor='s_drv_name' className='mandatory'>
                     Driver Name:
                   </label>
                   <input
                     type='text'
-                    id='s_driver_name'
-                    name='s_driver_name'
+                    id='s_drv_name'
+                    name='s_drv_name'
                     required
-                    value={formData.s_driver_name}
+                    value={formData.s_drv_name}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_driver_id'>Driver ID:</label>
+                  <label htmlFor='s_drv_id'>Driver ID:</label>
                   <input
                     type='text'
-                    id='s_driver_id'
-                    name='s_driver_id'
-                    value={formData.s_driver_id}
+                    id='s_drv_id'
+                    name='s_drv_id'
+                    value={formData.s_drv_id}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_driver_address' className='mandatory'>Address:</label>
+                  <label htmlFor='s_drv_add' className='mandatory'>Address:</label>
                   <input
                     type='text'
-                    id='s_driver_address'
-                    name='s_driver_address'
-                    value={formData.s_driver_address}
+                    id='s_drv_add'
+                    name='s_drv_add'
+                    value={formData.s_drv_add}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_driver_email'>Email:</label>
+                  <label htmlFor='s_drv_mail'>Email:</label>
                   <input
                     type='text'
-                    id='s_driver_email'
-                    name='s_driver_email'
-                    value={formData.s_driver_email}
+                    id='s_drv_mail'
+                    name='s_drv_mail'
+                    value={formData.s_drv_mail}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='i_mobile_no' className='mandatory'>Mobile No.:</label>
+                  <label htmlFor='s_drv_mb_no' className='mandatory'>Mobile No.:</label>
                   <input
                     type='text'
-                    id='i_mobile_no'
-                    name='i_mobile_no'
-                    value={formData.i_mobile_no}
+                    id='s_drv_mb_no'
+                    name='s_drv_mb_no'
+                    value={formData.s_drv_mb_no}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_country_name' className='mandatory'>Country:</label>
+                  <label htmlFor='s_drv_cntry' className='mandatory'>Country:</label>
                   <select
-                    id="s_country_name"
-                    name="s_country_name"
-                    value={formData.s_country_name}
+                    id="s_drv_cntry"
+                    name="s_drv_cntry"
+                    value={formData.s_drv_cntry}
                     onChange={handleChange}
                   >
                   <option value="">Select</option>
-                  <option value="country1">India</option>
-                  <option value="country2">Nepal</option>
-                  <option value="country1">Bhutan</option>
+                  <option value='BT'>Bhutan</option>
+                  <option value='IN'>India</option>
+                  <option value='NP'>Nepal</option>
                 </select>
                 </div>
                 <div>
-                  <label htmlFor='s_state_name' className='mandatory'>State:</label>
+                  <label htmlFor='s_drv_state' className='mandatory'>State:</label>
                   <select
-                    id="s_state_name"
-                    name="s_state_name"
-                    value={formData.s_state_name}
+                    id="s_drv_state"
+                    name="s_drv_state"
+                    value={formData.s_drv_state}
                     onChange={handleChange}
                   >
-                  <option value="">Select</option>
-                  <option value="state1">State 1</option>
+                  <option value=''>Select</option>
+                  {stateList && Array.isArray(stateList.state) ? (
+                    stateList.state.map(state => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {stateList && stateList.message
+                        ? stateList.message
+                        : 'No states available'}
+                    </option>
+                  )}
                 </select>
                 </div>
                 <div>
-                  <label htmlFor='s_driver_city' className='mandatory'>City:</label>
+                  <label htmlFor='s_drv_city' className='mandatory'>City:</label>
                   <input
                     type='text'
-                    id='s_driver_city'
-                    name='s_driver_city'
-                    value={formData.s_driver_city}
+                    id='s_drv_city'
+                    name='s_drv_city'
+                    value={formData.s_drv_city}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='i_driver_pincode' className='mandatory'>Pincode:</label>
+                  <label htmlFor='s_drv_pin' className='mandatory'>Pincode:</label>
                   <input
                     type='text'
-                    id='i_driver_pincode'
-                    name='i_driver_pincode'
-                    value={formData.i_driver_pincode}
+                    id='s_drv_pin'
+                    name='s_drv_pin'
+                    value={formData.s_drv_pin}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_smart_card_no'>Smart Card:</label>
+                  <label htmlFor='s_smart_crd_no'>Smart Card:</label>
                   <input
                     type='text'
-                    id='s_smart_card_no'
-                    name='s_smart_card_no'
-                    value={formData.s_smart_card_no}
+                    id='s_smart_crd_no'
+                    name='s_smart_crd_no'
+                    value={formData.s_smart_crd_no}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_hazard_certificate'>
+                  <label htmlFor='s_hzrd_crt_no'>
                     Hazardous Certificate:
                   </label>
                   <input
                     type='text'
-                    id='s_hazard_certificate'
-                    name='s_hazard_certificate'
-                    value={formData.s_hazard_certificate}
+                    id='s_hzrd_crt_no'
+                    name='s_hzrd_crt_no'
+                    value={formData.s_hzrd_crt_no}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='hazard_validity_date'>
+                  <label htmlFor='hzrd_vld_dt'>
                     Hazardous Validity:
                   </label>
                   <input
                     type='date'
-                    id='hazard_validity_date'
-                    name='hazard_validity_date'
-                    value={formData.hazard_validity_date}
+                    id='hzrd_vld_dt'
+                    name='hzrd_vld_dt'
+                    value={formData.hzrd_vld_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='medical_test_date'>Medical Test:</label>
+                  <label htmlFor='med_tst_dt'>Medical Test:</label>
                   <input
                     type='date'
-                    id='medical_test_date'
-                    name='medical_test_date'
-                    value={formData.medical_test_date}
+                    id='med_tst_dt'
+                    name='med_tst_dt'
+                    value={formData.med_tst_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='cab_validity_date'>Cab Validity:</label>
+                  <label htmlFor='cab_vld_dt'>Cab Validity:</label>
                   <input
                     type='date'
-                    id='cab_validity_date'
-                    name='cab_validity_date'
-                    value={formData.cab_validity_date}
+                    id='cab_vld_dt'
+                    name='cab_vld_dt'
+                    value={formData.cab_vld_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='product_training_date'>
+                  <label htmlFor='prd_trn_dt'>
                     Product Training:
                   </label>
                   <input
                     type='date'
-                    id='product_training_date'
-                    name='product_training_date'
-                    value={formData.product_training_date}
+                    id='prd_trn_dt'
+                    name='prd_trn_dt'
+                    value={formData.prd_trn_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_license_no'>License Number:</label>
+                  <label htmlFor='s_lic_no'>License Number:</label>
                   <input
                     type='text'
-                    id='s_license_no'
-                    name='s_license_no'
-                    value={formData.s_license_no}
+                    id='s_lic_no'
+                    name='s_lic_no'
+                    value={formData.s_lic_no}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='license_validity_date'>
+                  <label htmlFor='lic_vld_dt'>
                     License Validity:
                   </label>
                   <input
                     type='date'
-                    id='license_validity_date'
-                    name='license_validity_date'
-                    value={formData.license_validity_date}
+                    id='lic_vld_dt'
+                    name='lic_vld_dt'
+                    value={formData.lic_vld_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='ddt_expiry_date'>DDT Expiry:</label>
+                  <label htmlFor='ddt_exp_dt'>DDT Expiry:</label>
                   <input
                     type='date'
-                    id='ddt_expiry_date'
-                    name='ddt_expiry_date'
-                    value={formData.ddt_expiry_date}
+                    id='ddt_exp_dt'
+                    name='ddt_exp_dt'
+                    value={formData.ddt_exp_dt}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_remarks'>Remarks:</label>
+                  <label htmlFor='s_drv_rmk'>Remarks:</label>
                   <input
                     type='text'
-                    id='s_remarks'
-                    name='s_remarks'
-                    value={formData.s_remarks}
+                    id='s_drv_rmk'
+                    name='s_drv_rmk'
+                    value={formData.s_drv_rmk}
                     onChange={handleChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor='s_license_verification_covid'>
+                  <label htmlFor='s_covid_status'>
                     Covid-19 Status:
                   </label>
                   <select
-                    id='s_license_verification_covid'
-                    name='s_license_verification_covid'
-                    value={formData.s_license_verification_covid}
+                    id="s_covid_status"
+                    name="s_covid_status"
+                    value={formData.s_covid_status}
                     onChange={handleChange}
                   >
-                    <option value='Y'>Done</option>
-                    <option value='N'>Not Done</option>
-                    <option value='P'>Partially Done</option>
+                    <option value=''>Select</option>
+                    <option value='Done'>Done</option>
+                    <option value='Not Done'>Not Done</option>
+                    <option value='Partially Done'>Partially Done</option>
                   </select>
                 </div>
                 <div>
@@ -410,29 +426,30 @@ const DriverEntryForm = () => {
                     name='driver_active_status'
                     value={formData.driver_active_status}
                     onChange={handleChange}
-                  >
-                    <option value='A'>Active</option>
-                    <option value='I'>Inactive</option>
+                  > 
+                    <option value=''>Select</option>
+                    <option value='Active'>Active</option>
+                    <option value='Inactive'>Inactive</option>
                   </select>
                 </div>
                 <div>
-                <label htmlFor='s_driver_img_path'>Driver Photo:</label>
+                <label htmlFor='s_drv_img_path'>Driver Photo:</label>
                 <input
                   type='file'
                   accept='image/*'
-                  id='s_driver_img_path'
-                  name='s_driver_img_path'
-                  onChange={(e) => handleImageChange(e, 's_driver_img_path')}
+                  id='s_drv_img_path'
+                  name='s_drv_img_path'
+                  onChange={(e) => handleDriverChange(e)}
                 />
               </div>
               <div>
-                <label htmlFor='s_license_img_path'>License Photo:</label>
+                <label htmlFor='s_drv_lic_img_path'>License Photo:</label>
                 <input
                   type='file'
                   accept='image/*'
-                  id='s_license_img_path'
-                  name='s_license_img_path'
-                  onChange={(e) => handleImageChange(e, 's_license_img_path')}
+                  id='s_drv_lic_img_path'
+                  name='s_drv_lic_img_path'
+                  onChange={(e) => handleLicenseChange(e)}
                 />
               </div>
                 <div class='form-buttons'>
