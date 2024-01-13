@@ -16,14 +16,14 @@ let DriverRegistrationForm = () => {
     s_drv_city: '',
     s_drv_pin: '',
     s_lic_no: '',
-    lic_vld_dt: '',
+    lic_vld_dt: null,
     s_smart_crd_no: '',
     s_hzrd_crt_no: '',
-    hzrd_vld_dt: '',
-    med_tst_dt: '',
-    prd_trn_dt: '',
-    ddt_exp_dt: '',
-    cab_vld_dt: '',
+    hzrd_vld_dt: null,
+    med_tst_dt: null,
+    prd_trn_dt: null,
+    ddt_exp_dt: null,
+    cab_vld_dt: null,
     s_drv_rmk: '',
     s_covid_status: '',
     s_drv_img_path: '',
@@ -34,7 +34,7 @@ let DriverRegistrationForm = () => {
 
   let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -49,7 +49,7 @@ let DriverRegistrationForm = () => {
   useEffect(() => {
     if (driverRegDetails.s_drv_cntry) {
       fetch(
-        `http://13.127.103.103:1410/api/v0/getAllState?s_drv_cntryName=${driverRegDetails.s_drv_cntry}`
+        `http://13.201.79.110:1410/api/v0/getAllState?s_entity_countryName=${driverRegDetails.s_drv_cntry}`
       )
         .then(response => response.json())
         .then(data => {
@@ -64,7 +64,7 @@ let DriverRegistrationForm = () => {
   let [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (driverRegDetails.s_drv_state) {
-      let url = `http://13.127.103.103:1410/api/v0/getAllCity?s_drv_cntryName=${driverRegDetails.s_drv_cntry}&s_drv_state=${driverRegDetails.s_drv_state}`
+      let url = `http://13.201.79.110:1410/api/v0/getAllCity?s_entity_countryName=${driverRegDetails.s_drv_cntry}&s_entity_state=${driverRegDetails.s_drv_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -77,47 +77,60 @@ let DriverRegistrationForm = () => {
     }
   }, [driverRegDetails.s_drv_state, driverRegDetails.s_drv_cntry])
 
-  let handleFileChange = (e, fieldName) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setDriverRegDetails(prevData => ({
-          ...prevData,
-          [fieldName]: reader.result
-        }))
-      }
-      reader.readAsDataURL(file)
+  let handleFileChange = (e, s_entity_id1) => {
+    let { name, value } = e.target
+    if (name === 's_entity_id_and_name') {
+      setDriverRegDetails(prevData => ({
+        ...prevData,
+        s_entity_id_and_name: value,
+        s_entity_id: s_entity_id1
+      }))
     }
   }
 
   let handleChange = e => {
-    let { name, value, type, checked } = e.target
-    setDriverRegDetails(prevData => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value
-    }))
+    const { name, value } = e.target
+    setDriverRegDetails(prevData => ({ ...prevData, [name]: value }))
+  }
+  const [profilePic, setProfilePic] = useState(null)
+  const handleDriverChange = e => {
+    setProfilePic(e.target.files[0])
   }
 
-  let handleSubmit = e => {
+  const [licensePic, setLicensePic] = useState(null)
+  const handleLicenseChange = e => {
+    setLicensePic(e.target.files[0])
+  }
+
+  let handleSubmit = async e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(driverRegDetails)
-    })
-      .then(response => response.json())
-      .then(data => {
+    const driverRegDetailsObj = new FormData()
+    for (const key in driverRegDetails) {
+      driverRegDetailsObj.append(key, driverRegDetails[key])
+    }
+    driverRegDetailsObj.append('s_drv_img_path', profilePic)
+    driverRegDetailsObj.append('s_drv_lic_img_path', licensePic)
+    try {
+      const response = await fetch(
+        'http://13.201.79.110:1410/api/v0/addDriver',
+        {
+          method: 'POST',
+          body: driverRegDetailsObj
+        }
+      )
+      if (response.ok) {
+        const data = await response.json()
         console.log('Success in Driver Registration Form:', data)
-        alert('Driver registered successfully!')
-      })
-      .catch(error => {
-        console.error('Error:', error)
+        alert('Driver registration done successfully!')
+      } else {
+        console.error('Error:', response.statusText)
         alert('Error! Please try again.')
-      })
-    console.log('Driver registeration form submitted:', driverRegDetails)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Error! Please try again.')
+    }
+    console.log('Driver registration form submitted:', driverRegDetails)
   }
 
   return (
@@ -148,7 +161,12 @@ let DriverRegistrationForm = () => {
                   name='s_entity_id_and_name'
                   required
                   value={driverRegDetails.s_entity_id_and_name}
-                  onChange={handleChange}
+                  onChange={e => {
+                    const selectedEntity = entityMap.data.data.find(
+                      entity => entity.s_entity_name === e.target.value
+                    )
+                    handleFileChange(e, selectedEntity?.s_entity_id)
+                  }}
                 >
                   <option value=''>Select</option>
                   {entityMap.data && Array.isArray(entityMap.data.data) ? (
@@ -171,9 +189,26 @@ let DriverRegistrationForm = () => {
               </div>
               <div className='form-group'>
                 <label
+                  htmlFor='s_drv_id'
+                  className={`required-label ${
+                    driverRegDetails.s_drv_id ? 'required' : ''
+                  }`}
+                >
+                  Driver Id:
+                </label>
+                <input
+                  type='text'
+                  id='s_drv_id'
+                  name='s_drv_id'
+                  value={driverRegDetails.s_drv_id}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='form-group'>
+                <label
                   htmlFor='s_drv_name'
                   className={`required-label ${
-                    driverRegDetails.s_entity_id_and_name ? 'required' : ''
+                    driverRegDetails.s_drv_name ? 'required' : ''
                   }`}
                 >
                   Driver Name:
@@ -213,7 +248,7 @@ let DriverRegistrationForm = () => {
                   Mobile No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_drv_mb_no'
                   name='s_drv_mb_no'
                   value={driverRegDetails.s_drv_mb_no}
@@ -230,7 +265,7 @@ let DriverRegistrationForm = () => {
                   Address:
                 </label>
                 <input
-                  type='number'
+                  type='text'
                   id='s_drv_add'
                   name='s_drv_add'
                   value={driverRegDetails.s_drv_add}
@@ -247,7 +282,7 @@ let DriverRegistrationForm = () => {
                   Pincode:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_drv_pin'
                   name='s_drv_pin'
                   value={driverRegDetails.s_drv_pin}
@@ -480,15 +515,8 @@ let DriverRegistrationForm = () => {
                   id='s_drv_img_path'
                   name='s_drv_img_path'
                   accept='image/*'
-                  onChange={e => handleFileChange(e, 's_drv_img_path')}
+                  onChange={e => handleDriverChange(e)}
                 />
-                {driverRegDetails.s_drv_img_path && (
-                  <img
-                    src={driverRegDetails.s_drv_img_path}
-                    alt='Driver Preview'
-                    className='image-preview'
-                  />
-                )}
               </div>
               <div className='form-group'>
                 <label htmlFor='s_drv_lic_img_path'>
@@ -499,15 +527,8 @@ let DriverRegistrationForm = () => {
                   id='s_drv_lic_img_path'
                   name='s_drv_lic_img_path'
                   accept='image/*'
-                  onChange={e => handleFileChange(e, 's_drv_lic_img_path')}
+                  onChange={e => handleLicenseChange(e)}
                 />
-                {driverRegDetails.s_drv_lic_img_path && (
-                  <img
-                    src={driverRegDetails.s_drv_lic_img_path}
-                    alt='Driver License Preview'
-                    className='image-preview'
-                  />
-                )}
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>

@@ -414,7 +414,7 @@ let EntityCreationForm = () => {
                   Pincode:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_entity_pin'
                   name='s_entity_pin'
                   value={entityRegDetails.s_entity_pin}
