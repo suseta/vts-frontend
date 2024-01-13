@@ -9,6 +9,7 @@ let AssetDeviceMappingForm = () => {
     s_ad_mp_pur: '',
     asset_dvc_mp_dt: '',
     s_dvc_typ: '',
+    s_prd_typ: '',
     s_asset_id: '',
     s_asset_typ: '',
     i_nw_imei_no: '',
@@ -213,6 +214,30 @@ let AssetDeviceMappingForm = () => {
                   <option value='NI'>New Installation</option>
                   <option value='SC'>SIM Change</option>
                   <option value='UC'>Unit Change</option>
+                </select>
+              </div>
+              <div className='form-group'>
+                <label
+                  htmlFor='s_prd_typ'
+                  className={`required-label ${
+                    assetDeviceMapping.s_prd_typ ? 'required' : ''
+                  }`}
+                >
+                  Product Type:
+                </label>
+                <select
+                  className='form-select'
+                  id='s_prd_typ'
+                  name='s_prd_typ'
+                  required
+                  value={assetDeviceMapping.s_prd_typ}
+                  onChange={handleChange}
+                >
+                  <option value=''>Select</option>
+                  <option value='D'>DVR</option>
+                  <option value='G'>GPS</option>
+                  <option value='N'>NVR</option>
+                  <option value='S'>SIM</option>
                 </select>
               </div>
               <div className='form-group'>
