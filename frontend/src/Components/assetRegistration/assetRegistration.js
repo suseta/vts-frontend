@@ -4,37 +4,38 @@ import navLogo from '../../navLogo.jpg'
 
 let AssetRegistrationForm = () => {
   let [assetRegDetails, setAssetRegDetails] = useState({
-    s_asset_id: '',
-    s_asset_mk: '',
-    s_asset_mdl: '',
-    s_entity_id_and_name: '',
-    s_trans_name: '',
-    s_fuel_typ: '',
-    s_asset_cap: '',
-    s_asset_typ: '',
-    s_site_loc: '',
-    i_bat_volt: '',
-    i_mileage: '',
-    idle_time: '',
-    reg_dt: '',
-    mfg_yr: '',
-    reg_vld_dt: '',
-    gt_pass_vld_dt: '',
-    ftns_crt_vld_dt: '',
-    plt_crt_vld_dt: '',
-    ins_vld_dt: '',
-    state_permit_vld_dt: '',
-    nat_permit_vld_dt: '',
-    intrnat_permit_vld_dt: '',
-    gds_permit_vld_dt: '',
-    rd_permit_vld_dt: '',
-    bat_pur_dt: '',
-    bat_exp_dt: '',
-    i_std_km: '',
-    peso_lic_dt: '',
-    rule_18_dt: '',
-    rule_19_dt: '',
-    s_fnd_dvc_id: ''
+    s_asset_id: null,
+    s_entity_id:null,
+    s_asset_mk:null,
+    s_asset_mdl:null,
+    s_entity_id_and_name:null,
+    s_trans_name:null, 
+    s_fuel_typ:null,
+    s_asset_cap:null,
+    s_asset_typ:null,
+    s_site_loc:null,
+    i_bat_volt:null,
+    i_mileage:null,
+    idle_time:null,
+    reg_dt: null,
+    mfg_yr:null,
+    reg_vld_dt: null,
+    gt_pass_vld_dt: null,
+    ftns_crt_vld_dt: null,
+    plt_crt_vld_dt: null,
+    ins_vld_dt: null,
+    state_permit_vld_dt: null,
+    nat_permit_vld_dt: null,
+    intrnat_permit_vld_dt: null,
+    gds_permit_vld_dt: null,
+    rd_permit_vld_dt: null,
+    bat_pur_dt: null,
+    bat_exp_dt: null,
+    i_std_km:null,
+    peso_lic_dt: null,
+    rule_18_dt: null,
+    rule_19_dt: null,
+    s_fnd_dvc_id:null
   })
 
   let currentDate = new Date().toISOString().split('T')[0]
@@ -44,12 +45,23 @@ let AssetRegistrationForm = () => {
 
   let hourList = Array.from({ length: 24 }, (_, index) => index + 1)
 
-  let [entityMap, setEntityMap] = useState({ data: [] })
+  const handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target;
+    if (name === 's_entity_id_and_name') {
+      setAssetRegDetails(prevData => ({
+            ...prevData,
+            s_entity_id_and_name: value,
+            s_entity_id: s_entity_id1
+        }));
+    }
+  }; 
+
+  let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        setEntityMap({ data })
+        setEntityNames({ data })
       })
       .catch(error => {
         console.error('Error: ', error)
@@ -57,8 +69,9 @@ let AssetRegistrationForm = () => {
   }, [])
 
   let [transporter, setTransporter] = useState({ data: [] })
-  useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllTransporterName')
+  useEffect(() => {   
+    if(assetRegDetails.s_entity_id){
+      fetch(`http://13.201.79.110:1410/api/v0/getTransporterDetails?s_entity_id=${assetRegDetails.s_entity_id}`)
       .then(response => response.json())
       .then(data => {
         setTransporter({ data })
@@ -66,11 +79,13 @@ let AssetRegistrationForm = () => {
       .catch(error => {
         console.error('Error: ', error)
       })
-  }, [])
+    }
+    } , [assetRegDetails.s_entity_id])
+    
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAssetType')
+    fetch('http://13.201.79.110:1410/api/v0/getAssetTypeDetails')
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -82,7 +97,7 @@ let AssetRegistrationForm = () => {
 
   let [assetCapacity, setAssetCapacity] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAssetCapacity')
+    fetch('http://13.201.79.110:1410/api/v0/getAssetCapacityDetails')
       .then(response => response.json())
       .then(data => {
         setAssetCapacity({ data })
@@ -102,7 +117,7 @@ let AssetRegistrationForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
+    fetch('http://13.201.79.110:1410/api/v0/addVehicle', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -138,22 +153,25 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_entity_id_and_name'
                   className={`required-label ${
-                    assetRegDetails.s_entity_id_and_name ? 'required' : ''
+                    assetRegDetails.s_entity_id_and_name ? 'required' :null
                   }`}
                 >
                   Entity:
-                </label>
+                  </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetRegDetails.s_entity_id_and_name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
+                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  }}
                 >
                   <option value=''>Select</option>
-                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
-                    entityMap.data.data.map(entity => (
+                  {entityNames.data && Array.isArray(entityNames.data.data) ? (
+                    entityNames.data.data.map(entity => (
                       <option
                         key={entity.s_entity_id}
                         value={entity.s_entity_name}
@@ -163,8 +181,8 @@ let AssetRegistrationForm = () => {
                     ))
                   ) : (
                     <option value=''>
-                      {entityMap.data && entityMap.data.message
-                        ? entityMap.data.message
+                      {entityNames.data && entityNames.data.message
+                        ? entityNames.data.message
                         : 'No entities available'}
                     </option>
                   )}
@@ -182,19 +200,19 @@ let AssetRegistrationForm = () => {
                 >
                   <option value=''>Select</option>
                   {transporter.data && Array.isArray(transporter.data.data) ? (
-                    transporter.data.data.map(entity => (
+                    transporter.data.data.map(transporter => (
                       <option
-                        key={entity.s_trans_name}
-                        value={entity.s_trans_name}
+                        key={transporter.s_trans_id}
+                        value={transporter.s_trans_name}
                       >
-                        {entity.s_trans_name}
+                        {transporter.s_trans_name}
                       </option>
                     ))
                   ) : (
                     <option value=''>
                       {transporter.data && transporter.data.message
                         ? transporter.data.message
-                        : 'No transporters available'}
+                        : 'No entities available'}
                     </option>
                   )}
                 </select>
@@ -203,7 +221,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_asset_id'
                   className={`required-label ${
-                    assetRegDetails.s_asset_id ? 'required' : ''
+                    assetRegDetails.s_asset_id ? 'required' :null
                   }`}
                 >
                   Asset No.:
@@ -221,7 +239,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_asset_typ'
                   className={`required-label ${
-                    assetRegDetails.s_asset_typ ? 'required' : ''
+                    assetRegDetails.s_asset_typ ? 'required' :null
                   }`}
                 >
                   Asset Type:
@@ -301,7 +319,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_fuel_typ'
                   className={`required-label ${
-                    assetRegDetails.s_fuel_typ ? 'required' : ''
+                    assetRegDetails.s_fuel_typ ? 'required' :null
                   }`}
                 >
                   Fuel Type:
@@ -323,7 +341,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='i_mileage'
                   className={`required-label ${
-                    assetRegDetails.i_mileage ? 'required' : ''
+                    assetRegDetails.i_mileage ? 'required' :null
                   }`}
                 >
                   Mileage (KM/L):

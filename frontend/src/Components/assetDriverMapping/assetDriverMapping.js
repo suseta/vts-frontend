@@ -11,12 +11,23 @@ let AssetDriverMappingForm = () => {
     s_drv2_name: ''
   })
 
-  let [entityMap, setEntityMap] = useState({ data: [] })
+  const handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target;
+    if (name === 's_entity_id_and_name') {
+      setAssetDriverMapping(prevData => ({
+            ...prevData,
+            s_entity_id_and_name: value,
+            s_entity_id: s_entity_id1
+        }));
+    }
+  }; 
+
+  let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        setEntityMap({ data })
+        setEntityNames({ data })
       })
       .catch(error => {
         console.error('Error: ', error)
@@ -24,8 +35,9 @@ let AssetDriverMappingForm = () => {
   }, [])
 
   let [assetNo, setAssetNo] = useState({ data: [] })
-  useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllAssetList')
+  useEffect(() => {   
+    if(assetDriverMapping.s_entity_id){
+      fetch(`http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`)
       .then(response => response.json())
       .then(data => {
         setAssetNo({ data })
@@ -33,11 +45,15 @@ let AssetDriverMappingForm = () => {
       .catch(error => {
         console.error('Error: ', error)
       })
-  }, [])
+    }
+    } , [assetDriverMapping.s_entity_id])
 
+
+    
   let [driverName, setDriverName] = useState({ data: [] })
-  useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllDriverNameList')
+  useEffect(() => {   
+    if(assetDriverMapping.s_entity_id){
+      fetch(`http://13.201.79.110:1410/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`)
       .then(response => response.json())
       .then(data => {
         setDriverName({ data })
@@ -45,7 +61,8 @@ let AssetDriverMappingForm = () => {
       .catch(error => {
         console.error('Error: ', error)
       })
-  }, [])
+    }
+    } , [assetDriverMapping.s_entity_id])
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
@@ -57,7 +74,7 @@ let AssetDriverMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
+    fetch('http://13.201.79.110:1410/api/v0/setAssetDriverMapping', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -97,18 +114,21 @@ let AssetDriverMappingForm = () => {
                   }`}
                 >
                   Entity:
-                </label>
+                  </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetDriverMapping.s_entity_id_and_name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
+                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  }}
                 >
                   <option value=''>Select</option>
-                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
-                    entityMap.data.data.map(entity => (
+                  {entityNames.data && Array.isArray(entityNames.data.data) ? (
+                    entityNames.data.data.map(entity => (
                       <option
                         key={entity.s_entity_id}
                         value={entity.s_entity_name}
@@ -118,8 +138,8 @@ let AssetDriverMappingForm = () => {
                     ))
                   ) : (
                     <option value=''>
-                      {entityMap.data && entityMap.data.message
-                        ? entityMap.data.message
+                      {entityNames.data && entityNames.data.message
+                        ? entityNames.data.message
                         : 'No entities available'}
                     </option>
                   )}
@@ -145,8 +165,8 @@ let AssetDriverMappingForm = () => {
                   <option value=''>Select</option>
                   {assetNo.data && Array.isArray(assetNo.data.data) ? (
                     assetNo.data.data.map(asset => (
-                      <option key={asset.s_asset_id} value={asset.s_asset_name}>
-                        {asset.s_asset_name}
+                      <option key={asset.s_asset_id} value={asset.s_asset_id}>
+                        {asset.s_asset_id}
                       </option>
                     ))
                   ) : (

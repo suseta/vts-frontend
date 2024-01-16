@@ -7,7 +7,7 @@ let AssetDeviceMappingForm = () => {
     s_entity_id: '',
     s_entity_id_and_name: '',
     s_ad_mp_pur: '',
-    asset_dvc_mp_dt: '',
+    asset_dvc_mp_dt: null,
     s_dvc_typ: '',
     s_prd_typ: '',
     s_asset_id: '',
@@ -27,12 +27,23 @@ let AssetDeviceMappingForm = () => {
 
   let currentDate = new Date().toISOString().split('T')[0]
 
-  let [entityMap, setEntityMap] = useState({ data: [] })
+  const handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target;
+    if (name === 's_entity_id_and_name') {
+      setAssetDeviceMapping(prevData => ({
+            ...prevData,
+            s_entity_id_and_name: value,
+            s_entity_id: s_entity_id1
+        }));
+    }
+  }; 
+
+  let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
-        setEntityMap({ data })
+        setEntityNames({ data })
       })
       .catch(error => {
         console.error('Error: ', error)
@@ -41,7 +52,7 @@ let AssetDeviceMappingForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/deviceTypes')
+    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -53,7 +64,7 @@ let AssetDeviceMappingForm = () => {
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAssetType')
+    fetch('http://13.201.79.110:1410/api/v0/getAssetTypeDetails')
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -73,7 +84,7 @@ let AssetDeviceMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
+    fetch('http://13.201.79.110:1410/api/v0/setAssetDeviceMapping', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -113,18 +124,21 @@ let AssetDeviceMappingForm = () => {
                   }`}
                 >
                   Entity:
-                </label>
+                  </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetDeviceMapping.s_entity_id_and_name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
+                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  }}
                 >
                   <option value=''>Select</option>
-                  {entityMap.data && Array.isArray(entityMap.data.data) ? (
-                    entityMap.data.data.map(entity => (
+                  {entityNames.data && Array.isArray(entityNames.data.data) ? (
+                    entityNames.data.data.map(entity => (
                       <option
                         key={entity.s_entity_id}
                         value={entity.s_entity_name}
@@ -134,8 +148,8 @@ let AssetDeviceMappingForm = () => {
                     ))
                   ) : (
                     <option value=''>
-                      {entityMap.data && entityMap.data.message
-                        ? entityMap.data.message
+                      {entityNames.data && entityNames.data.message
+                        ? entityNames.data.message
                         : 'No entities available'}
                     </option>
                   )}
@@ -167,7 +181,7 @@ let AssetDeviceMappingForm = () => {
                   }`}
                 >
                   Asset Type:
-                </label>
+                  </label>
                 <select
                   className='form-select'
                   id='s_asset_typ'
@@ -260,8 +274,8 @@ let AssetDeviceMappingForm = () => {
                   <option value=''>Select</option>
                   {deviceType.data && Array.isArray(deviceType.data.data) ? (
                     deviceType.data.data.map(device => (
-                      <option key={device} value={device}>
-                        {device}
+                      <option key={device.s_device_name} value={device.s_device_id}>
+                        {device.s_device_name}
                       </option>
                     ))
                   ) : (
@@ -403,24 +417,24 @@ let AssetDeviceMappingForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  <option value=''>Airtel GPRS (airtelgprs.com)</option>
-                  <option value=''>Airtel IOT (airteliot.com)</option>
-                  <option value=''>Vodafone WWW (www)</option>
-                  <option value=''>Vodafone IOT (iot.com)</option>
-                  <option value=''>Idea Internet (internet)</option>
-                  <option value=''>Idea isafe (isafe)</option>
-                  <option value=''>BSNL (bsnl))</option>
-                  <option value=''>Jio (jio)</option>
-                  <option value=''>onSAT (onSAT)</option>
-                  <option value=''>Caburn Telecom (intelligence.m2m)</option>
-                  <option value=''>DIGI (diginet)</option>
-                  <option value=''>PWCC (public.pccwglobal.hktdcp)</option>
-                  <option value=''>GTT (internet.cellinkgy.com)</option>
-                  <option value=''>Digicel (web.digicelgy.com)</option>
-                  <option value=''>
+                  <option value='Airtel Gprs'>Airtel GPRS (airtelgprs.com)</option>
+                  <option value='Airtel Iot'>Airtel IOT (airteliot.com)</option>
+                  <option value='Vodafone www'>Vodafone WWW (www)</option>
+                  <option value='Vodafone Iot'>Vodafone IOT (iot.com)</option>
+                  <option value='Idea Internet'>Idea Internet (internet)</option>
+                  <option value='Idea isafe'>Idea isafe (isafe)</option>
+                  <option value='Bsnl'>BSNL (bsnl))</option>
+                  <option value='Jio'>Jio (jio)</option>
+                  <option value='onSAT'>onSAT (onSAT)</option>
+                  <option value='Caburn Telecom'>Caburn Telecom (intelligence.m2m)</option>
+                  <option value='DIGI'>DIGI (diginet)</option>
+                  <option value='PWCC'>PWCC (public.pccwglobal.hktdcp)</option>
+                  <option value='GTT'>GTT (internet.cellinkgy.com)</option>
+                  <option value='Digicel'>Digicel (web.digicelgy.com)</option>
+                  <option value='Claro Ecuador'>
                     Claro Ecuador (internet.claro.com.ec)
                   </option>
-                  <option value=''>TRUPHONE (iot.truphone.com)</option>
+                  <option value='TRUPHONE'>TRUPHONE (iot.truphone.com)</option>
                 </select>
               </div>
               <div className='form-group'>
