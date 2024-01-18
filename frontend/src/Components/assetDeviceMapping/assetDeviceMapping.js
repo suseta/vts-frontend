@@ -74,6 +74,18 @@ let AssetDeviceMappingForm = () => {
       })
   }, [])
 
+  let [vehicleList, setVehicleList] = useState({ data: [] })
+  useEffect(() => {
+    fetch('http://13.201.79.110:1410/api/v0/getVehicleDetails')
+      .then(response => response.json())
+      .then(data => {
+        setVehicleList({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     setAssetDeviceMapping(prevData => ({
@@ -164,14 +176,32 @@ let AssetDeviceMappingForm = () => {
                 >
                   Asset No.:
                 </label>
-                <input
-                  type='text'
+                <select
+                  className='form-select'
                   id='s_asset_id'
                   name='s_asset_id'
                   required
                   value={assetDeviceMapping.s_asset_id}
                   onChange={handleChange}
-                />
+                >
+                  <option value=''>Select</option>
+                  {vehicleList.data && Array.isArray(vehicleList.data.data) ? (
+                    vehicleList.data.data.map(vehicleList => (
+                      <option
+                        key={vehicleList.s_asset_id}
+                        value={vehicleList.s_asset_id}
+                      >
+                        {vehicleList.s_asset_id}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {vehicleList.data && vehicleList.data.message
+                        ? vehicleList.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
               </div>
               <div className='form-group'>
                 <label
