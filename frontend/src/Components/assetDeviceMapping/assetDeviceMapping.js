@@ -91,6 +91,18 @@ let AssetDeviceMappingForm = () => {
       })
   }, [])
 
+  let [vehicleList, setVehicleList] = useState({ data: [] })
+  useEffect(() => {
+    fetch('http://13.201.79.110:1410/api/v0/getVehicleDetails')
+      .then(response => response.json())
+      .then(data => {
+        setVehicleList({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     setAssetDeviceMapping(prevData => ({
