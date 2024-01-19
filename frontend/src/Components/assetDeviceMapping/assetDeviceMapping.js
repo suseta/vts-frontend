@@ -27,16 +27,16 @@ let AssetDeviceMappingForm = () => {
 
   let currentDate = new Date().toISOString().split('T')[0]
 
-  const handleNameChange = (e, s_entity_id1) => {
-    let { name, value } = e.target;
-    if (name === 's_entity_id_and_name') {
-      setAssetDeviceMapping(prevData => ({
-            ...prevData,
-            s_entity_id_and_name: value,
-            s_entity_id: s_entity_id1
-        }));
-    }
-  }; 
+  // let handleNameChange = (e, s_entity_id1) => {
+  //   let { name, value } = e.target
+  //   if (name === 's_entity_id_and_name') {
+  //     setAssetDeviceMapping(prevData => ({
+  //       ...prevData,
+  //       s_entity_id_and_name: value,
+  //       s_entity_id: s_entity_id1
+  //     }))
+  //   }
+  // }
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
@@ -49,6 +49,23 @@ let AssetDeviceMappingForm = () => {
         console.error('Error: ', error)
       })
   }, [])
+
+  let [assetList, setassetList] = useState({ data: [] })
+  let [selectedEntity, setSelectedEntity] = useState('')
+  useEffect(() => {
+    if (selectedEntity) {
+      fetch(
+        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${selectedEntity}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          setassetList({ data })
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
+    }
+  }, [selectedEntity])
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
@@ -80,6 +97,18 @@ let AssetDeviceMappingForm = () => {
       ...prevData,
       [name]: type === 'checkbox' ? checked : value
     }))
+  }
+
+  let handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target
+    if (name === 's_entity_id_and_name') {
+      setAssetDeviceMapping(prevData => ({
+        ...prevData,
+        s_entity_id_and_name: value,
+        s_entity_id: s_entity_id1
+      }))
+      setSelectedEntity(s_entity_id1)
+    }
   }
 
   let handleSubmit = e => {
@@ -124,16 +153,18 @@ let AssetDeviceMappingForm = () => {
                   }`}
                 >
                   Entity:
-                  </label>
+                </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetDeviceMapping.s_entity_id_and_name}
-                  onChange={(e) => {
-                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
-                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  onChange={e => {
+                    let selectedEntity = entityNames.data.data.find(
+                      entity => entity.s_entity_name === e.target.value
+                    )
+                    handleNameChange(e, selectedEntity?.s_entity_id)
                   }}
                 >
                   <option value=''>Select</option>
@@ -164,14 +195,29 @@ let AssetDeviceMappingForm = () => {
                 >
                   Asset No.:
                 </label>
-                <input
-                  type='text'
+                <select
+                  className='form-select'
                   id='s_asset_id'
                   name='s_asset_id'
                   required
                   value={assetDeviceMapping.s_asset_id}
                   onChange={handleChange}
-                />
+                >
+                  <option value=''>Select</option>
+                  {assetList.data && Array.isArray(assetList.data.data) ? (
+                    assetList.data.data.map(asset => (
+                      <option key={asset.s_asset_id} value={asset.s_asset_id}>
+                        {asset.s_asset_id}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {assetList.data && assetList.data.message
+                        ? assetList.data.message
+                        : 'No assets available'}
+                    </option>
+                  )}
+                </select>
               </div>
               <div className='form-group'>
                 <label
@@ -181,7 +227,7 @@ let AssetDeviceMappingForm = () => {
                   }`}
                 >
                   Asset Type:
-                  </label>
+                </label>
                 <select
                   className='form-select'
                   id='s_asset_typ'
@@ -274,7 +320,10 @@ let AssetDeviceMappingForm = () => {
                   <option value=''>Select</option>
                   {deviceType.data && Array.isArray(deviceType.data.data) ? (
                     deviceType.data.data.map(device => (
-                      <option key={device.s_device_name} value={device.s_device_id}>
+                      <option
+                        key={device.s_device_name}
+                        value={device.s_device_id}
+                      >
                         {device.s_device_name}
                       </option>
                     ))
@@ -305,30 +354,37 @@ let AssetDeviceMappingForm = () => {
                 />
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='i_nw_imei_no'
-                  className={`required-label ${
-                    assetDeviceMapping.i_nw_imei_no ? 'required' : ''
-                  }`}
-                >
+                <label htmlFor='i_nw_imei_no'>
                   New Device Id:
+                  {assetDeviceMapping.s_ad_mp_pur !== 'DU' ? (
+                    <span
+                      className={`required-label ${
+                        assetDeviceMapping.i_nw_imei_no ? 'required' : ''
+                      }`}
+                    ></span>
+                  ) : null}
                 </label>
                 <input
                   type='number'
                   id='i_nw_imei_no'
                   name='i_nw_imei_no'
+                  required={assetDeviceMapping.s_ad_mp_pur !== 'DU'}
                   value={assetDeviceMapping.i_nw_imei_no}
                   onChange={handleChange}
+                  disabled={assetDeviceMapping.s_ad_mp_pur === 'DU'}
                 />
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='i_old_imei_no'
-                  className={`required-label ${
-                    assetDeviceMapping.i_old_imei_no ? 'required' : ''
-                  }`}
-                >
+                <label htmlFor='i_old_imei_no'>
                   Existing Device Id:
+                  {assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+                  assetDeviceMapping.s_ad_mp_pur !== 'DU' ? (
+                    <span
+                      className={`required-label ${
+                        assetDeviceMapping.i_old_imei_no ? 'required' : ''
+                      }`}
+                    ></span>
+                  ) : null}
                 </label>
                 <input
                   type='number'
@@ -336,6 +392,11 @@ let AssetDeviceMappingForm = () => {
                   name='i_old_imei_no'
                   value={assetDeviceMapping.i_old_imei_no}
                   onChange={handleChange}
+                  required={
+                    assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+                    assetDeviceMapping.s_ad_mp_pur !== 'DU'
+                  }
+                  disabled={assetDeviceMapping.s_ad_mp_pur === 'NI'}
                 />
               </div>
               <div className='form-group'>
@@ -364,39 +425,45 @@ let AssetDeviceMappingForm = () => {
                 </select>
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='s_old_sim_no'
-                  className={`required-label ${
-                    assetDeviceMapping.s_old_sim_no ? 'required' : ''
-                  }`}
-                >
+                <label htmlFor='s_old_sim_no'>
                   Old SIM No.:
+                  {assetDeviceMapping.s_ad_mp_pur !== 'NI' ? (
+                    <span
+                      className={`required-label ${
+                        assetDeviceMapping.s_old_sim_no ? 'required' : ''
+                      }`}
+                    ></span>
+                  ) : null}
                 </label>
                 <input
                   type='number'
                   id='s_old_sim_no'
                   name='s_old_sim_no'
-                  required
+                  required={assetDeviceMapping.s_ad_mp_pur !== 'NI'}
                   value={assetDeviceMapping.s_old_sim_no || currentDate}
                   onChange={handleChange}
+                  disabled={assetDeviceMapping.s_ad_mp_pur === 'NI'}
                 />
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='s_nw_sim_no'
-                  className={`required-label ${
-                    assetDeviceMapping.s_nw_sim_no ? 'required' : ''
-                  }`}
-                >
+                <label htmlFor='s_nw_sim_no'>
                   New SIM No.:
+                  {assetDeviceMapping.s_ad_mp_pur !== 'DU' ? (
+                    <span
+                      className={`required-label ${
+                        assetDeviceMapping.s_nw_sim_no ? 'required' : ''
+                      }`}
+                    ></span>
+                  ) : null}
                 </label>
                 <input
                   type='number'
                   id='s_nw_sim_no'
                   name='s_nw_sim_no'
-                  required
+                  required={assetDeviceMapping.s_ad_mp_pur !== 'DU'}
                   value={assetDeviceMapping.s_nw_sim_no || currentDate}
                   onChange={handleChange}
+                  disabled={assetDeviceMapping.s_ad_mp_pur === 'DU'}
                 />
               </div>
               <div className='form-group'>
@@ -417,16 +484,22 @@ let AssetDeviceMappingForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  <option value='Airtel Gprs'>Airtel GPRS (airtelgprs.com)</option>
+                  <option value='Airtel Gprs'>
+                    Airtel GPRS (airtelgprs.com)
+                  </option>
                   <option value='Airtel Iot'>Airtel IOT (airteliot.com)</option>
                   <option value='Vodafone www'>Vodafone WWW (www)</option>
                   <option value='Vodafone Iot'>Vodafone IOT (iot.com)</option>
-                  <option value='Idea Internet'>Idea Internet (internet)</option>
+                  <option value='Idea Internet'>
+                    Idea Internet (internet)
+                  </option>
                   <option value='Idea isafe'>Idea isafe (isafe)</option>
                   <option value='Bsnl'>BSNL (bsnl))</option>
                   <option value='Jio'>Jio (jio)</option>
                   <option value='onSAT'>onSAT (onSAT)</option>
-                  <option value='Caburn Telecom'>Caburn Telecom (intelligence.m2m)</option>
+                  <option value='Caburn Telecom'>
+                    Caburn Telecom (intelligence.m2m)
+                  </option>
                   <option value='DIGI'>DIGI (diginet)</option>
                   <option value='PWCC'>PWCC (public.pccwglobal.hktdcp)</option>
                   <option value='GTT'>GTT (internet.cellinkgy.com)</option>
