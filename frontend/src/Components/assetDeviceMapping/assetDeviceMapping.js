@@ -91,18 +91,6 @@ let AssetDeviceMappingForm = () => {
       })
   }, [])
 
-  let [vehicleList, setVehicleList] = useState({ data: [] })
-  useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getVehicleDetails')
-      .then(response => response.json())
-      .then(data => {
-        setVehicleList({ data })
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
-  }, [])
-
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     setAssetDeviceMapping(prevData => ({
@@ -390,7 +378,8 @@ let AssetDeviceMappingForm = () => {
                 <label htmlFor='i_old_imei_no'>
                   Existing Device Id:
                   {assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
-                  assetDeviceMapping.s_ad_mp_pur !== 'DU' ? (
+                  assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+                  assetDeviceMapping.s_ad_mp_pur !== 'UC' ? (
                     <span
                       className={`required-label ${
                         assetDeviceMapping.i_old_imei_no ? 'required' : ''
@@ -406,7 +395,8 @@ let AssetDeviceMappingForm = () => {
                   onChange={handleChange}
                   required={
                     assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
-                    assetDeviceMapping.s_ad_mp_pur !== 'DU'
+                    assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+                    assetDeviceMapping.s_ad_mp_pur !== 'UC'
                   }
                   disabled={assetDeviceMapping.s_ad_mp_pur === 'NI'}
                 />
@@ -439,7 +429,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label htmlFor='s_old_sim_no'>
                   Old SIM No.:
-                  {assetDeviceMapping.s_ad_mp_pur !== 'NI' ? (
+                  {assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+                  assetDeviceMapping.s_ad_mp_pur !== 'UC' ? (
                     <span
                       className={`required-label ${
                         assetDeviceMapping.s_old_sim_no ? 'required' : ''
@@ -451,10 +442,16 @@ let AssetDeviceMappingForm = () => {
                   type='number'
                   id='s_old_sim_no'
                   name='s_old_sim_no'
-                  required={assetDeviceMapping.s_ad_mp_pur !== 'NI'}
+                  required={
+                    assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+                    assetDeviceMapping.s_ad_mp_pur !== 'UC'
+                  }
                   value={assetDeviceMapping.s_old_sim_no || currentDate}
                   onChange={handleChange}
-                  disabled={assetDeviceMapping.s_ad_mp_pur === 'NI'}
+                  disabled={
+                    assetDeviceMapping.s_ad_mp_pur === 'NI' ||
+                    assetDeviceMapping.s_ad_mp_pur === 'UC'
+                  }
                 />
               </div>
               <div className='form-group'>

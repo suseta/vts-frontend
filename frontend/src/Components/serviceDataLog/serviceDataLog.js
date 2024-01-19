@@ -46,14 +46,24 @@ let ServiceDataLogForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
+      <div className={`navbar ${isFormMinimized ? 'minimized' : ''}`}>
+        {/*<div class='navbar'>*/}
         <div class='logo-container'>
           <img src={navLogo} alt='Logo' class='logo' />
           <div className='brand-text'>NavitronicX</div>
+          {/*</div>*/}
+        </div>
+        <div
+          className={`form-minimizer ${isFormMinimized ? 'minimized' : ''}`}
+          onClick={toggleFormMinimizer}
+        >
+          {isFormMinimized ? '+' : '-'}
         </div>
       </div>
-      <div className='wrapper'>
-        <div className='container'>
+      {/*<div className='wrapper'>
+  <div className='container'>*/}
+      <div className={`wrapper ${isFormMinimized ? 'minimized' : ''}`}>
+        <div className={`container ${isFormMinimized ? 'minimized' : ''}`}>
           <h2>Service Data Log</h2>
           <div className='ServiceDataLogForm'>
             <form onSubmit={handleSubmit}>
@@ -64,7 +74,7 @@ let ServiceDataLogForm = () => {
                     serviceDataLog.i_imei_no ? 'required' : ''
                   }`}
                 >
-                  Device Id:
+                  Device Id/IMEI No.:
                 </label>
                 <input
                   type='text'

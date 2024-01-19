@@ -2,8 +2,8 @@
 import React from 'react'
 // import ServiceDataLogForm from './Components/serviceDataLog/serviceDataLog'
 // import AssetDriverMappingForm from './Components/assetDriverMapping/assetDriverMapping'
-import DriverRegistrationForm from './Components/driverRegistration/driverRegistration'
-// import AssetDeviceMappingForm from './Components/assetDeviceMapping/assetDeviceMapping'
+// import DriverRegistrationForm from './Components/driverRegistration/driverRegistration'
+import AssetDeviceMappingForm from './Components/assetDeviceMapping/assetDeviceMapping'
 // import AssetRegistrationForm from './Components/assetRegistration/assetRegistration'
 // import TransporterCreationForm from './Components/transporterCreation/transporterCreation'
 // import DeviceEntryForm from './Components/deviceEntry/deviceEntry'
@@ -25,8 +25,8 @@ function App () {
       {/*<TransporterCreationForm />*/}
       {/*<PlantLocEntryInfoForm />*/}
       {/*<DeviceEntryForm />*/}
-      {/*<AssetDeviceMappingForm />*/}
-      <DriverRegistrationForm />
+      <AssetDeviceMappingForm />
+      {/*<DriverRegistrationForm />*/}
       {/*<AssetDriverMappingForm />*/}
       {/*<ServiceDataLogForm />*/}
       {/* <EntityCreationForm /> */}
