@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './serviceDataLog.css'
 import navLogo from '../../navLogo.jpg'
-import Swal from 'sweetalert2'
 
 let ServiceDataLogForm = () => {
   let [serviceDataLog, setServiceDataLog] = useState({
@@ -10,9 +9,13 @@ let ServiceDataLogForm = () => {
     s_port_no: ''
   })
 
-  let [isFormMinimized, setFormMinimized] = useState(false)
-  const toggleFormMinimizer = () => {
-    setFormMinimized(!isFormMinimized)
+  let [isPortFound, setIsPortFound] = useState(false)
+  let [foundPort, setFoundPort] = useState(null)
+  let handleFindPort = () => {
+    // logic need to be added here
+    let port = '1234'
+    setFoundPort(port)
+    setIsPortFound(true)
   }
 
   let handleChange = e => {
@@ -46,24 +49,14 @@ let ServiceDataLogForm = () => {
 
   return (
     <div>
-      <div className={`navbar ${isFormMinimized ? 'minimized' : ''}`}>
-        {/*<div class='navbar'>*/}
+      <div class='navbar'>
         <div class='logo-container'>
           <img src={navLogo} alt='Logo' class='logo' />
           <div className='brand-text'>NavitronicX</div>
-          {/*</div>*/}
-        </div>
-        <div
-          className={`form-minimizer ${isFormMinimized ? 'minimized' : ''}`}
-          onClick={toggleFormMinimizer}
-        >
-          {isFormMinimized ? '+' : '-'}
         </div>
       </div>
-      {/*<div className='wrapper'>
-  <div className='container'>*/}
-      <div className={`wrapper ${isFormMinimized ? 'minimized' : ''}`}>
-        <div className={`container ${isFormMinimized ? 'minimized' : ''}`}>
+      <div className='wrapper'>
+        <div className='container'>
           <h2>Service Data Log</h2>
           <div className='ServiceDataLogForm'>
             <form onSubmit={handleSubmit}>
@@ -104,19 +97,24 @@ let ServiceDataLogForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_port_no'
-                  className={`required-label ${
-                    serviceDataLog.s_port_no ? 'required' : ''
-                  }`}
+                  className={`required-label ${isPortFound ? 'required' : ''}`}
                 >
                   Port No.:
                 </label>
                 <input
-                  type='number'
+                  type='text'
                   id='s_port_no'
                   name='s_port_no'
-                  value={serviceDataLog.s_port_no}
+                  value={isPortFound ? foundPort : serviceDataLog.s_port_no}
                   onChange={handleChange}
                 />
+                <button
+                  type='button'
+                  className='find-port-button'
+                  onClick={handleFindPort}
+                >
+                  Find Port
+                </button>
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Submit</button>
