@@ -19,29 +19,28 @@ let DeviceEntryForm = () => {
     is_ign_wr: false,
     is_air_wr: false
   })
-  
+
   let [showToggleValue, setShowToggleValue] = useState(false)
   const toggleInfo = () => {
-    setShowToggleValue((prevShowToggleValue) => {
-      setDeviceInfo((prevData) => ({
+    setShowToggleValue(prevShowToggleValue => {
+      setDeviceInfo(prevData => ({
         ...prevData,
-        is_ign_wr: !prevShowToggleValue,
-      }));
-      return !prevShowToggleValue;
-    });
-  };
+        is_ign_wr: !prevShowToggleValue
+      }))
+      return !prevShowToggleValue
+    })
+  }
 
-  let [showIsAirCon,setShowIsAirCon] = useState(false)
+  let [showIsAirCon, setShowIsAirCon] = useState(false)
   const toggleAirInfo = () => {
-    setShowIsAirCon((prevShowToggleValue) => {
-      setDeviceInfo((prevData) => ({
+    setShowIsAirCon(prevShowToggleValue => {
+      setDeviceInfo(prevData => ({
         ...prevData,
-        is_air_wr: !prevShowToggleValue,
-      }));
-      return !prevShowToggleValue;
-    });
-  };
-
+        is_air_wr: !prevShowToggleValue
+      }))
+      return !prevShowToggleValue
+    })
+  }
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
@@ -115,7 +114,7 @@ let DeviceEntryForm = () => {
                   IMEI No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='i_imei_no'
                   name='i_imei_no'
                   required
@@ -157,23 +156,31 @@ let DeviceEntryForm = () => {
                   value={deviceInfo.s_sim_op}
                   onChange={handleChange}
                 >
-                  <option value="">Select</option>
-                  <option value="Airtel Gprs">Airtel Gprs (airtelgprs.com)</option>
-					        <option value="Airtel Iot">Airtel Iot (airteliot.com)</option>
-                  <option value="Vodafone www">Vodafone www (www)</option>
-                  <option value="Vodafone Iot">Vodafone Iot (iot.com)</option>
-                  <option value="Idea Internet">Idea Internet (internet)</option>
-                  <option value="Idea isafe">Idea isafe (isafe)</option>
-                  <option value="Bsnl">Bsnl (bsnl)</option>
-                  <option value="Jio">Jio (jio)</option>
-                  <option value="onSAT">onSAT (onSAT)</option>
-                  <option value="Caburn Telecom">Caburn Telecom (intelligence.m2m)</option>
-                  <option value="DIGI">DIGI (diginet)</option>
-                  <option value="PWCC">PWCC (public.pccwglobal.hktdcp)</option>
-                  <option value="GTT">GTT (internet.cellinkgy.com)</option>
-                  <option value="Digicel">Digicel (web.digicelgy.com)</option>
-                  <option value="Claro Ecuador">Claro Ecuador (internet.claro.com.ec)</option>
-                  <option value="TRUPHONE">TRUPHONE (iot.truphone.com)</option>
+                  <option value=''>Select</option>
+                  <option value='Airtel Gprs'>
+                    Airtel Gprs (airtelgprs.com)
+                  </option>
+                  <option value='Airtel Iot'>Airtel Iot (airteliot.com)</option>
+                  <option value='Vodafone www'>Vodafone www (www)</option>
+                  <option value='Vodafone Iot'>Vodafone Iot (iot.com)</option>
+                  <option value='Idea Internet'>
+                    Idea Internet (internet)
+                  </option>
+                  <option value='Idea isafe'>Idea isafe (isafe)</option>
+                  <option value='Bsnl'>Bsnl (bsnl)</option>
+                  <option value='Jio'>Jio (jio)</option>
+                  <option value='onSAT'>onSAT (onSAT)</option>
+                  <option value='Caburn Telecom'>
+                    Caburn Telecom (intelligence.m2m)
+                  </option>
+                  <option value='DIGI'>DIGI (diginet)</option>
+                  <option value='PWCC'>PWCC (public.pccwglobal.hktdcp)</option>
+                  <option value='GTT'>GTT (internet.cellinkgy.com)</option>
+                  <option value='Digicel'>Digicel (web.digicelgy.com)</option>
+                  <option value='Claro Ecuador'>
+                    Claro Ecuador (internet.claro.com.ec)
+                  </option>
+                  <option value='TRUPHONE'>TRUPHONE (iot.truphone.com)</option>
                 </select>
               </div>
               <div className='form-group'>
@@ -196,7 +203,10 @@ let DeviceEntryForm = () => {
                   <option value=''>Select</option>
                   {deviceType.data && Array.isArray(deviceType.data.data) ? (
                     deviceType.data.data.map(device => (
-                      <option key={device.s_device_name} value={device.s_device_id}>
+                      <option
+                        key={device.s_device_name}
+                        value={device.s_device_id}
+                      >
                         {device.s_device_name}
                       </option>
                     ))

@@ -1,6 +1,7 @@
 // src/App.js
 import React from 'react'
-import ServiceDataLogForm from './Components/serviceDataLog/serviceDataLog'
+import PortDeviceMappingForm from './Components/portDeviceMapping/portDeviceMapping'
+// import ServiceDataLogForm from './Components/serviceDataLog/serviceDataLog'
 // import AssetDriverMappingForm from './Components/assetDriverMapping/assetDriverMapping'
 // import DriverRegistrationForm from './Components/driverRegistration/driverRegistration'
 // import AssetDeviceMappingForm from './Components/assetDeviceMapping/assetDeviceMapping'
@@ -28,7 +29,7 @@ function App () {
       {/*<AssetDeviceMappingForm />*/}
       {/*<DriverRegistrationForm />*/}
       {/*<AssetDriverMappingForm />*/}
-      <ServiceDataLogForm />
+      {/*<ServiceDataLogForm />*/}
       {/* <EntityCreationForm /> */}
       {/* <AssetEntryInfoForm/> */}
       {/*<ConsigneeEntryInfoForm/>*/}
@@ -36,6 +37,7 @@ function App () {
       {/* <TransporterCreationForm /> */}
       {/* <PlantLocEntryInfoForm/> */}
       {/* <DeviceEntryForm/> */}
+      <PortDeviceMappingForm />
     </div>
   )
 }
