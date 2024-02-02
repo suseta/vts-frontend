@@ -1,8 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import './driverRegistration.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let DriverRegistrationForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_drv_id: '',
+    s_entity_id_and_name: '',
+    s_drv_name: '',
+    s_entity_id: '',
+    s_drv_mail: '',
+    s_drv_mb_no: '',
+    s_drv_add: '',
+    s_drv_cntry: '',
+    s_drv_state: '',
+    s_drv_city: '',
+    s_drv_pin: '',
+    s_lic_no: '',
+    lic_vld_dt: null,
+    s_smart_crd_no: '',
+    s_hzrd_crt_no: '',
+    hzrd_vld_dt: null,
+    med_tst_dt: null,
+    prd_trn_dt: null,
+    ddt_exp_dt: null,
+    cab_vld_dt: null,
+    s_drv_rmk: '',
+    s_covid_status: '',
+    s_drv_img_path: '',
+    s_drv_lic_img_path: ''
+  }
+
   let [driverRegDetails, setDriverRegDetails] = useState({
     s_drv_id: '',
     s_entity_id_and_name: '',
@@ -88,38 +117,44 @@ let DriverRegistrationForm = () => {
     }
   }
 
-  let handleChange = e => {
-    const { name, value } = e.target
-    setDriverRegDetails(prevData => ({ ...prevData, [name]: value }))
-  }
-  const [profilePic, setProfilePic] = useState(null)
-  const handleDriverChange = e => {
+  let [profilePic, setProfilePic] = useState(null)
+  let handleDriverChange = e => {
     setProfilePic(e.target.files[0])
   }
 
-  const [licensePic, setLicensePic] = useState(null)
-  const handleLicenseChange = e => {
+  let [licensePic, setLicensePic] = useState(null)
+  let handleLicenseChange = e => {
     setLicensePic(e.target.files[0])
+  }
+
+  let resetForm = () => {
+    setDriverRegDetails(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
+  let handleChange = e => {
+    let { name, value } = e.target
+    setDriverRegDetails(prevData => ({ ...prevData, [name]: value }))
   }
 
   let handleSubmit = async e => {
     e.preventDefault()
-    const driverRegDetailsObj = new FormData()
-    for (const key in driverRegDetails) {
+    let driverRegDetailsObj = new FormData()
+    for (let key in driverRegDetails) {
       driverRegDetailsObj.append(key, driverRegDetails[key])
     }
     driverRegDetailsObj.append('s_drv_img_path', profilePic)
     driverRegDetailsObj.append('s_drv_lic_img_path', licensePic)
     try {
-      const response = await fetch(
-        'http://13.201.79.110:1410/api/v0/addDriver',
-        {
-          method: 'POST',
-          body: driverRegDetailsObj
-        }
-      )
+      let response = await fetch('http://13.201.79.110:1410/api/v0/addDriver', {
+        method: 'POST',
+        body: driverRegDetailsObj
+      })
       if (response.ok) {
-        const data = await response.json()
+        let data = await response.json()
         console.log('Success in Driver Registration Form:', data)
         alert('Driver registration done successfully!')
       } else {
@@ -135,12 +170,6 @@ let DriverRegistrationForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Driver Registration</h2>
@@ -162,7 +191,7 @@ let DriverRegistrationForm = () => {
                   required
                   value={driverRegDetails.s_entity_id_and_name}
                   onChange={e => {
-                    const selectedEntity = entityMap.data.data.find(
+                    let selectedEntity = entityMap.data.data.find(
                       entity => entity.s_entity_name === e.target.value
                     )
                     handleFileChange(e, selectedEntity?.s_entity_id)
@@ -532,15 +561,28 @@ let DriverRegistrationForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

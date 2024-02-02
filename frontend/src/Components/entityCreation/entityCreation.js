@@ -1,10 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import './entityCreation.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 let EntityCreationForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_entity_id: '',
+    s_entity_name: '',
+    s_prnt_entity: '',
+    s_entity_typ: '',
+    s_entity_grp: '',
+    s_entity_mail: '',
+    s_entity_pass: '',
+    s_entity_cnf_pass: '',
+    s_entity_mb_no: '',
+    s_entity_add: '',
+    s_entity_pin: '',
+    s_entity_country: '',
+    s_entity_state: '',
+    s_entity_city: '',
+    entity_tmz: '',
+    b_is_billing: false,
+    s_billing_name: '',
+    s_billing_typ: '',
+    s_billing_md: '',
+    s_billing_svr_chrg: 0,
+    s_msr_unit: '',
+    s_gst_no: '',
+    s_sap_code: '',
+    s_pan_no: '',
+    s_svr_typ: '',
+    s_mb_actv: '',
+    i_ovr_spd_lmt: 50,
+    s_rep_wp: '',
+    s_frc_entity_map: '',
+    b_is_fnd: false,
+    s_fnd_rt: ''
+  }
+
   let [entityRegDetails, setEntityRegDetails] = useState({
     s_entity_id: '',
     s_entity_name: '',
@@ -120,6 +156,14 @@ let EntityCreationForm = () => {
 
   let [passwordMatch, setPasswordMatch] = useState(true)
 
+  let resetForm = () => {
+    setEntityRegDetails(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     if (name === 's_entity_cnf_pass') {
@@ -155,12 +199,6 @@ let EntityCreationForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Entity Creation Form</h2>
@@ -807,15 +845,28 @@ let EntityCreationForm = () => {
               )}
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

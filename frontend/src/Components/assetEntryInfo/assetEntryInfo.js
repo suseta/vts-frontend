@@ -1,12 +1,27 @@
 import React, { useState } from 'react'
 import './assetEntryInfo.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let AssetEntryInfoForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_asset_typ: '',
+    s_asset_cap: ''
+  }
+
   let [assetData, setAssetData] = useState({
     s_asset_typ: '',
     s_asset_cap: ''
   })
+
+  let resetForm = () => {
+    setAssetData(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
 
   let handleChange = e => {
     let { name, value } = e.target
@@ -35,12 +50,6 @@ let AssetEntryInfoForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div class='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Info Entry (Information Insert For Dropdown)</h2>
@@ -68,15 +77,28 @@ let AssetEntryInfoForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

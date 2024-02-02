@@ -1,14 +1,31 @@
 import React, { useState } from 'react'
 import './portDeviceMapping.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let PortDeviceMappingForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    i_imei_no: '',
+    i_port_no: '',
+    prt_dvc_mp_dt: '',
+    prt_dvc_unmp_dt: ''
+  }
+
   let [portDeviceMapping, setPortDeviceMapping] = useState({
     i_imei_no: '',
     i_port_no: '',
     prt_dvc_mp_dt: '',
     prt_dvc_unmp_dt: ''
   })
+
+  let resetForm = () => {
+    setPortDeviceMapping(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
@@ -41,12 +58,6 @@ let PortDeviceMappingForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Port Device Mapping</h2>
@@ -118,15 +129,28 @@ let PortDeviceMappingForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import './assetRegistration.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let AssetRegistrationForm = () => {
-  let [assetRegDetails, setAssetRegDetails] = useState({
+  let navigate = useNavigate()
+
+  let initialState = {
     s_asset_id: null,
-    s_entity_id:null,
-    s_asset_mk:null,
-    s_asset_mdl:null,
-    s_entity_id_and_name:null,
-    s_trans_name:null, 
-    s_fuel_typ:null,
-    s_asset_cap:null,
-    s_asset_typ:null,
-    s_site_loc:null,
-    i_bat_volt:null,
-    i_mileage:null,
-    idle_time:null,
+    s_entity_id: null,
+    s_asset_mk: null,
+    s_asset_mdl: null,
+    s_entity_id_and_name: null,
+    s_trans_name: null,
+    s_fuel_typ: null,
+    s_asset_cap: null,
+    s_asset_typ: null,
+    s_site_loc: null,
+    i_bat_volt: null,
+    i_mileage: null,
+    idle_time: null,
     reg_dt: null,
-    mfg_yr:null,
+    mfg_yr: null,
     reg_vld_dt: null,
     gt_pass_vld_dt: null,
     ftns_crt_vld_dt: null,
@@ -31,11 +33,46 @@ let AssetRegistrationForm = () => {
     rd_permit_vld_dt: null,
     bat_pur_dt: null,
     bat_exp_dt: null,
-    i_std_km:null,
+    i_std_km: null,
     peso_lic_dt: null,
     rule_18_dt: null,
     rule_19_dt: null,
-    s_fnd_dvc_id:null
+    s_fnd_dvc_id: null
+  }
+
+  let [assetRegDetails, setAssetRegDetails] = useState({
+    s_asset_id: null,
+    s_entity_id: null,
+    s_asset_mk: null,
+    s_asset_mdl: null,
+    s_entity_id_and_name: null,
+    s_trans_name: null,
+    s_fuel_typ: null,
+    s_asset_cap: null,
+    s_asset_typ: null,
+    s_site_loc: null,
+    i_bat_volt: null,
+    i_mileage: null,
+    idle_time: null,
+    reg_dt: null,
+    mfg_yr: null,
+    reg_vld_dt: null,
+    gt_pass_vld_dt: null,
+    ftns_crt_vld_dt: null,
+    plt_crt_vld_dt: null,
+    ins_vld_dt: null,
+    state_permit_vld_dt: null,
+    nat_permit_vld_dt: null,
+    intrnat_permit_vld_dt: null,
+    gds_permit_vld_dt: null,
+    rd_permit_vld_dt: null,
+    bat_pur_dt: null,
+    bat_exp_dt: null,
+    i_std_km: null,
+    peso_lic_dt: null,
+    rule_18_dt: null,
+    rule_19_dt: null,
+    s_fnd_dvc_id: null
   })
 
   let currentDate = new Date().toISOString().split('T')[0]
@@ -45,16 +82,24 @@ let AssetRegistrationForm = () => {
 
   let hourList = Array.from({ length: 24 }, (_, index) => index + 1)
 
-  const handleNameChange = (e, s_entity_id1) => {
-    let { name, value } = e.target;
+  let resetForm = () => {
+    setAssetRegDetails(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
+  let handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target
     if (name === 's_entity_id_and_name') {
       setAssetRegDetails(prevData => ({
-            ...prevData,
-            s_entity_id_and_name: value,
-            s_entity_id: s_entity_id1
-        }));
+        ...prevData,
+        s_entity_id_and_name: value,
+        s_entity_id: s_entity_id1
+      }))
     }
-  }; 
+  }
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
@@ -69,19 +114,20 @@ let AssetRegistrationForm = () => {
   }, [])
 
   let [transporter, setTransporter] = useState({ data: [] })
-  useEffect(() => {   
-    if(assetRegDetails.s_entity_id){
-      fetch(`http://13.201.79.110:1410/api/v0/getTransporterDetails?s_entity_id=${assetRegDetails.s_entity_id}`)
-      .then(response => response.json())
-      .then(data => {
-        setTransporter({ data })
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
+  useEffect(() => {
+    if (assetRegDetails.s_entity_id) {
+      fetch(
+        `http://13.201.79.110:1410/api/v0/getTransporterDetails?s_entity_id=${assetRegDetails.s_entity_id}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          setTransporter({ data })
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
     }
-    } , [assetRegDetails.s_entity_id])
-    
+  }, [assetRegDetails.s_entity_id])
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
@@ -138,12 +184,6 @@ let AssetRegistrationForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Registration</h2>
@@ -153,20 +193,22 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_entity_id_and_name'
                   className={`required-label ${
-                    assetRegDetails.s_entity_id_and_name ? 'required' :null
+                    assetRegDetails.s_entity_id_and_name ? 'required' : null
                   }`}
                 >
                   Entity:
-                  </label>
+                </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetRegDetails.s_entity_id_and_name}
-                  onChange={(e) => {
-                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
-                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  onChange={e => {
+                    let selectedEntity = entityNames.data.data.find(
+                      entity => entity.s_entity_name === e.target.value
+                    )
+                    handleNameChange(e, selectedEntity?.s_entity_id)
                   }}
                 >
                   <option value=''>Select</option>
@@ -221,7 +263,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_asset_id'
                   className={`required-label ${
-                    assetRegDetails.s_asset_id ? 'required' :null
+                    assetRegDetails.s_asset_id ? 'required' : null
                   }`}
                 >
                   Asset No.:
@@ -239,7 +281,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_asset_typ'
                   className={`required-label ${
-                    assetRegDetails.s_asset_typ ? 'required' :null
+                    assetRegDetails.s_asset_typ ? 'required' : null
                   }`}
                 >
                   Asset Type:
@@ -319,7 +361,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='s_fuel_typ'
                   className={`required-label ${
-                    assetRegDetails.s_fuel_typ ? 'required' :null
+                    assetRegDetails.s_fuel_typ ? 'required' : null
                   }`}
                 >
                   Fuel Type:
@@ -341,7 +383,7 @@ let AssetRegistrationForm = () => {
                 <label
                   htmlFor='i_mileage'
                   className={`required-label ${
-                    assetRegDetails.i_mileage ? 'required' :null
+                    assetRegDetails.i_mileage ? 'required' : null
                   }`}
                 >
                   Mileage (KM/L):
@@ -598,8 +640,22 @@ let AssetRegistrationForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>

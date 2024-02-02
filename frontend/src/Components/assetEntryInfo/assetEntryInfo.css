@@ -117,71 +117,7 @@ body {
     background-color: #45a049;
   }
   
-  .navbar {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #4c56b3;
-    overflow: hidden;
-    z-index: 1000;
-    height: 60px;
-  }
-  
-  .navbar a {
-    display: inline-block;
-    color: rgb(84, 48, 243);
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-weight: bolder;
-    font-size: 32px;
-    color: #040768;
-    -webkit-text-stroke: 1px #fafafa;
-    position: relative;
-    z-index: 2;
-    height: 100%;
-  }
-  
-  .navbar .brand-text {
-    display: inline-block;
-    color: rgb(97, 3, 3);
-    text-decoration: none;
-    font-weight: bolder;
-    font-size: 34px;
-    color: #040761;
-    -webkit-text-stroke: 1px #62baf5;
-    padding: 14px 16px;
-    font-family: 'Verdana', sans-serif;
-    font-style: italic;
-  }
-  
-  .navbar .brand-text span {
-    text-shadow: 5px 10px 20px rgba(225, 236, 209, 0.753);
-  }
-  
-  .logo {
-    height: 50px;
-    width: 50px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    margin-left: 10px;
-    border-radius: 50%;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    box-shadow: 0 0 10px rgba(243, 236, 236, 0.5);
-    background-color: #9bb7f5;
-    border-radius: 50px;
-    margin-left: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  
-  .AssetRegistrationForm form {
+  .AssetEntryInfoForm form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -194,8 +130,8 @@ body {
     margin-left: 1px
   }
 
-  .AssetRegistrationForm form input,
-  .AssetRegistrationForm form select {
+  .AssetEntryInfoForm form input,
+  .AssetEntryInfoForm form select {
     width: 40%;
     padding: 8px;
     box-sizing: border-box;
@@ -205,17 +141,17 @@ body {
     background-color: #f2f2f2;
   }
   
-  .AssetRegistrationForm form div.full-width {
+  .AssetEntryInfoForm form div.full-width {
     margin-right: 0;
   }
 
-  .AssetRegistrationForm form .form-group {
+  .AssetEntryInfoForm form .form-group {
     flex: 0 0 calc(48% - 10px);
     margin-right: 10px;
     margin-bottom: 10px;
   }
 
-  .AssetRegistrationForm form label {
+  .AssetEntryInfoForm form label {
     display:inline-block;
     margin-bottom: 10px;
     margin-right: 30px;
@@ -223,7 +159,7 @@ body {
     color: #333;
   }
   
-  .AssetRegistrationForm form .form-buttons {
+  .AssetEntryInfoForm form .form-buttons {
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -231,7 +167,7 @@ body {
     align-items: center;
   }
   
-  .AssetRegistrationForm form button {
+  .AssetEntryInfoForm form button {
     background-color: #0de732;
     color: white;
     padding: 10px 15px;
@@ -242,10 +178,21 @@ body {
     margin-left: 1000px;
   }
   
-  .AssetRegistrationForm form button.cancel-button {
+  .AssetEntryInfoForm form button.cancel-button {
     background-color: #808080;
     color: #f1eaea;
     border: 1px solid #f5f0f0;
+    margin-left: 10px;
+  }
+
+  .AssetEntryInfoForm form button.refresh-button {
+    background-color: #ee612e; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
     margin-left: 10px;
   }
   
@@ -255,12 +202,12 @@ body {
   
   /* Making the form responsive */
   @media screen and (max-width: 768px) {
-    .AssetRegistrationForm form div {
+    .AssetEntryInfoForm form div {
       flex: 100%;
       margin-right: 0;
     }
-    .AssetRegistrationForm form button,
-    .AssetRegistrationForm form button.cancel-button {
+    .AssetEntryInfoForm form button,
+    .AssetEntryInfoForm form button.cancel-button {
       width: 100%;
       margin-left: 0;
       margin-top: 10px;
@@ -423,20 +370,6 @@ button:hover {
 
 .wrapper {
   display: flex;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #4c56b3;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Making the form responsive */

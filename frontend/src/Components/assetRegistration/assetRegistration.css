@@ -70,70 +70,6 @@
     background-color: #45a049;
   }
   
-  .navbar {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #4c56b3;
-    overflow: hidden;
-    z-index: 1000;
-    height: 60px;
-  }
-  
-  .navbar a {
-    display: inline-block;
-    color: rgb(84, 48, 243);
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-weight: bolder;
-    font-size: 32px;
-    color: #040768;
-    -webkit-text-stroke: 1px #fafafa;
-    position: relative;
-    z-index: 2;
-    height: 100%;
-  }
-  
-  .navbar .brand-text {
-    display: inline-block;
-    color: rgb(97, 3, 3);
-    text-decoration: none;
-    font-weight: bolder;
-    font-size: 34px;
-    color: #040761;
-    -webkit-text-stroke: 1px #62baf5;
-    padding: 14px 16px;
-    font-family: 'Verdana', sans-serif;
-    font-style: italic;
-  }
-  
-  .navbar .brand-text span {
-    text-shadow: 5px 10px 20px rgba(225, 236, 209, 0.753);
-  }
-  
-  .logo {
-    height: 50px;
-    width: 50px;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    margin-left: 10px;
-    border-radius: 50%;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    box-shadow: 0 0 10px rgba(243, 236, 236, 0.5);
-    background-color: #9bb7f5;
-    border-radius: 50px;
-    margin-left: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  
   .AssetRegistrationForm form {
     display: flex;
     flex-wrap: wrap;
@@ -201,23 +137,20 @@
     border: 1px solid #f5f0f0;
     margin-left: 10px;
   }
+
+  .AssetRegistrationForm form button.refresh-button {
+    background-color: #ee612e; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+  }
   
   .wrapper {
     display: flex;
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #4c56b3;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
   
   /* Making the form responsive */

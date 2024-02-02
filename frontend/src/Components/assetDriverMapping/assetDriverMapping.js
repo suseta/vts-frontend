@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import './assetDriverMapping.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../formDesign/navbar'
+import Footer from '../formDesign/footer'
 
 let AssetDriverMappingForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_entity_id: '',
+    s_entity_id_and_name: '',
+    s_asset_id: '',
+    s_drv1_name: '',
+    s_drv2_name: ''
+  }
+
   let [assetDriverMapping, setAssetDriverMapping] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
@@ -12,15 +24,15 @@ let AssetDriverMappingForm = () => {
   })
 
   const handleNameChange = (e, s_entity_id1) => {
-    let { name, value } = e.target;
+    let { name, value } = e.target
     if (name === 's_entity_id_and_name') {
       setAssetDriverMapping(prevData => ({
-            ...prevData,
-            s_entity_id_and_name: value,
-            s_entity_id: s_entity_id1
-        }));
+        ...prevData,
+        s_entity_id_and_name: value,
+        s_entity_id: s_entity_id1
+      }))
     }
-  }; 
+  }
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
@@ -35,34 +47,44 @@ let AssetDriverMappingForm = () => {
   }, [])
 
   let [assetNo, setAssetNo] = useState({ data: [] })
-  useEffect(() => {   
-    if(assetDriverMapping.s_entity_id){
-      fetch(`http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`)
-      .then(response => response.json())
-      .then(data => {
-        setAssetNo({ data })
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
+  useEffect(() => {
+    if (assetDriverMapping.s_entity_id) {
+      fetch(
+        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          setAssetNo({ data })
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
     }
-    } , [assetDriverMapping.s_entity_id])
+  }, [assetDriverMapping.s_entity_id])
 
-
-    
   let [driverName, setDriverName] = useState({ data: [] })
-  useEffect(() => {   
-    if(assetDriverMapping.s_entity_id){
-      fetch(`http://13.201.79.110:1410/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`)
-      .then(response => response.json())
-      .then(data => {
-        setDriverName({ data })
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
+  useEffect(() => {
+    if (assetDriverMapping.s_entity_id) {
+      fetch(
+        `http://13.201.79.110:1410/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          setDriverName({ data })
+        })
+        .catch(error => {
+          console.error('Error: ', error)
+        })
     }
-    } , [assetDriverMapping.s_entity_id])
+  }, [assetDriverMapping.s_entity_id])
+
+  let resetForm = () => {
+    setAssetDriverMapping(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
@@ -95,12 +117,7 @@ let AssetDriverMappingForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
+      <Navbar />
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Driver Mapping</h2>
@@ -114,16 +131,18 @@ let AssetDriverMappingForm = () => {
                   }`}
                 >
                   Entity:
-                  </label>
+                </label>
                 <select
                   className='form-select'
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
                   value={assetDriverMapping.s_entity_id_and_name}
-                  onChange={(e) => {
-                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
-                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  onChange={e => {
+                    const selectedEntity = entityNames.data.data.find(
+                      entity => entity.s_entity_name === e.target.value
+                    )
+                    handleNameChange(e, selectedEntity?.s_entity_id)
                   }}
                 >
                   <option value=''>Select</option>
@@ -239,15 +258,29 @@ let AssetDriverMappingForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
+      <Footer />
     </div>
   )
 }

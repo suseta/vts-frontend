@@ -1,8 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import './assetDeviceMapping.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let AssetDeviceMappingForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_entity_id: '',
+    s_entity_id_and_name: '',
+    s_ad_mp_pur: '',
+    asset_dvc_mp_dt: null,
+    s_dvc_typ: '',
+    s_prd_typ: '',
+    s_asset_id: '',
+    s_asset_typ: '',
+    i_nw_imei_no: '',
+    i_old_imei_no: '',
+    s_trk_typ: '',
+    s_old_sim_no: '',
+    s_nw_sim_no: '',
+    s_sim_op: '',
+    s_mx_spd: '',
+    s_crct_spd: '',
+    s_svr_eng_name: '',
+    s_svr_eng_mail: '',
+    s_svr_eng_mb_no: ''
+  }
+
   let [assetDeviceMapping, setAssetDeviceMapping] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
@@ -26,17 +50,6 @@ let AssetDeviceMappingForm = () => {
   })
 
   let currentDate = new Date().toISOString().split('T')[0]
-
-  // let handleNameChange = (e, s_entity_id1) => {
-  //   let { name, value } = e.target
-  //   if (name === 's_entity_id_and_name') {
-  //     setAssetDeviceMapping(prevData => ({
-  //       ...prevData,
-  //       s_entity_id_and_name: value,
-  //       s_entity_id: s_entity_id1
-  //     }))
-  //   }
-  // }
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
@@ -91,6 +104,14 @@ let AssetDeviceMappingForm = () => {
       })
   }, [])
 
+  let resetForm = () => {
+    setAssetDeviceMapping(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     setAssetDeviceMapping(prevData => ({
@@ -134,12 +155,6 @@ let AssetDeviceMappingForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Device Mapping</h2>
@@ -608,15 +623,28 @@ let AssetDeviceMappingForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

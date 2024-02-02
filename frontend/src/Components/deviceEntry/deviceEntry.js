@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import './deviceEntry.css'
-import navLogo from '../../navLogo.jpg'
-import { faL } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 let DeviceEntryForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    i_imei_no: '',
+    s_sim_no: '',
+    s_sim_op: '',
+    s_dvc_typ: '',
+    dvc_mdl_name: '',
+    dvc_timezone: '',
+    dvc_mfg_dt: '',
+    dvc_add_dt: '',
+    dvc_dlt_dt: null,
+    s_atd: '',
+    s_dvc_status: '',
+    is_ign_wr: false,
+    is_air_wr: false
+  }
+
   let [deviceInfo, setDeviceInfo] = useState({
     i_imei_no: '',
     s_sim_no: '',
@@ -21,7 +38,7 @@ let DeviceEntryForm = () => {
   })
 
   let [showToggleValue, setShowToggleValue] = useState(false)
-  const toggleInfo = () => {
+  let toggleInfo = () => {
     setShowToggleValue(prevShowToggleValue => {
       setDeviceInfo(prevData => ({
         ...prevData,
@@ -32,7 +49,7 @@ let DeviceEntryForm = () => {
   }
 
   let [showIsAirCon, setShowIsAirCon] = useState(false)
-  const toggleAirInfo = () => {
+  let toggleAirInfo = () => {
     setShowIsAirCon(prevShowToggleValue => {
       setDeviceInfo(prevData => ({
         ...prevData,
@@ -66,6 +83,14 @@ let DeviceEntryForm = () => {
       })
   }, [])
 
+  let resetForm = () => {
+    setDeviceInfo(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
   let handleChange = e => {
     let { name, value } = e.target
     setDeviceInfo(prevData => ({ ...prevData, [name]: value }))
@@ -93,12 +118,6 @@ let DeviceEntryForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div class='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Device Entry Form</h2>
@@ -368,15 +387,28 @@ let DeviceEntryForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }

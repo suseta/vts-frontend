@@ -1,10 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import './transporterCreation.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 let TransporterCreationForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    s_entity_id: '',
+    s_entity_id_and_name: '',
+    s_trans_id: '',
+    s_trans_name: '',
+    trans_tmz: '',
+    s_trans_add: '',
+    s_trans_mail: '',
+    s_trans_mb_no: '',
+    s_trans_usr: '',
+    s_trans_pass: '',
+    s_trans_cnf_pass: '',
+    s_trans_inact_tm: '',
+    s_trans_start_dt: null,
+    s_trans_due_dt: null,
+    s_trans_ext_dt: null,
+    s_trans_act_status: '',
+    s_trans_pan: '',
+    s_vh_sub_sync: '',
+    s_vh_sub_end: '',
+    b_is_bank: false,
+    s_trans_bnk: '',
+    s_trans_brn: '',
+    s_trans_acc_no: '',
+    s_trans_ifsc_cd: ''
+  }
+
   let currentDate = new Date().toISOString().split('T')[0]
   let defaultEndDate = () => {
     let oneYearLater = new Date()
@@ -13,8 +42,8 @@ let TransporterCreationForm = () => {
   }
 
   let [transporterRegDetails, setTransporterRegDetails] = useState({
-    s_entity_id:'',
-    s_entity_id_and_name:'',
+    s_entity_id: '',
+    s_entity_id_and_name: '',
     s_trans_id: '',
     s_trans_name: '',
     trans_tmz: '',
@@ -53,16 +82,16 @@ let TransporterCreationForm = () => {
   let toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword)
   }
-  const handleNameChange = (e, s_entity_id1) => {
-    let { name, value } = e.target;
+  let handleNameChange = (e, s_entity_id1) => {
+    let { name, value } = e.target
     if (name === 's_entity_id_and_name') {
-        setTransporterRegDetails(prevData => ({
-            ...prevData,
-            s_entity_id_and_name: value,
-            s_entity_id: s_entity_id1
-        }));
+      setTransporterRegDetails(prevData => ({
+        ...prevData,
+        s_entity_id_and_name: value,
+        s_entity_id: s_entity_id1
+      }))
     }
-  }; 
+  }
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
     fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
@@ -88,6 +117,14 @@ let TransporterCreationForm = () => {
   }, [])
 
   let [passwordMatch, setPasswordMatch] = useState(true)
+
+  let resetForm = () => {
+    setTransporterRegDetails(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
@@ -123,12 +160,6 @@ let TransporterCreationForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Transporter/Vendor Creation Form</h2>
@@ -149,9 +180,11 @@ let TransporterCreationForm = () => {
                   name='s_entity_id_and_name'
                   required
                   value={transporterRegDetails.s_entity_id_and_name}
-                  onChange={(e) => {
-                    const selectedEntity = entityNames.data.data.find(entity => entity.s_entity_name === e.target.value);
-                    handleNameChange(e, selectedEntity?.s_entity_id);
+                  onChange={e => {
+                    let selectedEntity = entityNames.data.data.find(
+                      entity => entity.s_entity_name === e.target.value
+                    )
+                    handleNameChange(e, selectedEntity?.s_entity_id)
                   }}
                 >
                   <option value=''>Select</option>
@@ -609,17 +642,29 @@ let TransporterCreationForm = () => {
               )}
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
     </div>
   )
 }
 export default TransporterCreationForm
-

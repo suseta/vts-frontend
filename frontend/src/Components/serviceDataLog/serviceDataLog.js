@@ -1,8 +1,16 @@
 import React, { useState } from 'react'
 import './serviceDataLog.css'
-import navLogo from '../../navLogo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 let ServiceDataLogForm = () => {
+  let navigate = useNavigate()
+
+  let initialState = {
+    i_imei_no: '',
+    date: '',
+    s_port_no: ''
+  }
+
   let [serviceDataLog, setServiceDataLog] = useState({
     i_imei_no: '',
     date: '',
@@ -11,6 +19,15 @@ let ServiceDataLogForm = () => {
 
   let [isPortFound, setIsPortFound] = useState(false)
   let [foundPort, setFoundPort] = useState(null)
+
+  let resetForm = () => {
+    setServiceDataLog(initialState)
+  }
+
+  let refreshPage = () => {
+    window.location.reload(true)
+  }
+
   let handleFindPort = () => {
     // logic need to be added here
     let port = '1234'
@@ -49,12 +66,6 @@ let ServiceDataLogForm = () => {
 
   return (
     <div>
-      <div class='navbar'>
-        <div class='logo-container'>
-          <img src={navLogo} alt='Logo' class='logo' />
-          <div className='brand-text'>NavitronicX</div>
-        </div>
-      </div>
       <div className='wrapper'>
         <div className='container'>
           <h2>Service Data Log</h2>
@@ -70,7 +81,7 @@ let ServiceDataLogForm = () => {
                   Device Id/IMEI No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='i_imei_no'
                   name='i_imei_no'
                   value={serviceDataLog.i_imei_no}
@@ -102,7 +113,7 @@ let ServiceDataLogForm = () => {
                   Port No.:
                 </label>
                 <input
-                  type='text'
+                  type='number'
                   id='s_port_no'
                   name='s_port_no'
                   value={isPortFound ? foundPort : serviceDataLog.s_port_no}
@@ -118,15 +129,29 @@ let ServiceDataLogForm = () => {
               </div>
               <div class='form-buttons'>
                 <button type='submit'>Submit</button>
-                <button type='button' className='cancel-button'>
+                <button
+                  type='button'
+                  className='cancel-button'
+                  onClick={() => {
+                    resetForm()
+                    navigate(-1)
+                  }}
+                >
                   Cancel
+                </button>
+                <button
+                  type='button'
+                  className='refresh-button'
+                  onClick={refreshPage}
+                >
+                  Refresh
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <div className='footer'>© 2023 NavitronicX. All rights reserved.</div>
+      {/*<div className='footer'>© 2023 NavitronicX. All rights reserved.</div>*/}
     </div>
   )
 }
