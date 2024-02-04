@@ -25,7 +25,7 @@ let ServiceDataLogForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload(true)
+    navigate('.', { replace: true })
   }
 
   let handleFindPort = () => {

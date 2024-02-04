@@ -87,7 +87,7 @@ let AssetRegistrationForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload(true)
+    navigate('.', { replace: true })
   }
 
   let handleNameChange = (e, s_entity_id1) => {

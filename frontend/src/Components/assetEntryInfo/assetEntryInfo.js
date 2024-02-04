@@ -20,7 +20,7 @@ let AssetEntryInfoForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload(true)
+    navigate('.', { replace: true })
   }
 
   let handleChange = e => {
