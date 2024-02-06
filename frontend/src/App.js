@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react'
+import React, { useState, Suspense, lazy } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import Navbar from './Components/formDesign/navbar.js'
 import Footer from './Components/formDesign/footer.js'
@@ -66,35 +66,35 @@ function App() {
       <div className="content-container">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/entityCreation" element={<EntityCreationForm />} />
+            <Route path="/sid=S01&sname=entityCreation" element={<EntityCreationForm />} />
             <Route
-              path="/transporterCreation"
+              path="/sid=S02&sname=transporterCreation"
               element={<TransporterCreationForm />}
             />
-            <Route path="/assetEntryInfo" element={<AssetEntryInfoForm />} />
+            <Route path="/sid=S03&sname=assetEntryInfo" element={<AssetEntryInfoForm />} />
             <Route
-              path="/assetRegistration"
+              path="/sid=S04&sname=assetRegistration"
               element={<AssetRegistrationForm />}
             />
             <Route
-              path="/assetDeviceMapping"
+              path="/sid=S05&sname=assetDeviceMapping"
               element={<AssetDeviceMappingForm />}
             />
-            <Route path="/deviceEntry" element={<DeviceEntryForm />} />
+            <Route path="/sid=S06&sname=deviceEntry" element={<DeviceEntryForm />} />
             <Route
-              path="/driverRegistration"
+              path="/sid=S07&sname=driverRegistration"
               element={<DriverRegistrationForm />}
             />
             <Route
-              path="/assetDriverMapping"
+              path="/sid=S08&sname=assetDriverMapping"
               element={<AssetDriverMapping />}
             />
             <Route
-              path="/portDeviceMapping"
+              path="/sid=S09&sname=portDeviceMapping"
               element={<PortDeviceMappingForm />}
             />
             <Route
-              path="/serviceDataLogForm"
+              path="/sid=S10&sname=serviceDataLogForm"
               element={<ServiceDataLogForm />}
             />
           </Routes>
