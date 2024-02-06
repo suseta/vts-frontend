@@ -98,8 +98,8 @@
     flex-direction: column;
     position: absolute;
     top: 100%;
-    left: auto;
-    width: auto;
+    left: -25px;
+    width: 90px;
     max-width: 200px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 3;
