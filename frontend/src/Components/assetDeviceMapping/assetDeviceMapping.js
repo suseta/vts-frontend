@@ -109,7 +109,7 @@ let AssetDeviceMappingForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload(true)
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -628,7 +628,6 @@ let AssetDeviceMappingForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

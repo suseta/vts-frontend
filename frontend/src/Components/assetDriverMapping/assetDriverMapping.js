@@ -83,7 +83,7 @@ let AssetDriverMappingForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -117,7 +117,6 @@ let AssetDriverMappingForm = () => {
 
   return (
     <div>
-      <Navbar />
       <div className='wrapper'>
         <div className='container'>
           <h2>Asset Driver Mapping</h2>
@@ -263,7 +262,6 @@ let AssetDriverMappingForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

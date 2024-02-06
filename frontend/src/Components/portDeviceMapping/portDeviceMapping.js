@@ -24,7 +24,7 @@ let PortDeviceMappingForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -134,7 +134,6 @@ let PortDeviceMappingForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

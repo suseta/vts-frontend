@@ -25,7 +25,7 @@ let ServiceDataLogForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleFindPort = () => {
@@ -134,7 +134,6 @@ let ServiceDataLogForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

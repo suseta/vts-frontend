@@ -20,6 +20,7 @@
   
   .menu-container {
     margin-right: 10px;
+    position: relative;
   }
   
   .navbar-main {
@@ -81,7 +82,7 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     box-shadow: 0 4px 8px rgba(243, 237, 237, 0.2);
     position: relative;
-    z-index: 2;
+    z-index: 2;    
   }
   
   .menu-button:hover {
@@ -97,7 +98,7 @@
     flex-direction: column;
     position: absolute;
     top: 100%;
-    right: 0;
+    left: auto;
     width: auto;
     max-width: 200px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -113,4 +114,12 @@
   .menu-container:hover .menu-button {
     background-color: #54b5ee;
   }
+ 
+  .menu-button:hover + .dropdown-content {
+    display: block; /* Show the dropdown content when the button is hovered */
+  }
   
+  .menu-options {
+    display: flex;
+    flex-direction: column;
+  }

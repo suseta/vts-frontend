@@ -87,7 +87,7 @@ let AssetRegistrationForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleNameChange = (e, s_entity_id1) => {
@@ -645,7 +645,6 @@ let AssetRegistrationForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

@@ -123,7 +123,7 @@ let TransporterCreationForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -647,7 +647,6 @@ let TransporterCreationForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

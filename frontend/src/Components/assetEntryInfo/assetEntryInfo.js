@@ -20,7 +20,7 @@ let AssetEntryInfoForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -82,7 +82,6 @@ let AssetEntryInfoForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel

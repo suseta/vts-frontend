@@ -161,7 +161,7 @@ let EntityCreationForm = () => {
   }
 
   let refreshPage = () => {
-    navigate('.', { replace: true })
+    window.location.reload();
   }
 
   let handleChange = e => {
@@ -850,7 +850,6 @@ let EntityCreationForm = () => {
                   className='cancel-button'
                   onClick={() => {
                     resetForm()
-                    navigate(-1)
                   }}
                 >
                   Cancel
