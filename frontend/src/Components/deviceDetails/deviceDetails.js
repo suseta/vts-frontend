@@ -61,7 +61,7 @@ let DeviceInfoForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/getDeviceTypeDetails')
+    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -73,7 +73,7 @@ let DeviceInfoForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/timezones')
+    fetch('http://13.201.79.110:1410/api/v0/timezones')
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -98,7 +98,7 @@ let DeviceInfoForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://13.201.79.110:1603/api/v0/setDeviceDetails`, {
+    fetch(`http://13.201.79.110:1410/api/v0/setDeviceDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

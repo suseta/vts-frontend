@@ -103,7 +103,7 @@ let AssetRegistrationForm = () => {
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -117,7 +117,7 @@ let AssetRegistrationForm = () => {
   useEffect(() => {
     if (assetRegDetails.s_entity_id) {
       fetch(
-        `http://13.201.79.110:1603/api/v0/getTransporterDetails?s_entity_id=${assetRegDetails.s_entity_id}`
+        `http://13.201.79.110:1410/api/v0/getTransporterDetails?s_entity_id=${assetRegDetails.s_entity_id}`
       )
         .then(response => response.json())
         .then(data => {
@@ -131,7 +131,7 @@ let AssetRegistrationForm = () => {
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/getAssetTypeDetails')
+    fetch('http://13.201.79.110:1410/api/v0/getAssetTypeDetails')
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -143,7 +143,7 @@ let AssetRegistrationForm = () => {
 
   let [assetCapacity, setAssetCapacity] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/getAssetCapacityDetails')
+    fetch('http://13.201.79.110:1410/api/v0/getAssetCapacityDetails')
       .then(response => response.json())
       .then(data => {
         setAssetCapacity({ data })
@@ -163,7 +163,7 @@ let AssetRegistrationForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1603/api/v0/addVehicle', {
+    fetch('http://13.201.79.110:1410/api/v0/addVehicle', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

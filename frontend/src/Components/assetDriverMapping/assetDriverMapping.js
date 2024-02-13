@@ -36,7 +36,7 @@ let AssetDriverMappingForm = () => {
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1603/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -50,7 +50,7 @@ let AssetDriverMappingForm = () => {
   useEffect(() => {
     if (assetDriverMapping.s_entity_id) {
       fetch(
-        `http://13.201.79.110:1603/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
       )
         .then(response => response.json())
         .then(data => {
@@ -66,7 +66,7 @@ let AssetDriverMappingForm = () => {
   useEffect(() => {
     if (assetDriverMapping.s_entity_id) {
       fetch(
-        `http://13.201.79.110:1603/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+        `http://13.201.79.110:1410/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
       )
         .then(response => response.json())
         .then(data => {
@@ -96,7 +96,7 @@ let AssetDriverMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1603/api/v0/setAssetDriverMapping', {
+    fetch('http://13.201.79.110:1410/api/v0/setAssetDriverMapping', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

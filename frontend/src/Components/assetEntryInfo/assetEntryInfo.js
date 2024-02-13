@@ -30,7 +30,7 @@ let AssetEntryInfoForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://13.201.79.110:1603/api/v0/setAssetInfo`, {
+    fetch(`http://13.201.79.110:1410/api/v0/setAssetInfo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -37,7 +37,7 @@ let PortDeviceMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1603/api/v0/setPortDeviceMapping', {
+    fetch('http://13.201.79.110:1410/api/v0/setPortDeviceMapping', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
