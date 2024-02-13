@@ -47,6 +47,13 @@
   h2 {
     text-align: center;
   }
+
+  .small-info {
+    font-size: 12px;
+    color: #888;
+    margin-left: 16px;
+    margin-bottom: 0%;
+  }
   
   input {
     width: 100%;
@@ -55,8 +62,8 @@
     margin-bottom: 5px;
     box-sizing: border-box;
   }
-     
-  .EntityCreationForm form {
+    
+  .TransporterRegistrationForm form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -81,9 +88,8 @@
     margin-top: 5px;
   }
 
-
-  .EntityCreationForm form input,
-  .EntityCreationForm form select {
+  .TransporterRegistrationForm form input,
+  .TransporterRegistrationForm form select {
     width: 40%;
     padding: 8px;
     box-sizing: border-box;
@@ -93,17 +99,17 @@
     background-color: #f2f2f2;
   }
   
-  .EntityCreationForm form div.full-width {
+  .TransporterRegistrationForm form div.full-width {
     margin-right: 0;
   }
 
-  .EntityCreationForm form .form-group {
+  .TransporterRegistrationForm form .form-group {
     flex: 0 0 calc(48% - 10px);
     margin-right: 10px;
     margin-bottom: 10px;
   }
 
-  .EntityCreationForm form label {
+  .TransporterRegistrationForm form label {
     display:inline-block;
     margin-bottom: 10px;
     margin-right: 30px;
@@ -111,7 +117,7 @@
     color: #333;
   }
   
-  .EntityCreationForm form .form-buttons {
+  .TransporterRegistrationForm form .form-buttons {
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -119,7 +125,7 @@
     align-items: center;
   }
   
-  .EntityCreationForm form button {
+  .TransporterRegistrationForm form button {
     background-color: #0de732;
     color: white;
     padding: 10px 15px;
@@ -130,14 +136,14 @@
     margin-left: 1000px;
   }
   
-  .EntityCreationForm form button.cancel-button {
+  .TransporterRegistrationForm form button.cancel-button {
     background-color: #808080;
     color: #f1eaea;
     border: 1px solid #f5f0f0;
     margin-left: 10px;
   }
 
-  .EntityCreationForm form button.refresh-button {
+  .TransporterRegistrationForm form button.refresh-button {
     background-color: #ee612e; 
     color: white;
     padding: 10px 15px;
@@ -154,12 +160,12 @@
   
   /* Making the form responsive */
   @media screen and (max-width: 768px) {
-    .EntityCreationForm form div {
+    .TransporterRegistrationForm form div {
       flex: 100%;
       margin-right: 0;
     }
-    .EntityCreationForm form button,
-    .EntityCreationForm form button.cancel-button {
+    .TransporterRegistrationForm form button,
+    .TransporterRegistrationForm form button.cancel-button {
       width: 100%;
       margin-left: 0;
       margin-top: 10px;

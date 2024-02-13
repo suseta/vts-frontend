@@ -5,7 +5,7 @@ import Footer from './Components/formDesign/footer.js'
 
 // Lazy-loaded components
 const AssetEntryInfoForm = lazy(() =>
-  import('./Components/assetEntryInfo/assetEntryInfo.js') 
+  import('./Components/assetEntryInfo/assetEntryInfo.js')
 )
 const AssetRegistrationForm = lazy(() =>
   import('./Components/assetRegistration/assetRegistration.js')
@@ -16,17 +16,17 @@ const AssetDeviceMappingForm = lazy(() =>
 const AssetDriverMapping = lazy(() =>
   import('./Components/assetDriverMapping/assetDriverMapping.js')
 )
-const DeviceEntryForm = lazy(() =>
-  import('./Components/deviceEntry/deviceEntry.js')
+const DeviceInfoForm = lazy(() =>
+  import('./Components/deviceDetails/deviceDetails.js')
 )
 const DriverRegistrationForm = lazy(() =>
   import('./Components/driverRegistration/driverRegistration.js')
 )
-const EntityCreationForm = lazy(() =>
-  import('./Components/entityCreation/entityCreation.js')
+const EntityRegistrationForm = lazy(() =>
+  import('./Components/entityRegistration/entityRegistration.js')
 )
-const TransporterCreationForm = lazy(() =>
-  import('./Components/transporterCreation/transporterCreation.js')
+const TransporterRegistrationForm = lazy(() =>
+  import('./Components/transporterRegistration/transporterRegistration.js')
 )
 const PortDeviceMappingForm = lazy(() =>
   import('./Components/portDeviceMapping/portDeviceMapping.js')
@@ -35,27 +35,27 @@ const ServiceDataLogForm = lazy(() =>
   import('./Components/serviceDataLog/serviceDataLog.js')
 )
 
-function App() {
-  const [selectedForm, setSelectedForm] = useState(null);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const navigate = useNavigate();
+function App () {
+  const [selectedForm, setSelectedForm] = useState(null)
+  const [isDropdownOpen, setDropdownOpen] = useState(false)
+  const navigate = useNavigate()
 
-  const handleFormClick = (formName) => {
-    setSelectedForm(formName);
-    setDropdownOpen(false);
-    navigate(formName);
-  };
+  const handleFormClick = formName => {
+    setSelectedForm(formName)
+    setDropdownOpen(false)
+    navigate(formName)
+  }
 
   const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+    setDropdownOpen(!isDropdownOpen)
+  }
 
   const closeDropdown = () => {
-    setDropdownOpen(false);
-  };
+    setDropdownOpen(false)
+  }
 
   return (
-    <div className="App">
+    <div className='App'>
       <Navbar
         toggleDropdown={toggleDropdown}
         closeDropdown={closeDropdown}
@@ -63,38 +63,47 @@ function App() {
         isDropdownOpen={isDropdownOpen}
       />
 
-      <div className="content-container">
+      <div className='content-container'>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/sid=S01&sname=entityCreation" element={<EntityCreationForm />} />
             <Route
-              path="/sid=S02&sname=transporterCreation"
-              element={<TransporterCreationForm />}
+              path='/sid=S01&sname=entityRegistration'
+              element={<EntityRegistrationForm />}
             />
-            <Route path="/sid=S03&sname=assetEntryInfo" element={<AssetEntryInfoForm />} />
             <Route
-              path="/sid=S04&sname=assetRegistration"
+              path='/sid=S02&sname=transporterRegistration'
+              element={<TransporterRegistrationForm />}
+            />
+            <Route
+              path='/sid=S03&sname=assetEntryInfo'
+              element={<AssetEntryInfoForm />}
+            />
+            <Route
+              path='/sid=S04&sname=assetRegistration'
               element={<AssetRegistrationForm />}
             />
             <Route
-              path="/sid=S05&sname=assetDeviceMapping"
+              path='/sid=S05&sname=assetDeviceMapping'
               element={<AssetDeviceMappingForm />}
             />
-            <Route path="/sid=S06&sname=deviceEntry" element={<DeviceEntryForm />} />
             <Route
-              path="/sid=S07&sname=driverRegistration"
+              path='/sid=S06&sname=deviceInfo'
+              element={<DeviceInfoForm />}
+            />
+            <Route
+              path='/sid=S07&sname=driverRegistration'
               element={<DriverRegistrationForm />}
             />
             <Route
-              path="/sid=S08&sname=assetDriverMapping"
+              path='/sid=S08&sname=assetDriverMapping'
               element={<AssetDriverMapping />}
             />
             <Route
-              path="/sid=S09&sname=portDeviceMapping"
+              path='/sid=S09&sname=portDeviceMapping'
               element={<PortDeviceMappingForm />}
             />
             <Route
-              path="/sid=S10&sname=serviceDataLogForm"
+              path='/sid=S10&sname=serviceDataLogForm'
               element={<ServiceDataLogForm />}
             />
           </Routes>
@@ -102,8 +111,7 @@ function App() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
-
 
 export default App

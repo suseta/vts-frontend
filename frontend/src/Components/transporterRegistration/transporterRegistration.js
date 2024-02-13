@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import './transporterCreation.css'
+import './transporterRegistration.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-let TransporterCreationForm = () => {
+let TransporterRegistrationForm = () => {
   let navigate = useNavigate()
 
   let initialState = {
@@ -123,7 +123,7 @@ let TransporterCreationForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload();
+    window.location.reload()
   }
 
   let handleChange = e => {
@@ -163,7 +163,7 @@ let TransporterCreationForm = () => {
       <div className='wrapper'>
         <div className='container'>
           <h2>Transporter/Vendor Creation Form</h2>
-          <div className='TransporterCreationForm'>
+          <div className='TransporterRegistrationForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
@@ -666,4 +666,4 @@ let TransporterCreationForm = () => {
     </div>
   )
 }
-export default TransporterCreationForm
+export default TransporterRegistrationForm

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import './entityCreation.css'
+import './entityRegistration.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-let EntityCreationForm = () => {
+let EntityRegistrationForm = () => {
   let navigate = useNavigate()
 
   let initialState = {
@@ -77,7 +77,7 @@ let EntityCreationForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/timezones')
+    fetch('http://13.201.79.110:1603/api/v0/timezones')
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -99,7 +99,7 @@ let EntityCreationForm = () => {
 
   let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.127.103.103:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1603/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -114,7 +114,7 @@ let EntityCreationForm = () => {
   useEffect(() => {
     if (entityRegDetails.s_entity_country) {
       fetch(
-        `http://13.127.103.103:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
+        `http://13.201.79.110:1603/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
       )
         .then(response => response.json())
         .then(data => {
@@ -129,7 +129,7 @@ let EntityCreationForm = () => {
   let [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (entityRegDetails.s_entity_state) {
-      let url = `http://13.127.103.103:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
+      let url = `http://13.201.79.110:1603/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -161,7 +161,7 @@ let EntityCreationForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload();
+    window.location.reload()
   }
 
   let handleChange = e => {
@@ -178,7 +178,7 @@ let EntityCreationForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/setEntityInfo', {
+    fetch('http://13.201.79.110:1603/api/v0/setEntityInfo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -187,22 +187,22 @@ let EntityCreationForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Entity Creation Form:', data)
+        console.log('Success in Entity Registration Form:', data)
         alert('Entity created successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Entity creation form submitted:', entityRegDetails)
+    console.log('Entity registration form submitted:', entityRegDetails)
   }
 
   return (
     <div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>Entity Creation Form</h2>
-          <div className='EntityCreationForm'>
+          <h2>Entity Registration Form</h2>
+          <div className='EntityRegistrationForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
@@ -577,7 +577,7 @@ let EntityCreationForm = () => {
                     <option value=''>
                       {timezone.data && timezone.data.message
                         ? timezone.data.message
-                        : 'No entities available'}
+                        : 'No timezones available'}
                     </option>
                   )}
                 </select>
@@ -870,4 +870,4 @@ let EntityCreationForm = () => {
   )
 }
 
-export default EntityCreationForm
+export default EntityRegistrationForm

@@ -25,7 +25,7 @@ let ServiceDataLogForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload();
+    window.location.reload()
   }
 
   let handleFindPort = () => {
@@ -45,7 +45,7 @@ let ServiceDataLogForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.127.103.103:1410/api/v0/getDataLog', {
+    fetch('http://13.201.79.110:1603/api/v0/getDataLog', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

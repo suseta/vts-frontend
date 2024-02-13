@@ -53,7 +53,7 @@ let AssetDeviceMappingForm = () => {
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch('http://13.201.79.110:1603/api/v0/getAllEntityNameList')
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -68,7 +68,7 @@ let AssetDeviceMappingForm = () => {
   useEffect(() => {
     if (selectedEntity) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${selectedEntity}`
+        `http://13.201.79.110:1603/api/v0/getVehicleDetails?s_entity_id=${selectedEntity}`
       )
         .then(response => response.json())
         .then(data => {
@@ -82,7 +82,7 @@ let AssetDeviceMappingForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
+    fetch('http://13.201.79.110:1603/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -94,7 +94,7 @@ let AssetDeviceMappingForm = () => {
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAssetTypeDetails')
+    fetch('http://13.201.79.110:1603/api/v0/getAssetTypeDetails')
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -109,7 +109,7 @@ let AssetDeviceMappingForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload();
+    window.location.reload()
   }
 
   let handleChange = e => {
@@ -134,7 +134,7 @@ let AssetDeviceMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setAssetDeviceMapping', {
+    fetch('http://13.201.79.110:1603/api/v0/setAssetDeviceMapping', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -143,14 +143,14 @@ let AssetDeviceMappingForm = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Asset-Device Mapping Form:', data)
-        alert('Asset-device mapped successfully!')
+        console.log('Success in Asset Device Mapping Form:', data)
+        alert('Asset device mapped successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Asset-device mapping form submitted:', assetDeviceMapping)
+    console.log('Asset device mapping form submitted:', assetDeviceMapping)
   }
 
   return (

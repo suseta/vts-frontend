@@ -24,34 +24,62 @@ const Navbar = ({
         <button className='menu-button'>Menu</button>
         {isDropdownOpen && (
           <div className='dropdown-content'>
-            <button onClick={() => handleFormClick('sid=S01&sname=entityCreation')}>
+            <button
+              onClick={() =>
+                handleFormClick('sid=S01&sname=entityRegistration')
+              }
+            >
               Entity Registration
             </button>
-            <button onClick={() => handleFormClick('sid=S02&sname=transporterCreation')}>
+            <button
+              onClick={() =>
+                handleFormClick('sid=S02&sname=transporterRegistration')
+              }
+            >
               Transporter Registration
             </button>
-            <button onClick={() => handleFormClick('sid=S03&sname=assetEntryInfo')}>
+            <button
+              onClick={() => handleFormClick('sid=S03&sname=assetEntryInfo')}
+            >
               Asset Info Entry
             </button>
-            <button onClick={() => handleFormClick('sid=S04&sname=assetRegistration')}>
+            <button
+              onClick={() => handleFormClick('sid=S04&sname=assetRegistration')}
+            >
               Asset Registration
             </button>
-            <button onClick={() => handleFormClick('sid=S05&sname=assetDeviceMapping')}>
+            <button
+              onClick={() =>
+                handleFormClick('sid=S05&sname=assetDeviceMapping')
+              }
+            >
               Asset Device Mapping
             </button>
-            <button onClick={() => handleFormClick('sid=S06&sname=deviceEntry')}>
-              Device Entry
+            <button onClick={() => handleFormClick('sid=S06&sname=deviceInfo')}>
+              Device Info Entry
             </button>
-            <button onClick={() => handleFormClick('sid=S07&sname=driverRegistration')}>
+            <button
+              onClick={() =>
+                handleFormClick('sid=S07&sname=driverRegistration')
+              }
+            >
               Driver Registration
             </button>
-            <button onClick={() => handleFormClick('sid=S08&sname=assetDriverMapping')}>
+            <button
+              onClick={() =>
+                handleFormClick('sid=S08&sname=assetDriverMapping')
+              }
+            >
               Asset Driver Mapping
             </button>
-            <button onClick={() => handleFormClick('sid=S09&sname=portDeviceMapping')}>
+            <button
+              onClick={() => handleFormClick('sid=S09&sname=portDeviceMapping')}
+            >
               Port Device Mapping
             </button>
-            <button onClick={() => handleFormClick('sid=S10&sname=serviceDataLog')}>
+            <button
+              onClick={() => handleFormClick('sid=S10&sname=serviceDataLog')}
+            >
               Service Data Log
             </button>
           </div>

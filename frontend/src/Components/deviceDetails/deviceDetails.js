@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import './deviceEntry.css'
+import './deviceDetails.css'
 import { useNavigate } from 'react-router-dom'
 
-let DeviceEntryForm = () => {
+let DeviceInfoForm = () => {
   let navigate = useNavigate()
 
   let initialState = {
@@ -61,7 +61,7 @@ let DeviceEntryForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
+    fetch('http://13.201.79.110:1603/api/v0/getDeviceTypeDetails')
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -73,7 +73,7 @@ let DeviceEntryForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/timezones')
+    fetch('http://13.201.79.110:1603/api/v0/timezones')
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -88,7 +88,7 @@ let DeviceEntryForm = () => {
   }
 
   let refreshPage = () => {
-    window.location.reload();
+    window.location.reload()
   }
 
   let handleChange = e => {
@@ -98,7 +98,7 @@ let DeviceEntryForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`http://13.201.79.110:1410/api/v0/setDeviceDetails`, {
+    fetch(`http://13.201.79.110:1603/api/v0/setDeviceDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -121,7 +121,7 @@ let DeviceEntryForm = () => {
       <div className='wrapper'>
         <div className='container'>
           <h2>Device Entry Form</h2>
-          <div className='DeviceEntryForm'>
+          <div className='DeviceInfoForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
@@ -276,7 +276,7 @@ let DeviceEntryForm = () => {
                     <option value=''>
                       {timezone.data && timezone.data.message
                         ? timezone.data.message
-                        : 'No entities available'}
+                        : 'No timezones available'}
                     </option>
                   )}
                 </select>
@@ -412,4 +412,4 @@ let DeviceEntryForm = () => {
   )
 }
 
-export default DeviceEntryForm
+export default DeviceInfoForm
