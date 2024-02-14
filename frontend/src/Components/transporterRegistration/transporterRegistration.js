@@ -3,9 +3,7 @@ import './transporterRegistration.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import dotenv from 'dotenv'
 
-dotenv.config()
 const ubuntuIP = process.env.ubuntuIP
 
 let TransporterRegistrationForm = () => {

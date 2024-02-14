@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import './portDeviceMapping.css'
 import { useNavigate } from 'react-router-dom'
-import dotenv from 'dotenv'
 
-dotenv.config()
 const ubuntuIP = process.env.ubuntuIP
 
 let PortDeviceMappingForm = () => {

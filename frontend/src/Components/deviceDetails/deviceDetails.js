@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './deviceDetails.css'
 import { useNavigate } from 'react-router-dom'
-import dotenv from 'dotenv'
 
-dotenv.config()
 const ubuntuIP = process.env.ubuntuIP
 
 let DeviceInfoForm = () => {

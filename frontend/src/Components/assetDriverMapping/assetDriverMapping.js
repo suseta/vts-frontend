@@ -3,9 +3,7 @@ import './assetDriverMapping.css'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../formDesign/navbar'
 import Footer from '../formDesign/footer'
-import dotenv from 'dotenv'
 
-dotenv.config()
 const ubuntuIP = process.env.ubuntuIP
 
 let AssetDriverMappingForm = () => {
