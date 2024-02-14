@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './assetDeviceMapping.css'
 import { useNavigate } from 'react-router-dom'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let AssetDeviceMappingForm = () => {
   let navigate = useNavigate()
@@ -53,7 +57,7 @@ let AssetDeviceMappingForm = () => {
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch(`${ubuntuIP}/api/v0/getAllEntityNameList`)
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -68,7 +72,7 @@ let AssetDeviceMappingForm = () => {
   useEffect(() => {
     if (selectedEntity) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${selectedEntity}`
+        `${ubuntuIP}/api/v0/getVehicleDetails?s_entity_id=${selectedEntity}`
       )
         .then(response => response.json())
         .then(data => {
@@ -82,7 +86,7 @@ let AssetDeviceMappingForm = () => {
 
   let [deviceType, setDeviceType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getDeviceTypeDetails')
+    fetch(`${ubuntuIP}/api/v0/getDeviceTypeDetails`)
       .then(response => response.json())
       .then(data => {
         setDeviceType({ data })
@@ -94,7 +98,7 @@ let AssetDeviceMappingForm = () => {
 
   let [assetType, setAssetType] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAssetTypeDetails')
+    fetch(`${ubuntuIP}/api/v0/getAssetTypeDetails`)
       .then(response => response.json())
       .then(data => {
         setAssetType({ data })
@@ -134,7 +138,7 @@ let AssetDeviceMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setAssetDeviceMapping', {
+    fetch(`${ubuntuIP}/api/v0/setAssetDeviceMapping`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

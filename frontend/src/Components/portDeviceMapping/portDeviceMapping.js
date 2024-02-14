@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import './portDeviceMapping.css'
 import { useNavigate } from 'react-router-dom'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let PortDeviceMappingForm = () => {
   let navigate = useNavigate()
@@ -37,7 +41,7 @@ let PortDeviceMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setPortDeviceMapping', {
+    fetch(`${ubuntuIP}/api/v0/setPortDeviceMapping`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

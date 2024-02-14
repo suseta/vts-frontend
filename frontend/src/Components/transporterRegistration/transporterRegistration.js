@@ -3,6 +3,10 @@ import './transporterRegistration.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let TransporterRegistrationForm = () => {
   let navigate = useNavigate()
@@ -94,7 +98,7 @@ let TransporterRegistrationForm = () => {
   }
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch(`${ubuntuIP}/api/v0/getAllEntityNameList`)
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -106,7 +110,7 @@ let TransporterRegistrationForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/timezones')
+    fetch(`${ubuntuIP}/api/v0/timezones`)
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -139,7 +143,7 @@ let TransporterRegistrationForm = () => {
   }
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setTransporterInfo', {
+    fetch(`${ubuntuIP}/api/v0/setTransporterInfo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

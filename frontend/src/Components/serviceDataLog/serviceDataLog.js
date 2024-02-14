@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import './serviceDataLog.css'
 import { useNavigate } from 'react-router-dom'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let ServiceDataLogForm = () => {
   let navigate = useNavigate()
@@ -45,7 +49,7 @@ let ServiceDataLogForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/getDataLog', {
+    fetch(`${ubuntuIP}/api/v0/getDataLog`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

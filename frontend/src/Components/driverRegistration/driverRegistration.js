@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './driverRegistration.css'
 import { useNavigate } from 'react-router-dom'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let DriverRegistrationForm = () => {
   let navigate = useNavigate()
@@ -63,7 +67,7 @@ let DriverRegistrationForm = () => {
 
   let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch(`${ubuntuIP}/api/v0/getAllEntityNameList`)
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -78,7 +82,7 @@ let DriverRegistrationForm = () => {
   useEffect(() => {
     if (driverRegDetails.s_drv_cntry) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getAllState?s_entity_countryName=${driverRegDetails.s_drv_cntry}`
+        `${ubuntuIP}/api/v0/getAllState?s_entity_countryName=${driverRegDetails.s_drv_cntry}`
       )
         .then(response => response.json())
         .then(data => {
@@ -93,7 +97,7 @@ let DriverRegistrationForm = () => {
   let [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (driverRegDetails.s_drv_state) {
-      let url = `http://13.201.79.110:1410/api/v0/getAllCity?s_entity_countryName=${driverRegDetails.s_drv_cntry}&s_entity_state=${driverRegDetails.s_drv_state}`
+      let url = `${ubuntuIP}/api/v0/getAllCity?s_entity_countryName=${driverRegDetails.s_drv_cntry}&s_entity_state=${driverRegDetails.s_drv_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -149,7 +153,7 @@ let DriverRegistrationForm = () => {
     driverRegDetailsObj.append('s_drv_img_path', profilePic)
     driverRegDetailsObj.append('s_drv_lic_img_path', licensePic)
     try {
-      let response = await fetch('http://13.201.79.110:1410/api/v0/addDriver', {
+      let response = await fetch(`${ubuntuIP}/api/v0/addDriver`, {
         method: 'POST',
         body: driverRegDetailsObj
       })

@@ -3,6 +3,10 @@ import './assetDriverMapping.css'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../formDesign/navbar'
 import Footer from '../formDesign/footer'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let AssetDriverMappingForm = () => {
   let navigate = useNavigate()
@@ -36,7 +40,7 @@ let AssetDriverMappingForm = () => {
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch(`${ubuntuIP}/api/v0/getAllEntityNameList`)
       .then(response => response.json())
       .then(data => {
         setEntityNames({ data })
@@ -50,7 +54,7 @@ let AssetDriverMappingForm = () => {
   useEffect(() => {
     if (assetDriverMapping.s_entity_id) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+        `${ubuntuIP}/api/v0/getVehicleDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
       )
         .then(response => response.json())
         .then(data => {
@@ -66,7 +70,7 @@ let AssetDriverMappingForm = () => {
   useEffect(() => {
     if (assetDriverMapping.s_entity_id) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
+        `${ubuntuIP}/api/v0/getDriverDetails?s_entity_id=${assetDriverMapping.s_entity_id}`
       )
         .then(response => response.json())
         .then(data => {
@@ -96,7 +100,7 @@ let AssetDriverMappingForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setAssetDriverMapping', {
+    fetch(`${ubuntuIP}/api/v0/setAssetDriverMapping`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

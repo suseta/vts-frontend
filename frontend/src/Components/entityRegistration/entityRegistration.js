@@ -3,6 +3,10 @@ import './entityRegistration.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const ubuntuIP = process.env.ubuntuIP
 
 let EntityRegistrationForm = () => {
   let navigate = useNavigate()
@@ -77,7 +81,7 @@ let EntityRegistrationForm = () => {
 
   let [timezone, setTimezone] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/timezones')
+    fetch(`${ubuntuIP}/api/v0/timezones`)
       .then(response => response.json())
       .then(data => {
         setTimezone({ data })
@@ -99,7 +103,7 @@ let EntityRegistrationForm = () => {
 
   let [entityMap, setEntityMap] = useState({ data: [] })
   useEffect(() => {
-    fetch('http://13.201.79.110:1410/api/v0/getAllEntityNameList')
+    fetch(`${ubuntuIP}/api/v0/getAllEntityNameList`)
       .then(response => response.json())
       .then(data => {
         setEntityMap({ data })
@@ -114,7 +118,7 @@ let EntityRegistrationForm = () => {
   useEffect(() => {
     if (entityRegDetails.s_entity_country) {
       fetch(
-        `http://13.201.79.110:1410/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
+        `${ubuntuIP}/api/v0/getAllState?s_entity_countryName=${entityRegDetails.s_entity_country}`
       )
         .then(response => response.json())
         .then(data => {
@@ -129,7 +133,7 @@ let EntityRegistrationForm = () => {
   let [cityList, setCityList] = useState([{ city: [] }])
   useEffect(() => {
     if (entityRegDetails.s_entity_state) {
-      let url = `http://13.201.79.110:1410/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
+      let url = `${ubuntuIP}/api/v0/getAllCity?s_entity_countryName=${entityRegDetails.s_entity_country}&s_entity_state=${entityRegDetails.s_entity_state}`
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -178,7 +182,7 @@ let EntityRegistrationForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch('http://13.201.79.110:1410/api/v0/setEntityInfo', {
+    fetch(`${ubuntuIP}/api/v0/setEntityInfo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
