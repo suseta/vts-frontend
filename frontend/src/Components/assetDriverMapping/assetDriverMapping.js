@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './assetDriverMapping.css'
-import { useNavigate } from 'react-router-dom'
-import Navbar from '../formDesign/navbar'
-import Footer from '../formDesign/footer'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let AssetDriverMappingForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_entity_id: '',
@@ -280,7 +276,6 @@ let AssetDriverMappingForm = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

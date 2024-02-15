@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import './assetEntryInfo.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let AssetEntryInfoForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_asset_typ: '',

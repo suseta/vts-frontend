@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './deviceDetails.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let DeviceInfoForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     i_imei_no: '',
@@ -117,7 +115,7 @@ let DeviceInfoForm = () => {
         alert('Error! Please try again.')
       })
   }
-
+ 
   return (
     <div>
       <div className='wrapper'>

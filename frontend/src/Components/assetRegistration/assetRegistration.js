@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './assetRegistration.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let AssetRegistrationForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_asset_id: null,

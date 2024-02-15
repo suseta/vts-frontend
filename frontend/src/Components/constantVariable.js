@@ -1,0 +1,1 @@
+export const ubuntuIP = "http://13.201.79.110:1410"

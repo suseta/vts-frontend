@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './entityRegistration.css'
-import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let EntityRegistrationForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_entity_id: '',

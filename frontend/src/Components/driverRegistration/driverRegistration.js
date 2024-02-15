@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './driverRegistration.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let DriverRegistrationForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_drv_id: '',

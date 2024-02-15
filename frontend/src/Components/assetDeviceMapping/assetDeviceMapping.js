@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './assetDeviceMapping.css'
-import { useNavigate } from 'react-router-dom'
-
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let AssetDeviceMappingForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     s_entity_id: '',

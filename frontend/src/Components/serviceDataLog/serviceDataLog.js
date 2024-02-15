@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import './serviceDataLog.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let ServiceDataLogForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     i_imei_no: '',

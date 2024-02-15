@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import './portDeviceMapping.css'
-import { useNavigate } from 'react-router-dom'
 
-const ubuntuIP = process.env.ubuntuIP
+import {ubuntuIP} from '../../Components/constantVariable'
 
 let PortDeviceMappingForm = () => {
-  let navigate = useNavigate()
 
   let initialState = {
     i_imei_no: '',
@@ -28,6 +26,19 @@ let PortDeviceMappingForm = () => {
   let refreshPage = () => {
     window.location.reload()
   }
+
+  let [deviceMap, setDeviceMap] = useState({ data: [] })
+
+  useEffect(() => {
+    fetch(`${ubuntuIP}/api/v0/getDeviceDetails`)
+      .then(response => response.json())
+      .then(data => {
+        setDeviceMap({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
 
   let handleChange = e => {
     let { name, value, type, checked } = e.target
@@ -74,14 +85,32 @@ let PortDeviceMappingForm = () => {
                 >
                   Device Id/IMEI No.:
                 </label>
-                <input
-                  type='number'
+                <select
+                  className='form-select'
                   id='i_imei_no'
                   name='i_imei_no'
                   required
                   value={portDeviceMapping.i_imei_no}
                   onChange={handleChange}
-                />
+                >
+                  <option value=''>Select</option>
+                  {deviceMap.data && Array.isArray(deviceMap.data.data) ? (
+                    deviceMap.data.data.map(imeiData => (
+                      <option
+                        key={imeiData.i_imei_no}
+                        value={imeiData.i_imei_no}
+                      >
+                        {imeiData.i_imei_no}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {deviceMap.data && deviceMap.data.message
+                        ? deviceMap.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
               </div>
               <div className='form-group'>
                 <label
