@@ -82,11 +82,6 @@ const Navbar = ({
             >
               Service Data Log
             </button>
-            <button
-              onClick={() => handleFormClick('sid=S11&sname=jsonToExcel')}
-            >
-              Json To Excel
-            </button>
           </div>
         )}
       </div>

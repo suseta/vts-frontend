@@ -35,17 +35,12 @@ const ServiceDataLogForm = lazy(() =>
   import('./Components/serviceDataLog/serviceDataLog.js')
 )
 
-const JsonToExcelForm = lazy(() =>
-  import('./Components/data/data.js')
-)
-
 function App () {
   const [selectedForm, setSelectedForm] = useState(null)
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleFormClick = formName => {
-    console.log("ggg",formName)
     setSelectedForm(formName)
     setDropdownOpen(false)
     navigate(formName)
@@ -108,12 +103,8 @@ function App () {
               element={<PortDeviceMappingForm />}
             />
             <Route
-              path='/sid=S10&sname=serviceDataLog'
+              path='/sid=S10&sname=serviceDataLogForm'
               element={<ServiceDataLogForm />}
-            />
-            <Route
-              path='/sid=S11&sname=jsonToExcel'
-              element={<JsonToExcelForm />}
             />
           </Routes>
         </Suspense>
