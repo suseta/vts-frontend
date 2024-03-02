@@ -25,8 +25,8 @@ const DriverRegistrationForm = lazy(() =>
 const EntityRegistrationForm = lazy(() =>
   import('./Components/entityRegistration/entityRegistration.js')
 )
-const TransporterRegistrationForm = lazy(() =>
-  import('./Components/transporterRegistration/transporterRegistration.js')
+const UserRegistrationForm = lazy(() =>
+  import('./Components/userRegistration/userRegistration.js')
 )
 const PortDeviceMappingForm = lazy(() =>
   import('./Components/portDeviceMapping/portDeviceMapping.js')
@@ -34,8 +34,8 @@ const PortDeviceMappingForm = lazy(() =>
 const ServiceDataLogForm = lazy(() =>
   import('./Components/serviceDataLog/serviceDataLog.js')
 )
-const ClientServiceDataLog =  lazy(() =>
-import('./Components/ClientServiceDataLog/clientServiceDataLog.js')
+const LiveGpsDataFetchPage = lazy(() =>
+  import('./Components/liveGpsDataFetchPage/liveGpsDataFetchPage.js')
 )
 
 function App () {
@@ -74,8 +74,8 @@ function App () {
               element={<EntityRegistrationForm />}
             />
             <Route
-              path='/sid=S02&sname=transporterRegistration'
-              element={<TransporterRegistrationForm />}
+              path='/sid=S02&sname=userRegistration'
+              element={<UserRegistrationForm />}
             />
             <Route
               path='/sid=S03&sname=assetEntryInfo'
@@ -110,8 +110,8 @@ function App () {
               element={<ServiceDataLogForm />}
             />
             <Route
-              path='/sid=S11&sname=clientServiceDataLog'
-              element={<ClientServiceDataLog />}
+              path='/sid=S11&sname=liveGpsDataFetchPage'
+              element={<LiveGpsDataFetchPage />}
             />
           </Routes>
         </Suspense>

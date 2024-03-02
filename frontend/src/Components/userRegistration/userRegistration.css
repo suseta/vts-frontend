@@ -63,7 +63,7 @@
     box-sizing: border-box;
   }
     
-  .TransporterRegistrationForm form {
+  .UserRegistrationForm form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -88,8 +88,8 @@
     margin-top: 5px;
   }
 
-  .TransporterRegistrationForm form input,
-  .TransporterRegistrationForm form select {
+  .UserRegistrationForm form input,
+  .UserRegistrationForm form select {
     width: 40%;
     padding: 8px;
     box-sizing: border-box;
@@ -99,17 +99,17 @@
     background-color: #f2f2f2;
   }
   
-  .TransporterRegistrationForm form div.full-width {
+  .UserRegistrationForm form div.full-width {
     margin-right: 0;
   }
 
-  .TransporterRegistrationForm form .form-group {
+  .UserRegistrationForm form .form-group {
     flex: 0 0 calc(48% - 10px);
     margin-right: 10px;
     margin-bottom: 10px;
   }
 
-  .TransporterRegistrationForm form label {
+  .UserRegistrationForm form label {
     display:inline-block;
     margin-bottom: 10px;
     margin-right: 30px;
@@ -117,7 +117,7 @@
     color: #333;
   }
   
-  .TransporterRegistrationForm form .form-buttons {
+  .UserRegistrationForm form .form-buttons {
     width: 100%;
     margin-top: 20px;
     display: flex;
@@ -125,7 +125,7 @@
     align-items: center;
   }
   
-  .TransporterRegistrationForm form button {
+  .UserRegistrationForm form button {
     background-color: #0de732;
     color: white;
     padding: 10px 15px;
@@ -136,14 +136,14 @@
     margin-left: 1000px;
   }
   
-  .TransporterRegistrationForm form button.cancel-button {
+  .UserRegistrationForm form button.cancel-button {
     background-color: #808080;
     color: #f1eaea;
     border: 1px solid #f5f0f0;
     margin-left: 10px;
   }
 
-  .TransporterRegistrationForm form button.refresh-button {
+  .UserRegistrationForm form button.refresh-button {
     background-color: #ee612e; 
     color: white;
     padding: 10px 15px;
@@ -160,12 +160,12 @@
   
   /* Making the form responsive */
   @media screen and (max-width: 768px) {
-    .TransporterRegistrationForm form div {
+    .UserRegistrationForm form div {
       flex: 100%;
       margin-right: 0;
     }
-    .TransporterRegistrationForm form button,
-    .TransporterRegistrationForm form button.cancel-button {
+    .UserRegistrationForm form button,
+    .UserRegistrationForm form button.cancel-button {
       width: 100%;
       margin-left: 0;
       margin-top: 10px;

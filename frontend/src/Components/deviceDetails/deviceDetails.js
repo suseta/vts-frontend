@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './deviceDetails.css'
 
-import {ubuntuIP} from '../../Components/constantVariable'
+import { ubuntuIP } from '../../Components/constantVariable'
 
 let DeviceInfoForm = () => {
-
   let initialState = {
     i_imei_no: '',
     s_sim_no: '',
@@ -115,7 +114,7 @@ let DeviceInfoForm = () => {
         alert('Error! Please try again.')
       })
   }
- 
+
   return (
     <div>
       <div className='wrapper'>
@@ -346,14 +345,7 @@ let DeviceInfoForm = () => {
                 </select>
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='s_atd'
-                  className={`required-label ${
-                    deviceInfo.s_atd ? 'required' : ''
-                  }`}
-                >
-                  Attendance:
-                </label>
+                <label htmlFor='s_atd'>Attendance:</label>
                 <select
                   id='s_atd'
                   name='s_atd'

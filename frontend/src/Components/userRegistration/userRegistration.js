@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import './transporterRegistration.css'
+import './userRegistration.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-import {ubuntuIP} from '../../Components/constantVariable'
+import { ubuntuIP } from '../../Components/constantVariable'
 
-let TransporterRegistrationForm = () => {
-
+let UserRegistrationForm = () => {
   let initialState = {
     s_entity_id: '',
     s_entity_id_and_name: '',
@@ -41,7 +40,7 @@ let TransporterRegistrationForm = () => {
     return oneYearLater.toISOString().split('T')[0]
   }
 
-  let [transporterRegDetails, setTransporterRegDetails] = useState({
+  let [userRegDetails, setUserRegDetails] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
     s_trans_id: '',
@@ -85,7 +84,7 @@ let TransporterRegistrationForm = () => {
   let handleNameChange = (e, s_entity_id1) => {
     let { name, value } = e.target
     if (name === 's_entity_id_and_name') {
-      setTransporterRegDetails(prevData => ({
+      setUserRegDetails(prevData => ({
         ...prevData,
         s_entity_id_and_name: value,
         s_entity_id: s_entity_id1
@@ -119,7 +118,7 @@ let TransporterRegistrationForm = () => {
   let [passwordMatch, setPasswordMatch] = useState(true)
 
   let resetForm = () => {
-    setTransporterRegDetails(initialState)
+    setUserRegDetails(initialState)
   }
 
   let refreshPage = () => {
@@ -129,47 +128,47 @@ let TransporterRegistrationForm = () => {
   let handleChange = e => {
     let { name, value, type, checked } = e.target
     if (name === 's_trans_cnf_pass') {
-      let match = value === transporterRegDetails.s_trans_pass
+      let match = value === userRegDetails.s_trans_pass
       setPasswordMatch(match)
     }
-    setTransporterRegDetails(prevData => ({
+    setUserRegDetails(prevData => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value
     }))
   }
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`${ubuntuIP}/api/v0/setTransporterInfo`, {
+    fetch(`${ubuntuIP}/api/v0/setUserInfo`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(transporterRegDetails)
+      body: JSON.stringify(userRegDetails)
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success in Transporter Creation Form:', data)
-        alert('Transporter created successfully!')
+        console.log('Success in User Creation Form:', data)
+        alert('User created successfully!')
       })
       .catch(error => {
         console.error('Error:', error)
         alert('Error! Please try again.')
       })
-    console.log('Transporter creation form submitted:', transporterRegDetails)
+    console.log('User creation form submitted:', userRegDetails)
   }
 
   return (
     <div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>Transporter/Vendor Creation Form</h2>
-          <div className='TransporterRegistrationForm'>
+          <h2>UserCreation Form</h2>
+          <div className='UserRegistrationForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_id_and_name'
                   className={`required-label ${
-                    transporterRegDetails.s_entity_id_and_name ? 'required' : ''
+                    userRegDetails.s_entity_id_and_name ? 'required' : ''
                   }`}
                 >
                   Entity:
@@ -179,7 +178,7 @@ let TransporterRegistrationForm = () => {
                   id='s_entity_id_and_name'
                   name='s_entity_id_and_name'
                   required
-                  value={transporterRegDetails.s_entity_id_and_name}
+                  value={userRegDetails.s_entity_id_and_name}
                   onChange={e => {
                     let selectedEntity = entityNames.data.data.find(
                       entity => entity.s_entity_name === e.target.value
@@ -210,17 +209,17 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_id'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_id ? 'required' : ''
+                    userRegDetails.s_trans_id ? 'required' : ''
                   }`}
                 >
-                  Transporter Id:
+                  User Id:
                 </label>
                 <input
                   type='text'
                   id='s_trans_id'
                   name='s_trans_id'
                   required
-                  value={transporterRegDetails.s_trans_id}
+                  value={userRegDetails.s_trans_id}
                   onChange={handleChange}
                 />
               </div>
@@ -228,17 +227,17 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_name'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_name ? 'required' : ''
+                    userRegDetails.s_trans_name ? 'required' : ''
                   }`}
                 >
-                  Transporter Name:
+                  Name:
                 </label>
                 <input
                   type='text'
                   id='s_trans_name'
                   name='s_trans_name'
                   required
-                  value={transporterRegDetails.s_trans_name}
+                  value={userRegDetails.s_trans_name}
                   onChange={handleChange}
                 />
               </div>
@@ -246,7 +245,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_add'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_add ? 'required' : ''
+                    userRegDetails.s_trans_add ? 'required' : ''
                   }`}
                 >
                   Address:
@@ -256,7 +255,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_add'
                   name='s_trans_add'
                   required
-                  value={transporterRegDetails.s_trans_add}
+                  value={userRegDetails.s_trans_add}
                   onChange={handleChange}
                 />
               </div>
@@ -264,7 +263,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_mail'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_mail ? 'required' : ''
+                    userRegDetails.s_trans_mail ? 'required' : ''
                   }`}
                 >
                   Mail Id:
@@ -274,7 +273,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_mail'
                   name='s_trans_mail'
                   required
-                  value={transporterRegDetails.s_trans_mail}
+                  value={userRegDetails.s_trans_mail}
                   onChange={handleChange}
                 />
               </div>
@@ -282,7 +281,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_mb_no'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_mb_no ? 'required' : ''
+                    userRegDetails.s_trans_mb_no ? 'required' : ''
                   }`}
                 >
                   Mobile No.:
@@ -292,7 +291,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_mb_no'
                   name='s_trans_mb_no'
                   required
-                  value={transporterRegDetails.s_trans_mb_no}
+                  value={userRegDetails.s_trans_mb_no}
                   onChange={handleChange}
                 />
               </div>
@@ -300,7 +299,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='trans_tmz'
                   className={`required-label ${
-                    transporterRegDetails.trans_tmz ? 'required' : ''
+                    userRegDetails.trans_tmz ? 'required' : ''
                   }`}
                 >
                   Timezone:
@@ -310,7 +309,7 @@ let TransporterRegistrationForm = () => {
                   id='trans_tmz'
                   name='trans_tmz'
                   required
-                  value={transporterRegDetails.trans_tmz}
+                  value={userRegDetails.trans_tmz}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
@@ -333,7 +332,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_usr'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_usr ? 'required' : ''
+                    userRegDetails.s_trans_usr ? 'required' : ''
                   }`}
                 >
                   Username:
@@ -343,7 +342,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_usr'
                   name='s_trans_usr'
                   required
-                  value={transporterRegDetails.s_trans_usr}
+                  value={userRegDetails.s_trans_usr}
                   onChange={handleChange}
                 />
               </div>
@@ -351,7 +350,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_pass'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_pass ? 'required' : ''
+                    userRegDetails.s_trans_pass ? 'required' : ''
                   }`}
                 >
                   Password:
@@ -361,7 +360,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_pass'
                   name='s_trans_pass'
                   required
-                  value={transporterRegDetails.s_trans_pass}
+                  value={userRegDetails.s_trans_pass}
                   onChange={handleChange}
                 />
                 <button
@@ -382,7 +381,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_cnf_pass'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_cnf_pass ? 'required' : ''
+                    userRegDetails.s_trans_cnf_pass ? 'required' : ''
                   }`}
                 >
                   Confirm Password:
@@ -392,7 +391,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_cnf_pass'
                   name='s_trans_cnf_pass'
                   required
-                  value={transporterRegDetails.s_trans_cnf_pass}
+                  value={userRegDetails.s_trans_cnf_pass}
                   onChange={handleChange}
                 />
                 <button
@@ -410,7 +409,7 @@ let TransporterRegistrationForm = () => {
                     icon={showConfirmPassword ? faEye : faEyeSlash}
                   />
                 </button>
-                {passwordMatch && transporterRegDetails.s_trans_cnf_pass && (
+                {passwordMatch && userRegDetails.s_trans_cnf_pass && (
                   <p className='success-message'>Password matched!</p>
                 )}
                 {!passwordMatch && (
@@ -421,7 +420,7 @@ let TransporterRegistrationForm = () => {
                 <label
                   htmlFor='s_trans_inact_tm'
                   className={`required-label ${
-                    transporterRegDetails.s_trans_inact_tm ? 'required' : ''
+                    userRegDetails.s_trans_inact_tm ? 'required' : ''
                   }`}
                 >
                   Inactive Time:
@@ -430,7 +429,7 @@ let TransporterRegistrationForm = () => {
                   id='s_trans_inact_tm'
                   name='s_trans_inact_tm'
                   required
-                  value={transporterRegDetails.s_trans_inact_tm}
+                  value={userRegDetails.s_trans_inact_tm}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
@@ -447,36 +446,22 @@ let TransporterRegistrationForm = () => {
                 </select>
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='s_trans_start_dt'
-                  /*className={`required-label ${
-                    transporterRegDetails.s_trans_start_dt ? 'required' : ''
-                  }`}*/
-                >
-                  Subscription Date:
-                </label>
+                <label htmlFor='s_trans_start_dt'>Subscription Date:</label>
                 <input
                   type='date'
                   id='s_trans_start_dt'
                   name='s_trans_start_dt'
-                  value={transporterRegDetails.s_trans_start_dt || currentDate}
+                  value={userRegDetails.s_trans_start_dt || currentDate}
                   onChange={handleChange}
                 />
               </div>
               <div className='form-group'>
-                <label
-                  htmlFor='s_trans_due_dt'
-                  /*className={`required-label ${
-                    transporterRegDetails.s_trans_due_dt ? 'required' : ''
-                  }`}*/
-                >
-                  Subscription Due Date:
-                </label>
+                <label htmlFor='s_trans_due_dt'>Subscription Due Date:</label>
                 <input
                   type='date'
                   id='s_trans_due_dt'
                   name='s_trans_due_dt'
-                  value={transporterRegDetails.s_trans_due_dt || defaultEndDate}
+                  value={userRegDetails.s_trans_due_dt || defaultEndDate}
                   onChange={handleChange}
                 />
               </div>
@@ -488,7 +473,7 @@ let TransporterRegistrationForm = () => {
                   type='date'
                   id='s_trans_ext_dt'
                   name='s_trans_ext_dt'
-                  value={transporterRegDetails.s_trans_ext_dt || defaultEndDate}
+                  value={userRegDetails.s_trans_ext_dt || defaultEndDate}
                   onChange={handleChange}
                 />
               </div>
@@ -497,7 +482,7 @@ let TransporterRegistrationForm = () => {
                 <select
                   id='s_trans_act_status'
                   name='s_trans_act_status'
-                  value={transporterRegDetails.s_trans_act_status}
+                  value={userRegDetails.s_trans_act_status}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
@@ -511,7 +496,7 @@ let TransporterRegistrationForm = () => {
                   type='text'
                   id='s_trans_pan'
                   name='s_trans_pan'
-                  value={transporterRegDetails.s_trans_pan}
+                  value={userRegDetails.s_trans_pan}
                   onChange={handleChange}
                 />
               </div>
@@ -522,7 +507,7 @@ let TransporterRegistrationForm = () => {
                 <select
                   id='s_vh_sub_sync'
                   name='s_vh_sub_sync'
-                  value={transporterRegDetails.s_vh_sub_sync}
+                  value={userRegDetails.s_vh_sub_sync}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
@@ -530,8 +515,8 @@ let TransporterRegistrationForm = () => {
                   <option value='N'>No</option>
                 </select>
                 <p className='small-info'>
-                  (All vehicles subscription will start when transporter
-                  subscription starts)
+                  (All vehicles subscription will start when user subscription
+                  starts)
                 </p>
               </div>
               <div className='form-group'>
@@ -541,7 +526,7 @@ let TransporterRegistrationForm = () => {
                 <select
                   id='s_vh_sub_end'
                   name='s_vh_sub_end'
-                  value={transporterRegDetails.s_vh_sub_end}
+                  value={userRegDetails.s_vh_sub_end}
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
@@ -549,8 +534,8 @@ let TransporterRegistrationForm = () => {
                   <option value='N'>No</option>
                 </select>
                 <p className='small-info'>
-                  (All vehicles subscription will end when transporter
-                  subscription ends)
+                  (All vehicles subscription will end when user subscription
+                  ends)
                 </p>
               </div>
               <div className='form-group'>
@@ -559,7 +544,7 @@ let TransporterRegistrationForm = () => {
                   type='checkbox'
                   id='b_is_bank'
                   name='b_is_bank'
-                  value={transporterRegDetails.b_is_bank}
+                  value={userRegDetails.b_is_bank}
                   checked={showBankingInfo}
                   onChange={toggleBankingInfo}
                 />
@@ -570,7 +555,7 @@ let TransporterRegistrationForm = () => {
                     <label
                       htmlFor='s_trans_bnk'
                       className={`required-label ${
-                        transporterRegDetails.s_trans_bnk ? 'required' : ''
+                        userRegDetails.s_trans_bnk ? 'required' : ''
                       }`}
                     >
                       Bank Name:
@@ -580,7 +565,7 @@ let TransporterRegistrationForm = () => {
                       id='s_trans_bnk'
                       name='s_trans_bnk'
                       required
-                      value={transporterRegDetails.s_trans_bnk}
+                      value={userRegDetails.s_trans_bnk}
                       onChange={handleChange}
                     />
                   </div>
@@ -588,7 +573,7 @@ let TransporterRegistrationForm = () => {
                     <label
                       htmlFor='s_trans_brn'
                       className={`required-label ${
-                        transporterRegDetails.s_trans_brn ? 'required' : ''
+                        userRegDetails.s_trans_brn ? 'required' : ''
                       }`}
                     >
                       Branch Name:
@@ -598,7 +583,7 @@ let TransporterRegistrationForm = () => {
                       id='s_trans_brn'
                       name='s_trans_brn'
                       required
-                      value={transporterRegDetails.s_trans_brn}
+                      value={userRegDetails.s_trans_brn}
                       onChange={handleChange}
                     />
                   </div>
@@ -606,7 +591,7 @@ let TransporterRegistrationForm = () => {
                     <label
                       htmlFor='s_trans_acc_no'
                       className={`required-label ${
-                        transporterRegDetails.s_trans_acc_no ? 'required' : ''
+                        userRegDetails.s_trans_acc_no ? 'required' : ''
                       }`}
                     >
                       Account No.:
@@ -616,7 +601,7 @@ let TransporterRegistrationForm = () => {
                       id='s_trans_acc_no'
                       name='s_trans_acc_no'
                       required
-                      value={transporterRegDetails.s_trans_acc_no}
+                      value={userRegDetails.s_trans_acc_no}
                       onChange={handleChange}
                     />
                   </div>
@@ -624,7 +609,7 @@ let TransporterRegistrationForm = () => {
                     <label
                       htmlFor='s_trans_ifsc_cd'
                       className={`required-label ${
-                        transporterRegDetails.s_trans_ifsc_cd ? 'required' : ''
+                        userRegDetails.s_trans_ifsc_cd ? 'required' : ''
                       }`}
                     >
                       IFSC Code:
@@ -634,7 +619,7 @@ let TransporterRegistrationForm = () => {
                       id='s_trans_ifsc_cd'
                       name='s_trans_ifsc_cd'
                       required
-                      value={transporterRegDetails.s_trans_ifsc_cd}
+                      value={userRegDetails.s_trans_ifsc_cd}
                       onChange={handleChange}
                     />
                   </div>
@@ -666,4 +651,4 @@ let TransporterRegistrationForm = () => {
     </div>
   )
 }
-export default TransporterRegistrationForm
+export default UserRegistrationForm
