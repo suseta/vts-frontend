@@ -36,7 +36,7 @@ const Navbar = ({
                 handleFormClick('sid=S02&sname=transporterRegistration')
               }
             >
-              Transporter Registration
+              User Registration
             </button>
             <button
               onClick={() => handleFormClick('sid=S03&sname=assetEntryInfo')}
