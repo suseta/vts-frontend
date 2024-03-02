@@ -49,6 +49,11 @@ const Navbar = ({
               Asset Registration
             </button>
             <button
+              onClick={() => handleFormClick('sid=S12&sname=simInfo')}
+            >
+              SIM Registration
+            </button>
+            <button
               onClick={() =>
                 handleFormClick('sid=S05&sname=assetDeviceMapping')
               }
