@@ -36,7 +36,7 @@ const Navbar = ({
                 handleFormClick('sid=S02&sname=transporterRegistration')
               }
             >
-              Transporter Registration
+              User Registration
             </button>
             <button
               onClick={() => handleFormClick('sid=S03&sname=assetEntryInfo')}
@@ -83,9 +83,9 @@ const Navbar = ({
               Service Data Log
             </button>
             <button
-              onClick={() => handleFormClick('sid=S11&sname=clientServiceDataLog')}
+              onClick={() => handleFormClick('sid=S11&sname=liveGpsDataFetchPage')}
             >
-              Client Service Data Log
+              Live GPS Data
             </button>
           </div>
         )}
