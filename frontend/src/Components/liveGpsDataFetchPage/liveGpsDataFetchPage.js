@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './clientServiceDataLog.css'
+import './liveGpsDataFetchPage.css'
 import { ubuntuIP } from '../constantVariable'
 
 const LiveGpsDataFetchPage = () => {
