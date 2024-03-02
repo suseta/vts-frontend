@@ -33,7 +33,7 @@ const Navbar = ({
             </button>
             <button
               onClick={() =>
-                handleFormClick('sid=S02&sname=transporterRegistration')
+                handleFormClick('sid=S02&sname=userRegistration')
               }
             >
               User Registration
