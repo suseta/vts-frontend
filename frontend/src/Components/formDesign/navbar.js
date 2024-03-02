@@ -85,7 +85,7 @@ const Navbar = ({
             <button
               onClick={() => handleFormClick('sid=S11&sname=liveGpsDataFetchPage')}
             >
-              Client Service Data Log
+              Live GPS Data
             </button>
           </div>
         )}
