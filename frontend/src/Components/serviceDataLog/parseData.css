@@ -1,0 +1,103 @@
+.data-row {
+  margin-bottom: 10px;
+  /* Adjust spacing between data rows */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  /* Adjust spacing between rows */
+}
+
+.row p {
+  flex: 0 0 calc(16.666% - 10px);
+  /* Adjust width of each column to create 6 columns in a row */
+  margin-left: 25px;
+  /* Adjust spacing between columns */
+}
+
+.parsed-data-row {
+  margin-bottom: 10px;
+  /* Adjust spacing between data rows */
+}
+
+.parsed-data-column {
+  flex: 0 0 calc(20% - 10px);
+  /* Adjust width of each column to create 5 columns in a row */
+  margin-right: 10px;
+  /* Adjust spacing between columns */
+}
+
+.parsed-data-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.parsed-data-item {
+  width: calc(20% - 10px);
+  margin-bottom: 10px;
+}
+
+
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 9999; /* Ensure modal appears on top of other content */
+}
+
+.modal-small {
+  max-width: 600px;
+  max-height: 400px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.modal-content {
+  overflow: hidden;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.table-container {
+  width: 100%;
+  max-height: 300px; /* Limit maximum height for better scrolling */
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+
+
+
+
+
+
+

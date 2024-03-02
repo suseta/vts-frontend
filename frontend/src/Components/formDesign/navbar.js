@@ -82,6 +82,11 @@ const Navbar = ({
             >
               Service Data Log
             </button>
+            <button
+              onClick={() => handleFormClick('sid=S11&sname=clientServiceDataLog')}
+            >
+              Client Service Data Log
+            </button>
           </div>
         )}
       </div>

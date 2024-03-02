@@ -34,6 +34,9 @@ const PortDeviceMappingForm = lazy(() =>
 const ServiceDataLogForm = lazy(() =>
   import('./Components/serviceDataLog/serviceDataLog.js')
 )
+const ClientServiceDataLog =  lazy(() =>
+import('./Components/ClientServiceDataLog/clientServiceDataLog.js')
+)
 
 function App () {
   const [selectedForm, setSelectedForm] = useState(null)
@@ -103,8 +106,12 @@ function App () {
               element={<PortDeviceMappingForm />}
             />
             <Route
-              path='/sid=S10&sname=serviceDataLogForm'
+              path='/sid=S10&sname=serviceDataLog'
               element={<ServiceDataLogForm />}
+            />
+            <Route
+              path='/sid=S11&sname=clientServiceDataLog'
+              element={<ClientServiceDataLog />}
             />
           </Routes>
         </Suspense>
