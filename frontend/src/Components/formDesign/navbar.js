@@ -83,7 +83,7 @@ const Navbar = ({
               Service Data Log
             </button>
             <button
-              onClick={() => handleFormClick('sid=S11&sname=clientServiceDataLog')}
+              onClick={() => handleFormClick('sid=S11&sname=liveGpsDataFetchPage')}
             >
               Client Service Data Log
             </button>
