@@ -36,6 +36,20 @@ let DeviceInfoForm = () => {
     is_air_wr: false
   })
 
+
+  let [InactiveSimList, setInactiveSimList] = useState({ data: [] })
+  useEffect(() => {
+    fetch(`${ubuntuIP}/api/v0/getInactiveSimDetails`)
+      .then(response => response.json())
+      .then(data => {
+        setInactiveSimList({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
+
   let [showToggleValue, setShowToggleValue] = useState(false)
   let toggleInfo = () => {
     setShowToggleValue(prevShowToggleValue => {
@@ -90,10 +104,37 @@ let DeviceInfoForm = () => {
     window.location.reload()
   }
 
-  let handleChange = e => {
-    let { name, value } = e.target
-    setDeviceInfo(prevData => ({ ...prevData, [name]: value }))
-  }
+  // let handleChange = e => {
+  //   let { name, value } = e.target
+  //   setDeviceInfo(prevData => ({ ...prevData, [name]: value }))
+  // }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDeviceInfo(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  
+    if (name === 's_sim_no') {
+      const selectedSim = InactiveSimList.data.data.find(sim => sim.s_sim_no === value);
+      if (selectedSim) {
+        setDeviceInfo(prevState => ({
+          ...prevState,
+          s_sim_op: selectedSim.s_sim_op
+        }));
+      } else {
+        // If the user selects 'Select', reset the SIM operator field
+        setDeviceInfo(prevState => ({
+          ...prevState,
+          s_sim_op: ''
+        }));
+      }
+    }
+  };
+  
+
+
 
   let handleSubmit = e => {
     e.preventDefault()
@@ -125,9 +166,8 @@ let DeviceInfoForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='i_imei_no'
-                  className={`required-label ${
-                    deviceInfo.i_imei_no ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.i_imei_no ? 'required' : ''
+                    }`}
                 >
                   IMEI No.:
                 </label>
@@ -140,7 +180,7 @@ let DeviceInfoForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='form-group'>
+              {/* <div className='form-group'>
                 <label
                   htmlFor='s_sim_no'
                   className={`required-label ${
@@ -149,13 +189,32 @@ let DeviceInfoForm = () => {
                 >
                   SIM No.:
                 </label>
-                <input
-                  type='number'
+                <select
+                  className='form-select'
                   id='s_sim_no'
                   name='s_sim_no'
+                  required
                   value={deviceInfo.s_sim_no}
                   onChange={handleChange}
-                />
+                >
+                  <option value=''>Select</option>
+                  {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
+                    InactiveSimList.data.data.map(simList => (
+                      <option
+                        key={simList.s_sim_no}
+                        value={simList.s_sim_no}
+                      >
+                        {simList.s_sim_no}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {InactiveSimList.data && InactiveSimList.data.message
+                        ? InactiveSimList.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
               </div>
               <div className='form-group'>
                 <label
@@ -200,13 +259,82 @@ let DeviceInfoForm = () => {
                   </option>
                   <option value='TRUPHONE'>TRUPHONE (iot.truphone.com)</option>
                 </select>
+              </div>  */}
+
+
+
+
+
+
+<div className='form-group'>
+                <label
+                  htmlFor='s_sim_no'
+                  className={`required-label ${
+                    deviceInfo.s_sim_no ? 'required' : ''
+                  }`}
+                >
+                  SIM No.:
+                </label>
+                <select
+                  className='form-select'
+                  id='s_sim_no'
+                  name='s_sim_no'
+                  required
+                  value={deviceInfo.s_sim_no}
+                  onChange={handleChange}
+                >
+                  <option value=''>Select</option>
+                  {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
+                    InactiveSimList.data.data.map(simList => (
+                      <option
+                        key={simList.s_sim_no}
+                        value={simList.s_sim_no}
+                      >
+                        {simList.s_sim_no}
+                      </option>
+                    ))
+                  ) : (
+                    <option value=''>
+                      {InactiveSimList.data && InactiveSimList.data.message
+                        ? InactiveSimList.data.message
+                        : 'No entities available'}
+                    </option>
+                  )}
+                </select>
               </div>
+              {deviceInfo.s_sim_no && (
+                <div className='form-group'>
+                  <label
+                    htmlFor='s_sim_op'
+                    className={`required-label ${deviceInfo.s_sim_op ? 'required' : ''
+                      }`}
+                  >
+                    SIM Operator:
+                  </label>
+                  <input
+                    type='text'
+                    id='s_sim_op'
+                    name='s_sim_op'
+                    className='form-control'
+                    value={deviceInfo.s_sim_op}
+                    readOnly
+                  />
+                </div>
+              )}
+
+
+
+
+
+
+
+
+
               <div className='form-group'>
                 <label
                   htmlFor='s_dvc_typ'
-                  className={`required-label ${
-                    deviceInfo.s_dvc_typ ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.s_dvc_typ ? 'required' : ''
+                    }`}
                 >
                   Device Type:
                 </label>
@@ -250,9 +378,8 @@ let DeviceInfoForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='dvc_timezone'
-                  className={`required-label ${
-                    deviceInfo.dvc_timezone ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.dvc_timezone ? 'required' : ''
+                    }`}
                 >
                   Timezone:
                 </label>
@@ -283,9 +410,8 @@ let DeviceInfoForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='dvc_mfg_dt'
-                  className={`required-label ${
-                    deviceInfo.dvc_mfg_dt ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.dvc_mfg_dt ? 'required' : ''
+                    }`}
                 >
                   Manufacture Date:
                 </label>
@@ -300,9 +426,8 @@ let DeviceInfoForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='dvc_add_dt'
-                  className={`required-label ${
-                    deviceInfo.dvc_add_dt ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.dvc_add_dt ? 'required' : ''
+                    }`}
                 >
                   Device Entry Date:
                 </label>
@@ -327,9 +452,8 @@ let DeviceInfoForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_dvc_status'
-                  className={`required-label ${
-                    deviceInfo.s_dvc_status ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.s_dvc_status ? 'required' : ''
+                    }`}
                 >
                   Device Active Status:
                 </label>

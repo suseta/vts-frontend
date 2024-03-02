@@ -8,7 +8,7 @@ let SimInfoForm = () => {
     s_sim_no: '',
     s_sim_op: '',
     sim_add_dt: '',
-    sim_dlt_dt: '',
+    sim_dlt_dt: null,
     s_sim_status: ''
   }
 
@@ -16,7 +16,7 @@ let SimInfoForm = () => {
     s_sim_no: '',
     s_sim_op: '',
     sim_add_dt: '',
-    sim_dlt_dt: '',
+    sim_dlt_dt: null,
     s_sim_status: ''
   })
 
@@ -186,8 +186,8 @@ let SimInfoForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  <option value='A'>Active</option>
-                  <option value='IA'>Inactive</option>
+                  <option value='true'>Active</option>
+                  <option value='false'>Inactive</option>
                 </select>
               </div>
               <div class='form-buttons'>
