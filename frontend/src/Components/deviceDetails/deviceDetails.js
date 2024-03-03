@@ -160,7 +160,7 @@ let DeviceInfoForm = () => {
     <div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>Device Entry Form</h2>
+          <h2>Device Registration</h2>
           <div className='DeviceInfoForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>

@@ -61,7 +61,7 @@ const Navbar = ({
               Asset Device Mapping
             </button>
             <button onClick={() => handleFormClick('sid=S06&sname=deviceInfo')}>
-              Device Info Entry
+            Device Registration
             </button>
             <button
               onClick={() =>
