@@ -79,7 +79,7 @@ let SimInfoForm = () => {
     <div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>SIM Entry</h2>
+          <h2>SIM Registration</h2>
           <div className='SimInfoForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>
