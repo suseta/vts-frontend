@@ -181,7 +181,7 @@ let DeviceInfoForm = () => {
                 />
               </div>
 
-              <div className='form-group'>
+              {/* <div className='form-group'>
                 <label
                   htmlFor='s_sim_no'
                   className={`required-label ${deviceInfo.s_sim_no ? 'required' : ''
@@ -234,7 +234,7 @@ let DeviceInfoForm = () => {
                     readOnly
                   />
                 </div>
-              )}
+              )} */}
 
 
 
