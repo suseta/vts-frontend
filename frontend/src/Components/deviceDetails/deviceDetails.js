@@ -115,7 +115,7 @@ let DeviceInfoForm = () => {
       ...prevState,
       [name]: value
     }));
-  
+
     if (name === 's_sim_no') {
       const selectedSim = InactiveSimList.data.data.find(sim => sim.s_sim_no === value);
       if (selectedSim) {
@@ -132,7 +132,7 @@ let DeviceInfoForm = () => {
       }
     }
   };
-  
+
 
 
 
@@ -180,98 +180,12 @@ let DeviceInfoForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              {/* <div className='form-group'>
-                <label
-                  htmlFor='s_sim_no'
-                  className={`required-label ${
-                    deviceInfo.s_sim_no ? 'required' : ''
-                  }`}
-                >
-                  SIM No.:
-                </label>
-                <select
-                  className='form-select'
-                  id='s_sim_no'
-                  name='s_sim_no'
-                  required
-                  value={deviceInfo.s_sim_no}
-                  onChange={handleChange}
-                >
-                  <option value=''>Select</option>
-                  {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
-                    InactiveSimList.data.data.map(simList => (
-                      <option
-                        key={simList.s_sim_no}
-                        value={simList.s_sim_no}
-                      >
-                        {simList.s_sim_no}
-                      </option>
-                    ))
-                  ) : (
-                    <option value=''>
-                      {InactiveSimList.data && InactiveSimList.data.message
-                        ? InactiveSimList.data.message
-                        : 'No entities available'}
-                    </option>
-                  )}
-                </select>
-              </div>
+
               <div className='form-group'>
                 <label
-                  htmlFor='s_sim_op'
-                  className={`required-label ${
-                    deviceInfo.s_sim_op ? 'required' : ''
-                  }`}
-                >
-                  SIM Operator:
-                </label>
-                <select
-                  className='form-select'
-                  id='s_sim_op'
-                  name='s_sim_op'
-                  required
-                  value={deviceInfo.s_sim_op}
-                  onChange={handleChange}
-                >
-                  <option value=''>Select</option>
-                  <option value='Airtel Gprs'>
-                    Airtel Gprs (airtelgprs.com)
-                  </option>
-                  <option value='Airtel Iot'>Airtel Iot (airteliot.com)</option>
-                  <option value='Vodafone www'>Vodafone www (www)</option>
-                  <option value='Vodafone Iot'>Vodafone Iot (iot.com)</option>
-                  <option value='Idea Internet'>
-                    Idea Internet (internet)
-                  </option>
-                  <option value='Idea isafe'>Idea isafe (isafe)</option>
-                  <option value='Bsnl'>Bsnl (bsnl)</option>
-                  <option value='Jio'>Jio (jio)</option>
-                  <option value='onSAT'>onSAT (onSAT)</option>
-                  <option value='Caburn Telecom'>
-                    Caburn Telecom (intelligence.m2m)
-                  </option>
-                  <option value='DIGI'>DIGI (diginet)</option>
-                  <option value='PWCC'>PWCC (public.pccwglobal.hktdcp)</option>
-                  <option value='GTT'>GTT (internet.cellinkgy.com)</option>
-                  <option value='Digicel'>Digicel (web.digicelgy.com)</option>
-                  <option value='Claro Ecuador'>
-                    Claro Ecuador (internet.claro.com.ec)
-                  </option>
-                  <option value='TRUPHONE'>TRUPHONE (iot.truphone.com)</option>
-                </select>
-              </div>  */}
-
-
-
-
-
-
-<div className='form-group'>
-                <label
                   htmlFor='s_sim_no'
-                  className={`required-label ${
-                    deviceInfo.s_sim_no ? 'required' : ''
-                  }`}
+                  className={`required-label ${deviceInfo.s_sim_no ? 'required' : ''
+                    }`}
                 >
                   SIM No.:
                 </label>

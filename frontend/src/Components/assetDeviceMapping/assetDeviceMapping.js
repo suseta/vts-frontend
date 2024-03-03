@@ -62,6 +62,30 @@ let AssetDeviceMappingForm = () => {
       })
   }, [])
 
+  let [InactiveSimList, setInactiveSimList] = useState({ data: [] })
+  useEffect(() => {
+    fetch(`${ubuntuIP}/api/v0/getInactiveSimDetails`)
+      .then(response => response.json())
+      .then(data => {
+        setInactiveSimList({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
+  let [activeSimList, setActiveSimList] = useState({ data: [] })
+  useEffect(() => {
+    fetch(`${ubuntuIP}/api/v0/getActiveSimDetails`)
+      .then(response => response.json())
+      .then(data => {
+        setActiveSimList({ data })
+      })
+      .catch(error => {
+        console.error('Error: ', error)
+      })
+  }, [])
+
   let [assetList, setassetList] = useState({ data: [] })
   let [selectedEntity, setSelectedEntity] = useState('')
   useEffect(() => {
@@ -440,7 +464,110 @@ let AssetDeviceMappingForm = () => {
                   <option value='T'>T</option>
                 </select>
               </div>
-              <div className='form-group'>
+
+
+              {(assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+  assetDeviceMapping.s_ad_mp_pur !== 'UC') &&
+  (assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+  assetDeviceMapping.s_ad_mp_pur !== '') ? (
+  <div className='form-group'>
+    <label
+      htmlFor='s_old_sim_no'
+      className={`required-label ${
+        assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+        assetDeviceMapping.s_ad_mp_pur !== 'UC' ? 'required' : ''
+      }`}
+    >
+      Old SIM No.:
+    </label>
+    <select
+      className='form-select'
+      id='s_old_sim_no'
+      name='s_old_sim_no'
+      required
+      value={assetDeviceMapping.s_old_sim_no}
+      onChange={handleChange}
+    >
+      <option value=''>Select</option>
+      {activeSimList.data && Array.isArray(activeSimList.data.data) ? (
+        activeSimList.data.data.map(simList => (
+          <option
+            key={simList.s_sim_no}
+            value={simList.s_sim_no}
+          >
+            {simList.s_sim_no}
+          </option>
+        ))
+      ) : (
+        <option value=''>
+          {activeSimList.data && activeSimList.data.message
+            ? activeSimList.data.message
+            : 'No entities available'}
+        </option>
+      )}
+    </select>
+  </div>
+) : null}
+{(assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+  assetDeviceMapping.s_ad_mp_pur !== '') ? (
+  <div className='form-group'>
+    <label
+      htmlFor='s_nw_sim_no'
+      className={`required-label ${
+        assetDeviceMapping.s_ad_mp_pur !== 'DU' ? 'required' : ''
+      }`}
+    >
+      New SIM No.:
+    </label>
+    <select
+      className='form-select'
+      id='s_nw_sim_no'
+      name='s_nw_sim_no'
+      required
+      value={assetDeviceMapping.s_nw_sim_no}
+      onChange={handleChange}
+    >
+      <option value=''>Select</option>
+      {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
+        InactiveSimList.data.data.map(simList => (
+          <option
+            key={simList.s_sim_no}
+            value={simList.s_sim_no}
+          >
+            {simList.s_sim_no}
+          </option>
+        ))
+      ) : (
+        <option value=''>
+          {InactiveSimList.data && InactiveSimList.data.message
+            ? InactiveSimList.data.message
+            : 'No entities available'}
+        </option>
+      )}
+    </select>
+  </div>
+) : null}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+              {/* <div className='form-group'>
                 <label htmlFor='s_old_sim_no'>
                   Old SIM No.:
                   {assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
@@ -488,7 +615,7 @@ let AssetDeviceMappingForm = () => {
                   onChange={handleChange}
                   disabled={assetDeviceMapping.s_ad_mp_pur === 'DU'}
                 />
-              </div>
+              </div> 
               <div className='form-group'>
                 <label
                   htmlFor='s_sim_op'
@@ -532,7 +659,7 @@ let AssetDeviceMappingForm = () => {
                   </option>
                   <option value='TRUPHONE'>TRUPHONE (iot.truphone.com)</option>
                 </select>
-              </div>
+              </div> */}
               <div className='form-group'>
                 <label
                   htmlFor='s_mx_spd'
