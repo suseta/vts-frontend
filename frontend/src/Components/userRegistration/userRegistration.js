@@ -161,7 +161,7 @@ let UserRegistrationForm = () => {
     <div>
       <div className='wrapper'>
         <div className='container'>
-          <h2>UserCreation Form</h2>
+          <h2>User Creation Form</h2>
           <div className='UserRegistrationForm'>
             <form onSubmit={handleSubmit}>
               <div className='form-group'>

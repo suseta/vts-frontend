@@ -473,7 +473,7 @@ let AssetDeviceMappingForm = () => {
   <div className='form-group'>
     <label
       htmlFor='s_old_sim_no'
-      className={`required-label ${
+      className={`s_old_sim_no ${
         assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
         assetDeviceMapping.s_ad_mp_pur !== 'UC' ? 'required' : ''
       }`}
@@ -484,7 +484,6 @@ let AssetDeviceMappingForm = () => {
       className='form-select'
       id='s_old_sim_no'
       name='s_old_sim_no'
-      required
       value={assetDeviceMapping.s_old_sim_no}
       onChange={handleChange}
     >
@@ -513,7 +512,7 @@ let AssetDeviceMappingForm = () => {
   <div className='form-group'>
     <label
       htmlFor='s_nw_sim_no'
-      className={`required-label ${
+      className={`s_nw_sim_no ${
         assetDeviceMapping.s_ad_mp_pur !== 'DU' ? 'required' : ''
       }`}
     >
@@ -523,7 +522,6 @@ let AssetDeviceMappingForm = () => {
       className='form-select'
       id='s_nw_sim_no'
       name='s_nw_sim_no'
-      required
       value={assetDeviceMapping.s_nw_sim_no}
       onChange={handleChange}
     >
