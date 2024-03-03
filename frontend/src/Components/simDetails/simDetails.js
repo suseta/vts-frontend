@@ -170,26 +170,6 @@ let SimInfoForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='form-group'>
-                <label
-                  htmlFor='s_sim_status'
-                  className={`required-label ${
-                    simInfo.s_sim_status ? 'required' : ''
-                  }`}
-                >
-                  SIM Active Status:
-                </label>
-                <select
-                  id='s_sim_status'
-                  name='s_sim_status'
-                  value={simInfo.s_sim_status}
-                  onChange={handleChange}
-                >
-                  <option value=''>Select</option>
-                  <option value='true'>Active</option>
-                  <option value='false'>Inactive</option>
-                </select>
-              </div>
               <div class='form-buttons'>
                 <button type='submit'>Save</button>
                 <button

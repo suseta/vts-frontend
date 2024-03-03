@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './assetDeviceMapping.css'
-import {ubuntuIP} from '../../Components/constantVariable'
+import { ubuntuIP } from '../../Components/constantVariable'
 
 let AssetDeviceMappingForm = () => {
 
@@ -186,9 +186,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_entity_id_and_name'
-                  className={`required-label ${
-                    assetDeviceMapping.s_entity_id_and_name ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_entity_id_and_name ? 'required' : ''
+                    }`}
                 >
                   Entity:
                 </label>
@@ -227,9 +226,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_asset_id'
-                  className={`required-label ${
-                    assetDeviceMapping.s_asset_id ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_asset_id ? 'required' : ''
+                    }`}
                 >
                   Asset No.:
                 </label>
@@ -260,9 +258,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_asset_typ'
-                  className={`required-label ${
-                    assetDeviceMapping.s_asset_typ ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_asset_typ ? 'required' : ''
+                    }`}
                 >
                   Asset Type:
                 </label>
@@ -293,9 +290,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_ad_mp_pur'
-                  className={`required-label ${
-                    assetDeviceMapping.s_ad_mp_pur ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_ad_mp_pur ? 'required' : ''
+                    }`}
                 >
                   Purpose:
                 </label>
@@ -317,9 +313,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_prd_typ'
-                  className={`required-label ${
-                    assetDeviceMapping.s_prd_typ ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_prd_typ ? 'required' : ''
+                    }`}
                 >
                   Product Type:
                 </label>
@@ -341,9 +336,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_dvc_typ'
-                  className={`required-label ${
-                    assetDeviceMapping.s_dvc_typ ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_dvc_typ ? 'required' : ''
+                    }`}
                 >
                   Device Type:
                 </label>
@@ -377,9 +371,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='asset_dvc_mp_dt'
-                  className={`required-label ${
-                    assetDeviceMapping.asset_dvc_mp_dt ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.asset_dvc_mp_dt ? 'required' : ''
+                    }`}
                 >
                   Asset Device Map Date:
                 </label>
@@ -396,9 +389,8 @@ let AssetDeviceMappingForm = () => {
                   New Device Id:
                   {assetDeviceMapping.s_ad_mp_pur !== 'DU' ? (
                     <span
-                      className={`required-label ${
-                        assetDeviceMapping.i_nw_imei_no ? 'required' : ''
-                      }`}
+                      className={`required-label ${assetDeviceMapping.i_nw_imei_no ? 'required' : ''
+                        }`}
                     ></span>
                   ) : null}
                 </label>
@@ -416,12 +408,11 @@ let AssetDeviceMappingForm = () => {
                 <label htmlFor='i_old_imei_no'>
                   Existing Device Id:
                   {assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
-                  assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
-                  assetDeviceMapping.s_ad_mp_pur !== 'UC' ? (
+                    assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+                    assetDeviceMapping.s_ad_mp_pur !== 'UC' ? (
                     <span
-                      className={`required-label ${
-                        assetDeviceMapping.i_old_imei_no ? 'required' : ''
-                      }`}
+                      className={`required-label ${assetDeviceMapping.i_old_imei_no ? 'required' : ''
+                        }`}
                     ></span>
                   ) : null}
                 </label>
@@ -442,9 +433,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_trk_typ'
-                  className={`required-label ${
-                    assetDeviceMapping.s_trk_typ ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_trk_typ ? 'required' : ''
+                    }`}
                 >
                   Track Type:
                 </label>
@@ -467,84 +457,82 @@ let AssetDeviceMappingForm = () => {
 
 
               {(assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
-  assetDeviceMapping.s_ad_mp_pur !== 'UC') &&
-  (assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
-  assetDeviceMapping.s_ad_mp_pur !== '') ? (
-  <div className='form-group'>
-    <label
-      htmlFor='s_old_sim_no'
-      className={`s_old_sim_no ${
-        assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
-        assetDeviceMapping.s_ad_mp_pur !== 'UC' ? 'required' : ''
-      }`}
-    >
-      Old SIM No.:
-    </label>
-    <select
-      className='form-select'
-      id='s_old_sim_no'
-      name='s_old_sim_no'
-      value={assetDeviceMapping.s_old_sim_no}
-      onChange={handleChange}
-    >
-      <option value=''>Select</option>
-      {activeSimList.data && Array.isArray(activeSimList.data.data) ? (
-        activeSimList.data.data.map(simList => (
-          <option
-            key={simList.s_sim_no}
-            value={simList.s_sim_no}
-          >
-            {simList.s_sim_no}
-          </option>
-        ))
-      ) : (
-        <option value=''>
-          {activeSimList.data && activeSimList.data.message
-            ? activeSimList.data.message
-            : 'No entities available'}
-        </option>
-      )}
-    </select>
-  </div>
-) : null}
-{(assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
-  assetDeviceMapping.s_ad_mp_pur !== '') ? (
-  <div className='form-group'>
-    <label
-      htmlFor='s_nw_sim_no'
-      className={`s_nw_sim_no ${
-        assetDeviceMapping.s_ad_mp_pur !== 'DU' ? 'required' : ''
-      }`}
-    >
-      New SIM No.:
-    </label>
-    <select
-      className='form-select'
-      id='s_nw_sim_no'
-      name='s_nw_sim_no'
-      value={assetDeviceMapping.s_nw_sim_no}
-      onChange={handleChange}
-    >
-      <option value=''>Select</option>
-      {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
-        InactiveSimList.data.data.map(simList => (
-          <option
-            key={simList.s_sim_no}
-            value={simList.s_sim_no}
-          >
-            {simList.s_sim_no}
-          </option>
-        ))
-      ) : (
-        <option value=''>
-          {InactiveSimList.data && InactiveSimList.data.message
-            ? InactiveSimList.data.message
-            : 'No entities available'}
-        </option>
-      )}
-    </select>
-  </div>
-) : null}
+                assetDeviceMapping.s_ad_mp_pur !== 'UC') &&
+                (assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+                  assetDeviceMapping.s_ad_mp_pur !== '') ? (
+                <div className='form-group'>
+                  <label
+                    htmlFor='s_old_sim_no'
+                    className={`s_old_sim_no ${assetDeviceMapping.s_ad_mp_pur !== 'NI' &&
+                        assetDeviceMapping.s_ad_mp_pur !== 'UC' ? 'required' : ''
+                      }`}
+                  >
+                    Old SIM No.:
+                  </label>
+                  <select
+                    className='form-select'
+                    id='s_old_sim_no'
+                    name='s_old_sim_no'
+                    value={assetDeviceMapping.s_old_sim_no}
+                    onChange={handleChange}
+                  >
+                    <option value=''>Select</option>
+                    {activeSimList.data && Array.isArray(activeSimList.data.data) ? (
+                      activeSimList.data.data.map(simList => (
+                        <option
+                          key={simList.s_sim_no}
+                          value={simList.s_sim_no}
+                        >
+                          {simList.s_sim_no}
+                        </option>
+                      ))
+                    ) : (
+                      <option value=''>
+                        {activeSimList.data && activeSimList.data.message
+                          ? activeSimList.data.message
+                          : 'No entities available'}
+                      </option>
+                    )}
+                  </select>
+                </div>
+              ) : null}
+              {(assetDeviceMapping.s_ad_mp_pur !== 'DU' &&
+                assetDeviceMapping.s_ad_mp_pur !== '') ? (
+                <div className='form-group'>
+                  <label
+                    htmlFor='s_nw_sim_no'
+                    className={`s_nw_sim_no ${assetDeviceMapping.s_ad_mp_pur !== 'DU' ? 'required' : ''
+                      }`}
+                  >
+                    New SIM No.:
+                  </label>
+                  <select
+                    className='form-select'
+                    id='s_nw_sim_no'
+                    name='s_nw_sim_no'
+                    value={assetDeviceMapping.s_nw_sim_no}
+                    onChange={handleChange}
+                  >
+                    <option value=''>Select</option>
+                    {InactiveSimList.data && Array.isArray(InactiveSimList.data.data) ? (
+                      InactiveSimList.data.data.map(simList => (
+                        <option
+                          key={simList.s_sim_no}
+                          value={simList.s_sim_no}
+                        >
+                          {simList.s_sim_no}
+                        </option>
+                      ))
+                    ) : (
+                      <option value=''>
+                        {InactiveSimList.data && InactiveSimList.data.message
+                          ? InactiveSimList.data.message
+                          : 'No entities available'}
+                      </option>
+                    )}
+                  </select>
+                </div>
+              ) : null}
 
 
 
@@ -564,7 +552,7 @@ let AssetDeviceMappingForm = () => {
 
 
 
-              
+
               {/* <div className='form-group'>
                 <label htmlFor='s_old_sim_no'>
                   Old SIM No.:
@@ -661,9 +649,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_mx_spd'
-                  className={`required-label ${
-                    assetDeviceMapping.s_mx_spd ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_mx_spd ? 'required' : ''
+                    }`}
                 >
                   Max Speed:
                 </label>
@@ -678,9 +665,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_crct_spd'
-                  className={`required-label ${
-                    assetDeviceMapping.s_crct_spd ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_crct_spd ? 'required' : ''
+                    }`}
                 >
                   Corrected Speed:
                 </label>
@@ -695,9 +681,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_svr_eng_name'
-                  className={`required-label ${
-                    assetDeviceMapping.s_svr_eng_name ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_svr_eng_name ? 'required' : ''
+                    }`}
                 >
                   Service Engineer Name:
                 </label>
@@ -713,9 +698,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_svr_eng_mail'
-                  className={`required-label ${
-                    assetDeviceMapping.s_svr_eng_mail ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_svr_eng_mail ? 'required' : ''
+                    }`}
                 >
                   Service Engineer Mail:
                 </label>
@@ -731,9 +715,8 @@ let AssetDeviceMappingForm = () => {
               <div className='form-group'>
                 <label
                   htmlFor='s_svr_eng_mb_no'
-                  className={`required-label ${
-                    assetDeviceMapping.s_svr_eng_mb_no ? 'required' : ''
-                  }`}
+                  className={`required-label ${assetDeviceMapping.s_svr_eng_mb_no ? 'required' : ''
+                    }`}
                 >
                   Service Engineer Mobile No.:
                 </label>
