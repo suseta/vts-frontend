@@ -38,7 +38,7 @@ let EntityRegistrationForm = () => {
     s_rep_wp: '',
     s_frc_entity_map: '',
     b_is_fnd: false,
-    s_fnd_rt: ''
+    s_fnd_rt: null
   }
 
   let [entityRegDetails, setEntityRegDetails] = useState({
@@ -72,7 +72,7 @@ let EntityRegistrationForm = () => {
     s_rep_wp: '',
     s_frc_entity_map: '',
     b_is_fnd: false,
-    s_fnd_rt: ''
+    s_fnd_rt: null
   })
 
   let [timezone, setTimezone] = useState({ data: [] })
