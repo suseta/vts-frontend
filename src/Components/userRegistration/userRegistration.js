@@ -9,6 +9,7 @@ let UserRegistrationForm = () => {
   let initialState = {
     s_entity_id: '',
     s_entity_id_and_name: '',
+    s_user_type:'',
     s_trans_id: '',
     s_trans_name: '',
     trans_tmz: '',
@@ -43,6 +44,7 @@ let UserRegistrationForm = () => {
   let [userRegDetails, setUserRegDetails] = useState({
     s_entity_id: '',
     s_entity_id_and_name: '',
+    s_user_type:'',
     s_trans_id: '',
     s_trans_name: '',
     trans_tmz: '',
@@ -136,8 +138,8 @@ let UserRegistrationForm = () => {
       [name]: type === 'checkbox' ? checked : value
     }))
   }
-  let handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
     fetch(`${ubuntuIP}/api/v0/setUserInfo`, {
       method: 'POST',
       headers: {
@@ -145,16 +147,18 @@ let UserRegistrationForm = () => {
       },
       body: JSON.stringify(userRegDetails)
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success in User Creation Form:', data)
-        alert('User created successfully!')
-      })
-      .catch(error => {
-        console.error('Error:', error)
-        alert('Error! Please try again.')
-      })
-    console.log('User creation form submitted:', userRegDetails)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error occurred while creating user.'); 
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('User created successfully!');
+    })
+    .catch(error => {
+      alert(error.message); 
+    });
   }
 
   return (
@@ -203,6 +207,30 @@ let UserRegistrationForm = () => {
                         : 'No entities available'}
                     </option>
                   )}
+                </select>
+              </div>
+              <div className='form-group'>
+                <label
+                  htmlFor='s_user_type'
+                  className={`required-label ${
+                    userRegDetails.s_user_type ? 'required' : ''
+                  }`}
+                >
+                  User Role:
+                </label>
+                <select
+                  id='s_user_type'
+                  name='s_user_type'
+                  required
+                  value={userRegDetails.s_user_type}
+                  onChange={handleChange}
+                >
+                  <option value=''>Select</option>
+                  <option value='plant'>Plant</option>
+                  <option value='department'>Department</option>
+                  <option value='transporter'>Transporter</option>
+                  <option value='truckOwner'>Truck Owner</option>
+                  <option value='user'>User</option>
                 </select>
               </div>
               <div className='form-group'>
@@ -433,7 +461,7 @@ let UserRegistrationForm = () => {
                   onChange={handleChange}
                 >
                   <option value=''>Select</option>
-                  <option value='1/2'>1/2</option>
+                  {/* <option value='1/2'>1/2</option> */}
                   <option value='1'>1</option>
                   <option value='2'>2</option>
                   <option value='3'>3</option>

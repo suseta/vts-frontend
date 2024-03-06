@@ -13,11 +13,11 @@ let AssetDeviceMappingForm = () => {
     s_prd_typ: '',
     s_asset_id: '',
     s_asset_typ: '',
-    i_nw_imei_no: '',
-    i_old_imei_no: '',
+    i_nw_imei_no: null,
+    i_old_imei_no: null,
     s_trk_typ: '',
-    s_old_sim_no: '',
-    s_nw_sim_no: '',
+    s_old_sim_no: null,
+    s_nw_sim_no: null,
     s_sim_op: '',
     s_mx_spd: '',
     s_crct_spd: '',
@@ -35,11 +35,11 @@ let AssetDeviceMappingForm = () => {
     s_prd_typ: '',
     s_asset_id: '',
     s_asset_typ: '',
-    i_nw_imei_no: '',
-    i_old_imei_no: '',
+    i_nw_imei_no: null,
+    i_old_imei_no: null,
     s_trk_typ: '',
-    s_old_sim_no: '',
-    s_nw_sim_no: '',
+    s_old_sim_no: null,
+    s_nw_sim_no: null,
     s_sim_op: '',
     s_mx_spd: '',
     s_crct_spd: '',
@@ -48,7 +48,7 @@ let AssetDeviceMappingForm = () => {
     s_svr_eng_mb_no: ''
   })
 
-  let currentDate = new Date().toISOString().split('T')[0]
+  // let currentDate = new Date().toISOString().split('T')[0]
 
   let [entityNames, setEntityNames] = useState({ data: [] })
   useEffect(() => {

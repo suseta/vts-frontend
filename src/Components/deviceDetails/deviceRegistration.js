@@ -1,54 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import './deviceDetails.css'
 
-import { ubuntuIP } from '../../Components/constantVariable'
+import { ubuntuIP } from '../constantVariable'
 
-let DeviceInfoForm = () => {
+let DeviceRegistration = () => {
   let initialState = {
     i_imei_no: '',
-    s_sim_no: '',
-    s_sim_op: '',
     s_dvc_typ: '',
     dvc_mdl_name: '',
     dvc_timezone: '',
     dvc_mfg_dt: '',
     dvc_add_dt: '',
-    dvc_dlt_dt: null,
     s_atd: '',
-    s_dvc_status: '',
     is_ign_wr: false,
     is_air_wr: false
   }
 
   let [deviceInfo, setDeviceInfo] = useState({
     i_imei_no: '',
-    s_sim_no: '',
-    s_sim_op: '',
     s_dvc_typ: '',
     dvc_mdl_name: '',
     dvc_timezone: '',
     dvc_mfg_dt: '',
     dvc_add_dt: '',
-    dvc_dlt_dt: null,
     s_atd: '',
-    s_dvc_status: '',
     is_ign_wr: false,
     is_air_wr: false
   })
-
-
-  let [InactiveSimList, setInactiveSimList] = useState({ data: [] })
-  useEffect(() => {
-    fetch(`${ubuntuIP}/api/v0/getInactiveSimDetails`)
-      .then(response => response.json())
-      .then(data => {
-        setInactiveSimList({ data })
-      })
-      .catch(error => {
-        console.error('Error: ', error)
-      })
-  }, [])
-
 
   let [showToggleValue, setShowToggleValue] = useState(false)
   let toggleInfo = () => {
@@ -115,29 +93,13 @@ let DeviceInfoForm = () => {
       ...prevState,
       [name]: value
     }));
-
-    if (name === 's_sim_no') {
-      const selectedSim = InactiveSimList.data.data.find(sim => sim.s_sim_no === value);
-      if (selectedSim) {
-        setDeviceInfo(prevState => ({
-          ...prevState,
-          s_sim_op: selectedSim.s_sim_op
-        }));
-      } else {
-        // If the user selects 'Select', reset the SIM operator field
-        setDeviceInfo(prevState => ({
-          ...prevState,
-          s_sim_op: ''
-        }));
-      }
-    }
   };
 
 
 
 
-  let handleSubmit = e => {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
     fetch(`${ubuntuIP}/api/v0/setDeviceDetails`, {
       method: 'POST',
       headers: {
@@ -145,15 +107,18 @@ let DeviceInfoForm = () => {
       },
       body: JSON.stringify(deviceInfo)
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success in Device Entry form:', data)
-        alert('Device details saved successfully!')
-      })
-      .catch(error => {
-        console.error('Error:', error)
-        alert('Error! Please try again.')
-      })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error occurred while saving device details.'); 
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('Device details saved successfully!');
+    })
+    .catch(error => {
+      alert(error.message); // Alert for catch block
+    });
   }
 
   return (
@@ -235,9 +200,6 @@ let DeviceInfoForm = () => {
                   />
                 </div>
               )} */}
-
-
-
 
 
 
@@ -354,35 +316,6 @@ let DeviceInfoForm = () => {
                 />
               </div>
               <div className='form-group'>
-                <label htmlFor='dvc_dlt_dt'>Device Remove Date:</label>
-                <input
-                  type='date'
-                  id='dvc_dlt_dt'
-                  name='dvc_dlt_dt'
-                  value={deviceInfo.dvc_dlt_dt}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='form-group'>
-                <label
-                  htmlFor='s_dvc_status'
-                  className={`required-label ${deviceInfo.s_dvc_status ? 'required' : ''
-                    }`}
-                >
-                  Device Active Status:
-                </label>
-                <select
-                  id='s_dvc_status'
-                  name='s_dvc_status'
-                  value={deviceInfo.s_dvc_status}
-                  onChange={handleChange}
-                >
-                  <option value=''>Select</option>
-                  <option value='A'>Active</option>
-                  <option value='IA'>Inactive</option>
-                </select>
-              </div>
-              <div className='form-group'>
                 <label htmlFor='s_atd'>Attendance:</label>
                 <select
                   id='s_atd'
@@ -442,4 +375,4 @@ let DeviceInfoForm = () => {
   )
 }
 
-export default DeviceInfoForm
+export default DeviceRegistration

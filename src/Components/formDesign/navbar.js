@@ -51,7 +51,7 @@ const Navbar = ({
             <button
               onClick={() => handleFormClick('sid=S12&sname=simInfo')}
             >
-              SIM Registration
+              SIM Management
             </button>
             <button
               onClick={() =>
@@ -61,7 +61,7 @@ const Navbar = ({
               Asset Device Mapping
             </button>
             <button onClick={() => handleFormClick('sid=S06&sname=deviceInfo')}>
-            Device Registration
+            Device Management
             </button>
             <button
               onClick={() =>

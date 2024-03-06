@@ -16,10 +16,10 @@ const AssetDeviceMappingForm = lazy(() =>
 const AssetDriverMapping = lazy(() =>
   import('./Components/assetDriverMapping/assetDriverMapping.js')
 )
-const DeviceInfoForm = lazy(() =>
+const DeviceInfoPage = lazy(() =>
   import('./Components/deviceDetails/deviceDetails.js')
 )
-const SimInfoForm = lazy(() => import('./Components/simDetails/simDetails.js'))
+const SimInfoPage = lazy(() => import('./Components/simDetails/simDetails.js'))
 
 const DriverRegistrationForm = lazy(() =>
   import('./Components/driverRegistration/driverRegistration.js')
@@ -94,7 +94,7 @@ function App () {
             />
             <Route
               path='/sid=S06&sname=deviceInfo'
-              element={<DeviceInfoForm />}
+              element={<DeviceInfoPage />}
             />
             <Route
               path='/sid=S07&sname=driverRegistration'
@@ -116,7 +116,7 @@ function App () {
               path='/sid=S11&sname=liveGpsDataFetchPage'
               element={<LiveGpsDataFetchPage />}
             />
-            <Route path='/sid=S12&sname=simInfo' element={<SimInfoForm />} />
+            <Route path='/sid=S12&sname=simInfo' element={<SimInfoPage />} />
           </Routes>
         </Suspense>
       </div>

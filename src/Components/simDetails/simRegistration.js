@@ -7,40 +7,14 @@ let SimInfoForm = () => {
   let initialState = {
     s_sim_no: '',
     s_sim_op: '',
-    sim_add_dt: '',
-    sim_dlt_dt: null,
-    s_sim_status: ''
+    sim_add_dt: ''
   }
 
   let [simInfo, setSimInfo] = useState({
     s_sim_no: '',
     s_sim_op: '',
-    sim_add_dt: '',
-    sim_dlt_dt: null,
-    s_sim_status: ''
+    sim_add_dt: ''
   })
-
-  let [showToggleValue, setShowToggleValue] = useState(false)
-  let toggleInfo = () => {
-    setShowToggleValue(prevShowToggleValue => {
-      setSimInfo(prevData => ({
-        ...prevData,
-        is_ign_wr: !prevShowToggleValue
-      }))
-      return !prevShowToggleValue
-    })
-  }
-
-  let [showIsAirCon, setShowIsAirCon] = useState(false)
-  let toggleAirInfo = () => {
-    setShowIsAirCon(prevShowToggleValue => {
-      setSimInfo(prevData => ({
-        ...prevData,
-        is_air_wr: !prevShowToggleValue
-      }))
-      return !prevShowToggleValue
-    })
-  }
 
   let resetForm = () => {
     setSimInfo(initialState)
@@ -57,7 +31,7 @@ let SimInfoForm = () => {
 
   let handleSubmit = e => {
     e.preventDefault()
-    fetch(`${ubuntuIP}/api/v0/setSimDetails`, {
+    fetch(`${ubuntuIP}/api/v0/registerSimDetails`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -157,16 +131,6 @@ let SimInfoForm = () => {
                   id='sim_add_dt'
                   name='sim_add_dt'
                   value={simInfo.sim_add_dt}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor='sim_dlt_dt'>SIM Remove Date:</label>
-                <input
-                  type='date'
-                  id='sim_dlt_dt'
-                  name='sim_dlt_dt'
-                  value={simInfo.sim_dlt_dt}
                   onChange={handleChange}
                 />
               </div>
